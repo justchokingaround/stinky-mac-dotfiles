@@ -12,7 +12,7 @@ alias doc='cd ~/Documents'
 alias ani='cd ~/anime'
 alias lofi='cd ~/git/Rofi-Beats/ ; ./rofi-beats'
 alias at='./ani-cli'
-alias nf='neofetch'
+alias nf='neofetch | lolcat'
 alias cz='nvim ~/.zshrc'
 alias syncplay='/Applications/Syncplay.app/Contents/MacOS/Syncplay'
 
