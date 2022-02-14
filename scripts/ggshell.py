@@ -1,0 +1,1 @@
+/home/ivan/anime-helper-shell/ggshell.py

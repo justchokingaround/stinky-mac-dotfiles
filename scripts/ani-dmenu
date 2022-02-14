@@ -1,0 +1,171 @@
+#!/bin/sh
+
+# Inspired from https://github.com/pystardust/ani-cli
+# written in pure posix script. shellcheck is regularly run and it is tested to run with dash. 
+# except the coreutils, mpv are dependencies
+
+# setting the url cause i'm impatient and can't wait for 2 fucking seconds to get the working url. if urls changes run the recache url function. i'm too lazy
+base_url="https://www1.gogoanime.pe/"
+
+# history file
+logfile="$HOME/.cache/ani-hsts"
+
+# exiting function
+exiting() {
+    notify-send "😔 Exiting.... 🔴" "$1" && exit
+}
+
+# beautifully stolen from https://github.com/pystardust/ani-cli
+search_anime () {
+	search=$(printf '%s' "$1" | tr ' ' '-' )
+
+	curl -s "$base_url//search.html" \
+		-G \
+		-d "keyword=$search" |
+	sed -n -E '
+		s_^[[:space:]]*<a href="/category/([^"]*)" title="([^"]*)".*_\1_p
+		'
+}
+
+# searching for the anime
+get_name() {
+    query="$(: | dmenu -p 'Search Anime:')"
+    [ -z "$query" ] && exiting "Nothing entered"
+
+    search_results="$(search_anime "$query")"
+    [ -z "$search_results" ] && exiting "No anime found"
+
+    anime_name="$(printf '%s' "$search_results" | dmenu -p "Select Anime:" -l 15)"
+    [ -z "$anime_name" ] && exiting "No anime selected"
+
+    choose_epi
+}
+
+# beautifully stolen from https://github.com/pystardust/ani-cli
+search_eps () {
+	anime_id=$1
+
+	curl -s "$base_url/category/$anime_id" |
+	sed -n -E '
+		/^[[:space:]]*<a href="#" class="active" ep_start/{
+		s/.* '\''([0-9]*)'\'' ep_end = '\''([0-9]*)'\''.*/\2/p
+		q
+		}
+		'
+}
+
+# getting the episode number. don't be a dick and enter number which isn't possible. the script won't tell your computer that you entered something wrong
+choose_epi() {
+    no_of_epis="$(search_eps "$anime_name")"
+
+    epi="$(: | dmenu -p "Choose episode [1-$no_of_epis]:")"
+    [ -z "$epi" ] && exiting "Nothing entered"
+
+    get_url_play 
+}
+
+# beautifully stolen from https://github.com/pystardust/ani-cli
+get_dpage_link() {
+	anime_id=$1
+	ep_no=$2
+
+	anime_page=$(curl -s "$base_url/$anime_id-$ep_no")
+
+	if printf '%s' "$anime_page" | grep -q "404" ; then
+		anime_page=$(curl -s "$base_url/$anime_id-episode-$ep_no")
+	fi
+
+	printf '%s' "$anime_page" |
+	    sed -n -E 's/^[[:space:]]*<a href="#" rel="100" data-video="([^"]*)".*/\1/p' |
+	    sed 's/^/https:/g'
+}
+
+# beautifully stolen from https://github.com/pystardust/ani-cli
+decrypt_link() {
+    ajax_url='https://gogoplay.io/encrypt-ajax.php'
+
+    video_id=$(printf '%s' "$1" | cut -d\? -f2 | cut -d\& -f1 | sed 's/id=//g')
+    
+    secret_key='3235373436353338353932393338333936373634363632383739383333323838'
+    iv='34323036393133333738303038313335'
+    ajax=$(printf '%s' "$video_id" | openssl enc -aes256  -K "$secret_key" -iv "$iv" -a)
+    
+	curl -s -H 'x-requested-with:XMLHttpRequest' "$ajax_url" -d "id=$ajax" -d "time=69420691337800813569" |
+		sed -e 's/\].*/\]/' -e 's/\\//g' |
+		grep -Eo 'https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)' 
+}
+
+# to run after the exiting mpv
+after_choose() {
+    no_of_epis="$(search_eps "$anime_name")"
+
+    choice="$(printf "Next episode($((epi+1)))\nPrevious episode($((epi-1)))\nSelect episode[1-$no_of_epis]\nReplay current episode($epi)\nSearch for another anime\nSearch history" | dmenu -l 6 -i -p "Choose:")"
+    [ -z "$choice" ] && exiting "Nothing entered"
+
+    case $choice in
+        "Next episode($((epi+1)))") epi=$((epi + 1)) && get_url_play ;;
+        "Previous episode($((epi-1)))") epi=$((epi - 1)) && get_url_play ;;
+        "Select episode[1-$no_of_epis]") choose_epi ;;
+        "Replay current episode($epi)") get_url_play ;;
+        "Search for another anime") get_name ;;
+        "Search history") get_history ;;
+    esac
+}
+
+# making so that you remember which episode you watched last
+append_to_hist() {
+    grep "$anime_name\s" "$logfile" && sed -e '/'"$anime_name"'\t.*/d' -i "$logfile" && printf "%s\t%d\n" "$anime_name" "$epi" >> "$logfile" ||
+    printf "%s\t%d\n" "$anime_name" "$epi" >> "$logfile"
+}
+
+# to print the history
+get_history() {
+    search_results="$(tac "$logfile" | sed 's/\t[0-9]*//' )"
+    [ -z "$search_results" ] && exiting "History is empty"
+
+    anime_name="$(printf '%s' "$search_results" | dmenu -p "Choose:" -i -l 15)"
+    [ -z "$anime_name" ] && exiting "Nothing chosen"
+
+    no_of_epis="$(search_eps "$anime_name")"
+    epi=$(sed -n -E "s/${anime_name}\t//p" "$logfile") 
+
+    whether_to_continue=$(printf "Continue from left($epi)\nGo to next episode($((epi + 1)))\nSelect episode[1-$no_of_epis]\nSearch history\nSearch for another anime" | dmenu -i -l 5 -p "Choose:" )
+    [ -z "$whether_to_continue" ] && exiting "Nothing chosen"
+
+    case $whether_to_continue in
+        "Continue from left($epi)") get_url_play ;;
+        "Go to next episode($((epi + 1)))") epi=$((epi + 1)) && get_url_play ;;
+        "Select episode[1-$no_of_epis]") choose_epi ;;
+        "Search history") get_history ;;
+        "Search for another anime") get_name ;;
+    esac
+}
+
+# getting the url and opening it in mpv
+get_url_play() {
+    dpage_url="$(get_dpage_link "$anime_name" "$epi")"
+    urls="$(decrypt_link "$dpage_url")"
+    video_link=$(printf '%s' "$urls" | head -n 4 | tail -n 1)
+    append_to_hist
+    mpv --title="$anime_name ep-$epi" --speed=1.50 "$video_link" && after_choose || exiting "Some error happened"
+}
+
+# for recaching the url
+recache_web() {
+    base_url=$(curl -s -L -o /dev/null -w "%{url_effective}\n" https://gogoanime.cm) && sed 's|^base_url.*|base_url="'"$base_url"'"|' -i "$0" && main
+}
+
+# the main function
+main() {
+    what_to_do="$(printf "Search web\nSearch history\nRecache url"| dmenu -i -l 3 -p "What to do?")"
+    [ -z "$what_to_do" ] && exiting "Nothing entered"
+
+    case $what_to_do in 
+        "Search web") get_name ;;
+        "Search history") get_history ;;
+        "Recache url") recache_web || exiting "Failed to refresh url" ;;
+    esac
+}
+
+# run it now quick
+main

@@ -1,0 +1,12 @@
+#!/bin/sh
+file="$(printf "Y2V2\nY2V3\nY2V4\nY2V4.5" | dmenu -p "Choose a volume of cote:" -i -l 6)"
+[ -z "$file" ] && exit
+
+program="foliate"
+program2="zathura"
+case $file in
+    "Y2V2") $program /home/ivan/ebooks/cote/Y2V2;; 
+    "Y2V3") $program /home/ivan/ebooks/cote/Y2V3;; 
+    "Y2V4") $program2 /home/ivan/ebooks/cote/Y2V4;; 
+    "Y2V4.5") $program2 /home/ivan/ebooks/cote/Y2V4.5;; 
+esac

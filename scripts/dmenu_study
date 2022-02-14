@@ -1,0 +1,8 @@
+#!/bin/sh
+prompt="$(printf "artemis\nmoodle\n" | dmenu -i -p 'Open:')"
+[ -z "$prompt" ] && exit
+
+case $prompt in
+    "artemis") firefox "https://artemis.ase.in.tum.de/courses";;
+    "moodle") firefox "https://www.moodle.tum.de/my/index.php?lang=en";;
+esac

@@ -1,0 +1,148 @@
+#!/bin/bash
+
+# ---------------------------------------------------------
+# Name:   			dmenu-edit-configs
+# Author: 			Cyr4x3
+# Orig. Author: Derek Taylor
+# Descr.: 			Dmenu script for editing some of my more
+# 							frequently edited config files.
+# ---------------------------------------------------------
+
+# NOTE:
+# -----
+# This script uses the .dotfiles folder, as I am a user of
+# rcm. This may not be the case for you and the paths
+# displayed here may not work.
+# Don't forget to change the path to the configs' path in
+# your system.
+
+
+declare options=("amfora
+bash
+bash_aliases
+castero
+dmenu
+dunst
+kitty
+mpdnotify
+ncmpcpp
+newsboat
+neovim
+slock
+st
+startpages
+weechat
+xmobar
+xmonad
+xresources
+zathurarc
+zshrc
+zsh_confs
+quit")
+
+choice=$(echo -e "${options[@]}" | dmenu -l -i -p 'Edit config file: ')
+
+case "$choice" in
+	quit)
+		echo "Program terminated." && exit 1
+	;;
+	amfora)
+		choice="$HOME/.config/amfora/config.toml"
+	;;
+	bash)
+		choice="$HOME/.dotfiles/bashrc"
+	;;
+	bash_aliases)
+		choice="$HOME/.dotfiles/bash_aliases"
+#	;;
+#	broot)
+#		choice="$HOME/.config/broot/conf.toml"
+	;;
+	castero)
+		choice="$HOME/.dotfiles/config/castero/castero.conf"
+	;;
+	dmenu)
+		choice="$HOME/.bin/scripts/dmenu-scripts/"
+	;;
+	dunst)
+		choice="$HOME/.dotfiles/config/dunst/dunstrc"
+	;;
+	lfrc)
+		choice="$HOME/.dotfiles/config/lf/lfrc"
+	;;
+	kitty)
+		choice="$HOME/.dotfiles/config/kitty/kitty.conf"
+  ;;
+	mpdnotify)
+		choice="$HOME/.dotfiles/config/mpdnotify.conf"
+  ;;
+	ncmpcpp)
+		choice="$HOME/.dotfiles/ncmpcpp/config"
+  ;;
+	neovim)
+		choice="$HOME/.config/nvim/init.vim"
+	;;
+	newsboat)
+		choice="$HOME/.dotfiles/newsboat"
+#	;;
+#	picom)
+#		choice="$HOME/.config/picom/picom.conf"
+#	;;
+#	polybar)
+#		choice="$HOME/.config/polybar/config"
+#	;;
+#	qtile)
+#		choice="$HOME/.config/qtile/config.py"
+#	;;
+#	quickmarks)
+#		choice="$HOME/.config/qutebrowser/quickmarks"
+#	;;
+#	qutebrowser)
+#		choice="$HOME/.config/qutebrowser/autoconfig.yml"
+	;;
+	slock)
+		choice="$HOME/.bin/suckless-builds/slock-1.4/config.def.h"
+	;;
+	st)
+		choice="$HOME/.bin/suckless-builds/st-0.8.4/config.def.h"
+	;;
+	startpages)
+		choice="$HOME/Documents/Linux/Personalizacion/Firefox/Startpages"
+	;;
+	terminator)
+		choice="$HOME/.dotfiles/config/terminator/config"
+	;;
+	vifm)
+		choice="$HOME/.dotfiles/config/vifm/vifmrc"
+#	;;
+#	vim)
+#		choice="$HOME/.vimrc"
+	;;
+	weechat)
+		choice="$HOME/.dotfiles/weechat"
+	;;
+	xmobar)
+		choice="$HOME/.dotfiles/config/xmobar/xmobarrc"
+	;;
+	xmonad)
+		choice="$HOME/.dotfiles/xmonad/xmonad.hs"
+	;;
+	xresources)
+		choice="$HOME/.Xresources"
+ 	;;
+	zathurarc)
+		choice="$HOME/.dotfiles/config/zathura/zathurarc"
+ 	;;
+	zshrc)
+		choice="$HOME/.dotfiles/zshrc"
+	;;
+	zsh_confs)
+		choice="$HOME/.dotfiles/config/zsh"
+	;;
+	*)
+		exit 1
+	;;
+esac
+
+$TERMINAL -e nvim "$choice"
+

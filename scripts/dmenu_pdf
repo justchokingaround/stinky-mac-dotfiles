@@ -1,0 +1,5 @@
+#!/bin/sh
+file="$(cd ~/Downloads && ls -- *.pdf | dmenu -p "Open:" -i -l 15 )"
+[ -z "$file" ] && exit
+
+zathura ~/Downloads/"$file"

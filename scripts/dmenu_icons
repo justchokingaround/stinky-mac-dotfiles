@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# inspired by https://github.com/lukesmithxyz/voidrice
+case $1 in
+    "emojis") chosen=$(dmenu -i -l 15 < ~/.local/share/emoji | sed "s/ .*//") ;;
+    "glyphs") chosen=$(dmenu -i -l 15 < ~/.local/share/glyphs | sed "s/ .*//") ;;
+esac
+
+# Exit if none chosen.
+[ -z "$chosen" ] && exit
+
+# Put the selection to clipboard
+printf '%s' "$chosen" | xsel --clipboard && notify-send "$chosen copied to clipboard"

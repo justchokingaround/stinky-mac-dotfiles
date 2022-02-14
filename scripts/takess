@@ -1,0 +1,18 @@
+#!/bin/sh
+choice="$(printf "Whole screen\nSelect an area\nFocused window" | dmenu -p "Select:" -i -l 3)"
+[ -z "$choice" ] && exit
+
+location="$(printf "pix\nhome\nscreenshots" | dmenu -p "Select:" -i -l 4)"
+[ -z "$location" ] && exit
+
+case $location in
+    "pix") file="$HOME/pix/%T-%d-%m.png" ;;
+    "home") file="$HOME/%T-%d-%m.png" ;;
+    "screenshots") file="$HOME/Pictures/screenshots/$T-%d-%m.png" ;;
+esac
+
+case $choice in
+    "Whole screen") scrot "$file" -e 'notify-send -i ~/.config/dunst/image.png "🖼️ Scrot 🖼️" "$f saved" && echo "$f" >> /tmp/lastss' ;;
+    "Select an area") scrot "$file" -e 'notify-send -i ~/.config/dunst/image.png "🖼️ Scrot 🖼️" "$f saved" && echo "$f" >> /tmp/lastss' -s ;;
+    "Focused window") scrot "$file" -e 'notify-send -i ~/.config/dunst/image.png "🖼️ Scrot 🖼️" "$f saved" && echo "$f" >> /tmp/lastss' -u ;;
+esac
