@@ -1,0 +1,24 @@
+#!/bin/sh
+while read file
+do 
+		fullpath="$(pwd)/$file"
+		case "$1" in	
+"C-d") trash-put "$file" && notify-send "image was deleted";;
+"C-w") feh --bg-scale "$file" && notify-send "new wallpaper set";; 
+"C-c") curl -s -F"file=@${file}" https://0x0.st| xclip -sel c && notify-send "copied to clipboard";;
+"C-g") gimp "$file" & disown && nofify-send "opening in gimp";;
+"C-n") nautilus "$file" & ;;
+"C-v") 
+filetype=$(echo "$file" | awk -F . '{print $NF}')
+		if [ $filetype = "png" ]; then
+			xclip -se c -t image/png "$file"
+		elif [ $filetype != "gif" ]; then
+			convert "$file" "/tmp/clipboard.png"
+			xclip -se c -t image/png "/tmp/clipboard.png"
+		fi ;;
+"C-r")
+		newname="$(dmenu -p "New name of $file?")"
+		[ "$newname" ] && newname="$newname"'.'"${file##*.}" && [ "$(printf "No\nYes" | dmenu -i -p "Rename $file to $newname?")" = "Yes" ] && mv "$file" "$newname" && dunstify "$file renamed to $newname." ;;
+
+		esac
+done
