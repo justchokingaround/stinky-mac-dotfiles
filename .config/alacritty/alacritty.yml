@@ -1,0 +1,94 @@
+# Window Customization
+window:
+  opacity: 0.75
+  #opacity: 1
+  dimensions:
+    columns: 140
+    lines: 38
+  padding:
+    x: 35
+    y: 35
+  decorations: full #Still won't show in a window manger, but will in a desktop environment
+scrolling:
+  history: 10000
+  multiplier: 3
+window.dynamic_title: true
+# Font Customization
+font:
+  normal:
+    family: Hack Nerd Font Mono
+    style: Regular
+  bold:
+    family: Hack Nerd Font Mono
+    style: Bold
+  italic:
+    family: Hack Nerd Font Mono
+    style: Italic
+  size: 18
+  offset:
+    x: 0
+    y: 0
+  glyph_offset:
+    x: 0
+    y: 0
+  use_thin_strokes: false
+  debug:
+    persistent_logging: false
+draw_bold_text_with_bright_colors: true
+
+# VSCode's integrated terminal default colors
+# Primary and dimmed colors needed
+
+colors:
+  # Default colors
+  primary:
+    background: '#282a36' #Background from Dark Theme
+    foreground: '#cccccc'
+
+  # Selection colors
+  selection:
+    text: CellForeground
+    background: '#565656'
+
+  # Normal colors
+  normal:
+    black:   '#000000'
+    red:     '#cd3131'
+    green:   '#0dbc79'
+    yellow:  '#e5e510'
+    blue:    '#2472c8'
+    magenta: '#bc3fbc'
+    cyan:    '#11a8cd'
+    white:   '#e5e5e5'
+
+  # Bright colors
+  bright:
+    black:   '#666666'
+    red:     '#f14c4c'
+    green:   '#23d18b'
+    yellow:  '#f5f543'
+    blue:    '#3b8eea'
+    magenta: '#d670d6'
+    cyan:    '#29b8db'
+    white:   '#e5e5e5'
+
+
+  indexed_colors:
+    - { index: 16, color: '0xdc9656' }
+    - { index: 17, color: '0xa16946' }
+    - { index: 18, color: '0x282828' }
+    - { index: 19, color: '0x383838' }
+    - { index: 20, color: '0xb8b8b8' }
+    - { index: 21, color: '0xe8e8e8' }
+
+  selection:
+    text: '0xffffff'
+    background: '0xdc3232'
+    white:   '0xffffff'
+
+cursor:
+  style:
+    shape: Beam
+    blinking: off
+    blink-interval: 750
+    unfocused_hollow: true
