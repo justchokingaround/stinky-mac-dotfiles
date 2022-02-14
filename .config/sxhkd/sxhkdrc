@@ -1,0 +1,85 @@
+alt + {f,l} ; {q,y,g,s,w,p,i,c,r,l}
+    dmenu_search {"firefox","firefox-nightly"} {ArchWiki,Youtube,Github,Search,Wikipedia,Piratebay,YandexImages,CoteWiki, Subreddits,MyAnimeList}
+
+alt + q ; {s,q,t,g,p,c,n}
+    {takess, ani-dmenu,todo,xclip -sel clip < ~/passwords/github.txt,xclip -sel clip < ~/passwords/artemis.txt,cote, dmenu_open-manpage.py}
+
+alt + {p,s,b,d,t,k,y}
+    {dmenu_pix, sxiv ~/Pictures/screenshots/, dmenu_bookmarks, dmenu_pdf, dmenu_study,takess,$TERMINAL -e ytfzf -t}
+
+XF86AudioLowerVolume
+	pulsemixer --change-volume -5
+XF86AudioRaiseVolume
+	pulsemixer --change-volume +5
+XF86AudioMute
+	pulsemixer --toggle-mute
+
+super + equal
+	sxiv -rt "$HOME/Pictures/wallpapers/"
+
+super + shift + b
+    feh --bg-fill /home/ivan/Pictures/wallpapers/black.jpg
+
+super + shift + t
+    trash-empty
+
+super + n
+    $TERMINAL -e nvim
+
+# lock
+super + b
+	betterlockscreen -l
+
+super + shift + r
+    pkill -USR1 -x sxhkd && notify-send "refreshed sxhkd"
+
+alt + space   
+   rofi -show drun -show-icons
+
+super + c
+    feh --bg-fill --randomize /home/ivan/Pictures/wallpapers*;clear
+
+super + z
+    feh --bg-fill --randomize /home/ivan/Pictures/wallhaven*;clear
+
+super + shift + w
+   $TERMINAL -e nvim /home/ivan/.config/sxhkd/sxhkdrc
+
+Print
+    scrot  $(date  +%F-%H%M).png -e 'mv $f ~/Pictures/screenshots/' && notify-send "fullscreen screenshot taken"
+
+Print + shift
+    scrot -s $(date  +%F-%H%M).png -e 'mv $f ~/Pictures/screenshots/' && notify-send "selected window's screenshot taken"
+
+shift + Print + ctrl
+    scrot -s $(date  +%F-%H%M).png -e 'mv $f ~/Pictures/cote_screenshots/' && notify-send "selected window's screenshot was saved to cote"
+
+shift + Print + mod5
+    scrot $(date  +%F-%H%M).png -e 'mv $f ~/Pictures/cote_screenshots/' && notify-send "fullscreen screenshot was saved to cote"
+
+mod5 + p 
+    maim -sB -d 1| xclip -selection clipboard -t image/png && notify-send "screenshot copied to clipboard"
+
+super + Return
+  $TERMINAL
+
+ctrl + Return
+    $TERMINAL
+
+mod5 + Return
+    $TERMINAL
+
+ctrl + mod5 + {o, g, b, f, s, d, n, a, u, t, r, c, z, h, e}
+  {obs, gimp, $BROWSER, firefox-nightly, spotify, discord, $TERMINAL -e nvim, $TERMINAL -e ani-cli, $TERMINAL -e ani-cli -u, telegram-desktop, $TERMINAL -e ranger, foliate /home/ivan/ebooks/cote/Y2V2, /home/ivan/scripts/./waldl, $TERMINAL -e ggshell.py, /usr/bin/eclipse}
+
+super + q
+    $TERMINAL -e ani-cli
+
+super + shift + g
+    $TERMINAL -e ggshell.py
+
+shift + ctrl + g
+    $TERMINAL -e ggshell.py
+
+super + u
+    $TERMINAL -e ani-cli -u

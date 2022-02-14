@@ -1,94 +1,128 @@
-# Window Customization
 window:
-  opacity: 0.75
-  #opacity: 1
+  opacity: 0.75 
+  dynamic_title: true
   dimensions:
-    columns: 140
-    lines: 38
+    columns: 0
+    lines: 0
+
+  position:
+    x: 0
+    y: 0
+    #startup_mode: SimpleFullscreen
+    #position:
+    #x: 0
+    #y: 0
+
   padding:
-    x: 35
-    y: 35
-  decorations: full #Still won't show in a window manger, but will in a desktop environment
+    x: 40 
+    y: 10
+
+  dynamic_padding: false
+  decorations: none
+
 scrolling:
-  history: 10000
+  history: 50000
   multiplier: 3
-window.dynamic_title: true
-# Font Customization
+
 font:
   normal:
-    family: Hack Nerd Font Mono
+    family: Cascadia Code 
     style: Regular
+
   bold:
-    family: Hack Nerd Font Mono
+    family: Cascadia Code 
     style: Bold
+
   italic:
-    family: Hack Nerd Font Mono
-    style: Italic
-  size: 18
+    family: Cascadia Code 
+    style: Bold Italic
+
+  size: 14.0
+
   offset:
     x: 0
     y: 0
+
   glyph_offset:
     x: 0
     y: 0
-  use_thin_strokes: false
-  debug:
-    persistent_logging: false
+
+  use_thin_strokes: true
+
 draw_bold_text_with_bright_colors: true
 
-# VSCode's integrated terminal default colors
-# Primary and dimmed colors needed
+# background_opacity: 0.5
+
+key_bindings:
+  - { key: K,    mods: Control,    action: ScrollLineUp   }
+  - { key: J,    mods: Control,    action: ScrollLineDown }
+  - { key: U,    mods: Alt,        action: ScrollPageUp   }
+  - { key: D,    mods: Control,    action: ScrollPageDown }
+  - {key: Return,mods: Alt,        action: ToggleFullscreen }
+
+
+scheme:
+  primary:
+    background: '0x1b2b34'
+    foreground: '0xd8dee9'
+  normal:
+    black: '0x29414f'
+    red: '0xec5f67'
+    green: '0x99c794'
+    yellow: '0xfac863'
+    blue: '0x6699cc'
+    magenta: '0xc594c5'
+    cyan: '0x5fb3b3'
+    white: '0x65737e'
+  bright:
+    black: '0x405860'
+    red: '0xec5f67'
+    green: '0x99c794'
+    yellow: '0xfac863'
+    blue: '0x6699cc'
+    magenta: '0xc594c5'
+    cyan: '0x5fb3b3'
+    white: '0xadb5c0'
 
 colors:
+  # COLORSCHEME: base16-dracula-256.yml
   # Default colors
   primary:
-    background: '#282a36' #Background from Dark Theme
-    foreground: '#cccccc'
+    background: '0x282936'
+    foreground: '0xe9e9f4'
 
-  # Selection colors
-  selection:
-    text: CellForeground
-    background: '#565656'
+  # Colors the cursor will use if `custom_cursor_colors` is true
+  cursor:
+    text: '0x282936'
+    cursor: '0xe9e9f4'
 
   # Normal colors
   normal:
-    black:   '#000000'
-    red:     '#cd3131'
-    green:   '#0dbc79'
-    yellow:  '#e5e510'
-    blue:    '#2472c8'
-    magenta: '#bc3fbc'
-    cyan:    '#11a8cd'
-    white:   '#e5e5e5'
+    black: '0x282936'
+    red: '0xea51b2'
+    green: '0xebff87'
+    yellow: '0x00f769'
+    blue: '0x62d6e8'
+    magenta: '0xb45bcf'
+    cyan: '0xa1efe4'
+    white: '0xe9e9f4'
 
   # Bright colors
   bright:
-    black:   '#666666'
-    red:     '#f14c4c'
-    green:   '#23d18b'
-    yellow:  '#f5f543'
-    blue:    '#3b8eea'
-    magenta: '#d670d6'
-    cyan:    '#29b8db'
-    white:   '#e5e5e5'
-
+    black: '0x626483'
+    red: '0xea51b2'
+    green: '0xebff87'
+    yellow: '0x00f769'
+    blue: '0x62d6e8'
+    magenta: '0xb45bcf'
+    cyan: '0xa1efe4'
+    white: '0xf7f7fb'
 
   indexed_colors:
-    - { index: 16, color: '0xdc9656' }
-    - { index: 17, color: '0xa16946' }
-    - { index: 18, color: '0x282828' }
-    - { index: 19, color: '0x383838' }
-    - { index: 20, color: '0xb8b8b8' }
-    - { index: 21, color: '0xe8e8e8' }
-
-  selection:
-    text: '0xffffff'
-    background: '0xdc3232'
-    white:   '0xffffff'
-
-cursor:
-  style:
-    shape: Beam
-    blinking: off
-    blink-interval: 750
-    unfocused_hollow: true
+    - {index: 16, color: '0xb45bcf'}
+    - {index: 17, color: '0x00f769'}
+    - {index: 18, color: '0x3a3c4e'}
+    - {index: 19, color: '0x4d4f68'}
+    - {index: 20, color: '0x62d6e8'}
+    - {index: 21, color: '0xf1f2f8'}
+theme: Argonaut
