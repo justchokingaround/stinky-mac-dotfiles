@@ -1,0 +1,5 @@
+#!/bin/sh
+
+Str="very cool sentence with several words that we can cut"
+subStr=$(echo $Str| cut -d ' ' -f 1-3)
+echo $subStr

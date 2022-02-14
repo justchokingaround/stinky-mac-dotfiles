@@ -1,0 +1,11 @@
+#!/bin/sh
+
+echo "Total arguments : $#"
+echo "First Argument = $1"
+echo "Second Argument = $2"
+
+case $1 in
+    cool)
+        echo "your first argument is cool";;
+    esac
+    

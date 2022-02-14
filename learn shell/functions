@@ -1,0 +1,18 @@
+#!/bin/sh
+
+function addition() {
+    read -p "first number: " a
+    read -p "second number: " b
+    echo "the sum is equal to: $((a+b))"
+}
+
+#addition
+
+function greeting() {
+    string="Hello $name, how are you feeling today?"
+    echo $string
+}
+
+read -p "what's your name? > " name
+
+echo "$(greeting)"

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+for ((i=0; i<=30; i++))
+do
+    touch testfile${i}
+done
+

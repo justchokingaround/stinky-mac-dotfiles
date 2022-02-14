@@ -1,0 +1,8 @@
+#!/bin/sh
+
+read -p "What is your favorite fruit: " FRUIT 
+echo "Your favorite fruit is: $FRUIT"
+
+echo "What is your name?"
+read NAME 
+echo "Hello, $NAME"

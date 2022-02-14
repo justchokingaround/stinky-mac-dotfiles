@@ -1,0 +1,24 @@
+#!/bin/sh
+
+# $0 is used for the filename of the current script
+echo "File Name: $0"
+
+# $1 is used for the first parameter that is passed when executing the script 
+echo "First Parameter : $1"
+
+# $2 is the same as $1 but for the second argument
+echo "Second Parameter : $2"
+
+# $# is used for the number of arguments supplied to a script
+echo "Total Number of Parameters : $#"
+
+
+for PARAMETER in $*
+do
+  echo $PARAMETER
+done
+
+for PARAMETER in $*
+do
+  printf $PARAMETER
+done
