@@ -1,0 +1,6 @@
+start=7.799458
+pause=yes
+vf=@blackout:!lavfi=graph=
+af=@silencedetect:!lavfi=graph=%31%silencedetect=noise=-30dB:d=0.5
+sid=no
+sub-ass-override=no

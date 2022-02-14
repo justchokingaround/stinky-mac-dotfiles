@@ -1,0 +1,9 @@
+start=136.386250
+pause=yes
+fullscreen=yes
+vf=@blackout:!lavfi=graph=
+af=@silencedetect:!lavfi=graph=%31%silencedetect=noise=-30dB:d=0.5
+panscan=0.200000
+sid=no
+sub-delay=0.400000
+video-aspect-override=1.777778

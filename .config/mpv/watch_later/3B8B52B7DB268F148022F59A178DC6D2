@@ -1,0 +1,6 @@
+start=18.950000
+volume=100.820015
+fullscreen=yes
+vf=@blackout:!lavfi=graph=
+af=@silencedetect:!lavfi=graph=%31%silencedetect=noise=-30dB:d=0.5
+sid=no

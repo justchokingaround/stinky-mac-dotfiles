@@ -1,0 +1,8 @@
+start=927.468200
+pause=yes
+volume=50.000000
+mute=yes
+fullscreen=yes
+vf=@blackout:!lavfi=graph=
+af=@silencedetect:!lavfi=graph=%31%silencedetect=noise=-30dB:d=0.5
+sid=no

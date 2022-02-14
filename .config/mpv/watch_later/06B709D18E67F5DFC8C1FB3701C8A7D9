@@ -1,0 +1,6 @@
+start=36.970000
+vf=@blackout:!lavfi=graph=
+af=@silencedetect:!lavfi=graph=%31%silencedetect=noise=-30dB:d=0.5
+sid=no
+ab-loop-a=11.144000
+ab-loop-b=57.024000

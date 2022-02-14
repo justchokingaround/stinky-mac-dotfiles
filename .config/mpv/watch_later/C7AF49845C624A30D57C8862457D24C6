@@ -1,0 +1,5 @@
+start=120.277539
+volume=60.000000
+vf=@blackout:!lavfi=graph=
+af=@silencedetect:!lavfi=graph=%31%silencedetect=noise=-30dB:d=0.5
+sid=no

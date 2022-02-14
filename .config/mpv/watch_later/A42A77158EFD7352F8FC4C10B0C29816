@@ -1,0 +1,5 @@
+start=1339.880208
+fullscreen=yes
+vf=@blackout:!lavfi=graph=%28%nullsink,color=c=black:s=0x0
+af=@silencedetect:!lavfi=graph=%31%silencedetect=noise=-30dB:d=0.5
+sid=no

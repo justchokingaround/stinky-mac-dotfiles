@@ -1,0 +1,8 @@
+start=647.419844
+pause=yes
+fullscreen=yes
+deinterlace=yes
+vf=@blackout:!lavfi=graph=
+af=@silencedetect:!lavfi=graph=%31%silencedetect=noise=-30dB:d=0.5
+panscan=0.100000
+sid=no
