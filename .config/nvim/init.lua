@@ -59,7 +59,7 @@ require("presence"):setup({
     buttons = {
       {
         label = "my init.lua" ,
-       url = "https://github.com/iamchokerman/dotfiles/.config/nvim"
+       url = "https://github.com/iamchokerman/dotfiles/tree/main/.config/nvim"
       }
     }
 })
