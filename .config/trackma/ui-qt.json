@@ -1,0 +1,40 @@
+{
+    "close_to_tray": true,
+    "colors": {
+        "is_airing": "#D2FAFA",
+        "is_playing": "#9696FA",
+        "is_queued": "#D2FAD2",
+        "new_episode": "#FAFA82",
+        "not_aired": "#FAFAD2",
+        "progress_bg": "#F5F5F5",
+        "progress_complete": "#00D200",
+        "progress_fg": "#74C0FA",
+        "progress_sub_bg": "#D2D2D2",
+        "progress_sub_fg": "#5187B1"
+    },
+    "columns_per_api": false,
+    "columns_state": null,
+    "episodebar_style": 1,
+    "episodebar_text": false,
+    "filter_bar_position": 2,
+    "filter_global": false,
+    "inline_edit": true,
+    "last_height": 480,
+    "last_width": 740,
+    "last_x": 0,
+    "last_y": 0,
+    "notifications": true,
+    "remember_columns": false,
+    "remember_geometry": false,
+    "show_tray": true,
+    "sort_index": 1,
+    "sort_order": 0,
+    "start_in_tray": false,
+    "tray_api_icon": false,
+    "visible_columns": [
+        "Title",
+        "Progress",
+        "Score",
+        "Percent"
+    ]
+}
