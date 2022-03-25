@@ -105,17 +105,43 @@ require'nvim-treesitter.configs'.setup {
 
 -- Setting some keybindings {{{
 local keymap = vim.api.nvim_set_keymap
-
 keymap('n', '<c-f>', ':NvimTreeFindFileToggle<cr>' , {silent = true})
-vim.api.nvim_command([[
+vim.cmd([[
+let mapleader =","
+inoremap jj <Esc>
+inoremap , ,<c-g>u
+inoremap . .<c-g>u
+inoremap ! !<c-g>u
+inoremap ? ?<c-g>u
+
+nnoremap S :%s//g<Left><Left>
 nnoremap <leader>ss :SSave<CR>
 nnoremap <leader>sc :SClose<CR>
 nnoremap <leader>sd :SDelete<CR>
 nnoremap <leader>sl :SLoad<CR>
-inoremap jj <Esc>
-nnoremap <space> :
-nmap <leader>y :History:<CR>
 nnoremap <silent> <leader><space> :noh<cr>
+nnoremap <space> :
+nnoremap Y y$
+nnoremap n nzzzv
+nnoremap N Nzzzv
+nnoremap J mzJ`z
+
+map Q gq
+map <leader>s :!clear && shellcheck -x %<CR>
+map <leader>c :w! \| !compiler "<c-r>%"<CR>
+nmap <leader>y :History:<CR>
+
+" Custom commands
+command -nargs=* Rename %s/tmp/\=printf('<args>_%03d', line('.'))/
+command -bar Minus %s/_-_/-/g
+command -bar Spaces %s/\ /_/g
+command -bar Minus3 %s/___/_/g
+command -bar Minus4 %s/____/_/g
+command -bar Square %norm 0f[lda]
+command -bar Cleanup :Spaces | :Minus | :Square | :Minus4 | :Minus3
+
+
+
 ]])
 -- }}}
 
@@ -158,7 +184,7 @@ vim.cmd('colorscheme tokyonight')
 -- Startify config {{{
 vim.api.nvim_command([[
 highlight StartifyHeader  ctermfg=114
-let g:startify_bookmarks = [ { 'c' : ''} , { 's' : '~/.config/nvim/init.lua'} , { 'd' : ''} , { 'b' : '~/.local/bin'} , { 'a' : ''} , { 'v' : ''} ]
+let g:startify_bookmarks = [ { 'c' : '~/.zshrc'} , { 's' : '~/.config/nvim/init.lua'} , { 'd' : ''} , { 'b' : '~/.local/bin'} , { 'a' : '~/dev/ani-cli/ani-cli'} , { 'v' : ''} ]
 let g:startify_lists = [{ 'header': ['     Recent'],'type': 'files' },{ 'header': ['     Bookmarks'],'type': 'bookmarks' },]
 let g:startify_custom_header ='startify#center(startify#fortune#cowsay())'
 hi StartifyPath ctermbg=None ctermfg=Blue
@@ -186,4 +212,3 @@ autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checkti
 -- }}}
 
 -- vim:foldmethod=marker
-
