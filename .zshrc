@@ -13,7 +13,8 @@ export IMAGE="/Applications/qView.app/Contents/MacOS/qView"
 export OPENER="open"
 export NVIMRC="~/.config/nvim/init.lua"
 export PATH="$HOME/.emacs.d/bin:$PATH"
-export LC_ALL=en_EN.UTF-8
+LC_CTYPE=en_US.UTF-8
+LC_ALL=en_US.UTF-8
 PATH=$PATH:~/.local/bin
 PATH=$PATH:~/scripts
 # Enable colors and change prompt:
@@ -64,12 +65,18 @@ alias l='ls --color=auto'
 alias ll='ls -lhtrF --color=auto'
 alias lh='ls -lhtrdF .*'
 alias grep="grep --color=auto"
-alias r='rm -rf "$(fzf)"'
+alias r='rm -rf "$(ls -d */ | fzf)"'
+alias rf='rm -i "$(find . -maxdepth 1 -type f| fzf)"'
 alias v='nvim'
 alias nv='nvim'
 alias vki="vim -c ':VimwikiIndex'"
 alias vimwiki="vim -c ':VimwikiIndex'"
 alias f="fzf"
+
+### Suffix aliases
+alias -s md=nvim
+alias -s mp4=mpv
+alias -s mkv=mpv
 
 ### Media aliases
 
@@ -99,6 +106,9 @@ alias cf="change_folder"
 alias ofm="open_pdf_fzf_mupdf"
 alias of="open_with_fzf"
 alias nvf="open_with_nvim"
+alias mpf="open_with_mpv"
+alias msf="open_with_mpv_silent"
+alias nb="newsboat"
 
 
 ### Life one ez mode
@@ -138,6 +148,16 @@ change_folder() {
 open_pdf_fzf_mupdf() {
     PDF_PATH=$(rg --files -t pdf| fzf )
     [[ -z $PDF_PATH ]] || (mupdf-gl "$PDF_PATH" &> /dev/null)
+}
+
+open_with_mpv() {
+    VIDEO_PATH=$(rg --files -g '*.{mp4,mkv,webm,m4v}'| fzf )
+    [[ -z $VIDEO_PATH ]] || (mpv "$VIDEO_PATH")
+}
+
+open_with_mpv_silent() {
+    VIDEO_PATH=$(rg --files -g '*.{mp3,flac,m4a}'| fzf )
+    [[ -z $VIDEO_PATH ]] || (mpv --no-video "$VIDEO_PATH")
 }
 
 open_with_fzf() {
