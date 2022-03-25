@@ -136,11 +136,10 @@ command -nargs=* Rename %s/tmp/\=printf('<args>_%03d', line('.'))/
 command -bar Minus %s/_-_/-/g
 command -bar Spaces %s/\ /_/g
 command -bar Minus3 %s/___/_/g
-command -bar Minus4 %s/____/_/g
+command -bar Underminus %s/_-/-/g
+command -bar Underdot %s/_\././g
 command -bar Square %norm 0f[lda]
-command -bar Cleanup :Spaces | :Minus | :Square | :Minus4 | :Minus3
-
-
+command -bar Cleanup :Spaces | :Minus | :Square | :Minus3 | :Underminus | :Underdot
 
 ]])
 -- }}}
@@ -191,7 +190,7 @@ hi StartifyPath ctermbg=None ctermfg=Blue
 nnoremap <silent> <C-e> :Startify<cr>
 let g:startify_update_oldfiles = 1
 let g:startify_fortune_use_unicode = 1
-let g:startify_files_number = 12
+let g:startify_files_number = 5
 let g:startify_padding_left = 5
 autocmd TabNewEntered * Startify
 ]])
