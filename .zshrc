@@ -1,30 +1,28 @@
-alias g='cd "$(ls -d */| fzy)"'
-alias trackma='trackma -a 1'
-alias r='rm -rf "$(fzf)"'
-alias python='python3'
-alias pip='pip3'
-alias ls='lsd'
-alias aw='ani-cli'
-alias awc='ani-cli -c'
-alias awu='ani-cli -U'
-alias u='exec zsh'
-#alias cat='lolcat'
-alias v='nvim'
-alias nv='nvim'
-alias ..='cd ..'
-alias down='cd ~/Downloads'
-alias doc='cd ~/Documents'
-alias ani='cd ~/anime'
-alias lofi='cd ~/git/Rofi-Beats/ ; ./rofi-beats'
-alias at='./ani-cli'
-alias nf='neofetch | lolcat'
-alias cz='nvim ~/.zshrc'
-alias syncplay='/Applications/Syncplay.app/Contents/MacOS/Syncplay'
+### Essentials
+
+# vi mode
+bindkey -v
+export KEYTIMEOUT=1
 
 export EDITOR="nvim"
+export TERMINAL="kitty"
 export NVIMRC="~/.config/nvim/init.lua"
 export PATH="$HOME/.emacs.d/bin:$PATH"
-export LC_ALL=fr_FR.UTF-8
+export LC_ALL=en_EN.UTF-8
+PATH=$PATH:~/.local/bin
+PATH=$PATH:~/scripts
+# colorful man pages
+export LESS_TERMCAP_mb=$'\e[1;31m'
+export LESS_TERMCAP_md=$'\e[1;31m'
+export LESS_TERMCAP_me=$'\e[0m'
+export LESS_TERMCAP_se=$'\e[0m'
+export LESS_TERMCAP_so=$'\e[01;33m'
+export LESS_TERMCAP_ue=$'\e[0m'
+export LESS_TERMCAP_us=$'\e[1;4;32m'
+export FZF_DEFAULT_COMMAND="rg ~ --files --hidden -g '!/Library/'"
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+alias rg="rg -g '!/Library/'" 
 
 eval "$(starship init zsh)"
 
@@ -32,9 +30,106 @@ eval "$(starship init zsh)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-####
-#GIT
-####
+
+### File managing aliases
+
+alias down='cd ~/Downloads'
+alias doc='cd ~/Documents'
+alias dev="cd ~/dev/"
+alias sd="cd ~/Documents/ && fd . $HOME/Documents"
+alias ..='cd ..'
+alias g='cd "$(ls -d */| fzy)"'
+alias ls='lsd'
+alias l='ls -ahl --color=auto'
+alias ll='ls -hl --color=auto'
+alias r='rm -rf "$(fzf)"'
+alias v='nvim'
+alias nv='nvim'
+alias vki="vim -c ':VimwikiIndex'"
+alias vimwiki="vim -c ':VimwikiIndex'"
+alias f="fzf"
+
+### Media aliases
+
+alias ani='cd ~/anime'
+alias trackma='trackma -a 1'
+alias syncplay='/Applications/Syncplay.app/Contents/MacOS/Syncplay'
+alias mpvq="mpv --no-video"
+
+### yt-dlp aliases
+# don't forget to download ffmpeg :/
+
+alias ytdl="yt-dlp -f 'bestvideo+bestaudio' --embed-thumbnail --embed-subs --embed-metadata"
+alias ytdl-mp3="yt-dlp --extract-audio --audio-format mp3 --audio-quality 0"
+alias ytdlist="yt-dlp -f 'bv*[height=1080]+ba'"
+
+
+### Other aliases
+
+alias nf='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'
+alias nft='neofetch --iterm2 ~/.config/neofetch/neofetch.jpeg'
+alias python='python3'
+alias pip='pip3'
+alias u='exec zsh'
+alias myip="curl ipinfo.io/ip"
+alias ytm="ytfzf -m"
+alias cf="change_folder"
+alias ofm="open_pdf_fzf_mupdf"
+alias of="open_with_fzf"
+alias nvf="open_with_nvim"
+
+
+### Life one ez mode
+function chst {
+    [ -z $1 ] && echo "no args provided!" || (curl -s cheat.sh/$1 | bat --style=plain)
+}
+
+mkcd() {
+    if [ "$#" -lt 1 ]; then
+        echo "no arguments provided!"
+        return
+    elif [ "$#" -gt 1 ]; then
+        echo "too many arguments! ignoring extra.."
+    fi
+    test -d "$1" || mkdir "$1" && cd "$1"
+}
+
+change_folder() {
+    # if no argument is provided, search from ~ else use argument
+    [[ -z $1 ]] && DIR=~ || DIR=$1
+    # choose file using rg and fzf
+    CHOSEN=$(fd . -H -t d $DIR | fzf --preview="exa -s type --icons {}" --bind="ctrl-space:toggle-preview" --preview-window=,30:hidden)
+
+    # quit if no path is selected else cd into the path
+    if [[ -z $CHOSEN ]]; then
+        echo $CHOSEN
+        return 1
+    else
+        cd "$CHOSEN"
+    fi
+
+    # show ls output if dir has less than 61 files
+    [[ $(ls | wc -l) -le 60 ]] && (pwd; ls)
+    return 0
+}
+
+open_pdf_fzf_mupdf() {
+    PDF_PATH=$(rg --files -t pdf| fzf )
+    [[ -z $PDF_PATH ]] || (mupdf-gl "$PDF_PATH" &> /dev/null)
+}
+
+open_with_fzf() {
+    FILE=$(rg --files | fzf )
+    [[ -z "$FILE" ]] || (open "$FILE" &> /dev/null)
+}
+
+open_with_nvim() {
+  nvim $(fzf)
+}
+
+
+
+### Git
 
 gc() { git clone https://github.com"$@"; }
 gci() { git clone https://github.com/iamchokerman"$@"; }
@@ -79,6 +174,7 @@ fco_preview() {
         --ansi --preview="git --no-pager log -150 --pretty=format:%s '..{2}'") || return
   git checkout $(awk '{print $2}' <<<"$target" )
 }
+
 # fcoc - checkout git commit
 fcoc() {
   local commits commit
@@ -86,6 +182,7 @@ fcoc() {
   commit=$(echo "$commits" | fzf --tac +s +m -e) &&
   git checkout $(echo "$commit" | sed "s/ .*//")
 }
+
 # fshow - git commit browser
 fshow() {
   git log --graph --color=always \
@@ -97,6 +194,7 @@ fshow() {
                 {}
 FZF-EOF"
 }
+
 # fcs - get git commit sha
 # example usage: git rebase -i `fcs`
 fcs() {
@@ -107,11 +205,7 @@ fcs() {
 }
 
 
-
-
-######
-#MEDIA
-######
+### Media
 
 w () {
   while :; do
@@ -123,6 +217,7 @@ w () {
     rm -vi "$tmp"
   done
   }
+
 te () {
     dir="/Volumes/EXTERNAL/chokerman/media/tv shows"
     tmp3="$(ls "$dir" | fzf)"
@@ -139,6 +234,7 @@ te () {
         rm -vi "$dir/"$tmp"/$tmp2"
     done
 }
+
 me () {
     dir="/Volumes/EXTERNAL/chokerman/media/movies"
     tmp="$(ls "$dir" | fzf)"
@@ -154,6 +250,7 @@ me () {
         rm -vi "$dir/"$tmp"/$tmp2"
     done
 }
+
 ae () {
     dir="/Volumes/EXTERNAL/chokerman/media/anime"
     tmp="$(ls "$dir" | fzf)"
@@ -170,72 +267,26 @@ ae () {
     done
 }
 
-##############
-#FZF FUNCTIONS
-##############
+
+### Fzf funtions
 
 alias p="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
+
 # using ripgrep combined with preview
 # find-in-file - usage: fif <searchTerm>
 fif() {
   if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
   rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
 }
+
 # fda - including hidden directories
 fda() {
   local dir
   dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
 }
-# fd - cd to selected directory
-fd() {
-  local dir
-  dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
-}
 
+### Other
 
-######
-#OTHER
-######
-# Install or open the webpage for the selected application 
-# using brew cask search as input source
-# and display a info quickview window for the currently marked application 
-install() {
-    local token
-    token=$(brew search --casks "$1" | fzf-tmux --query="$1" +m --preview 'brew info {}')
-                    
-    if [ "x$token" != "x" ]                                                                
-    then             
-        echo "(I)nstall or open the (h)omepage of $token"
-        read input                             
-        if [ $input = "i" ] || [ $input = "I" ]; then    
-            brew install --cask $token                   
-        fi                                                                                    
-        if [ $input = "h" ] || [ $input = "H" ]; then                                         
-            brew home $token                     
-        fi                                           
-    fi                             
-}
-# Uninstall or open the webpage for the selected application 
-# using brew list as input source (all brew cask installed applications) 
-# and display a info quickview window for the currently marked application
-uninstall() {                                                                     
-    local token                                                                   
-    token=$(brew list --casks | fzf-tmux --query="$1" +m --preview 'brew info {}')
-                                                                                  
-    if [ "x$token" != "x" ]                                                       
-    then                                                                          
-        echo "(U)ninstall or open the (h)omepae of $token"                        
-        read input                                                                
-        if [ $input = "u" ] || [ $input = "U" ]; then                             
-            brew uninstall --cask $token                                          
-        fi                                                                        
-        if [ $input = "h" ] || [ $token = "h" ]; then                             
-            brew home $token                                                      
-        fi                                                                        
-    fi                                                                            
-}                                                                                 
 emoji() {
   emojis=$(curl -sSL 'https://git.io/JXXO7')
   selected_emoji=$(echo $emojis | fzf)
