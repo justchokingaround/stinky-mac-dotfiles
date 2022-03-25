@@ -6,11 +6,29 @@ export KEYTIMEOUT=1
 
 export EDITOR="nvim"
 export TERMINAL="kitty"
+export READER="mupdf -gl"
+export VISUAL="nvim"
+export VIDEO="mpv"
+export IMAGE="/Applications/qView.app/Contents/MacOS/qView"
+export OPENER="open"
 export NVIMRC="~/.config/nvim/init.lua"
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export LC_ALL=en_EN.UTF-8
 PATH=$PATH:~/.local/bin
 PATH=$PATH:~/scripts
+# Enable colors and change prompt:
+autoload -U colors && colors
+# History in cache directory:
+HISTSIZE=1000
+SAVEHIST=1000
+HISTFILE=~/.cache/zsh/history
+autoload -U compinit && compinit -u
+zstyle ':completion:*' menu select
+# Auto complete with case insenstivity
+zstyle ':completion:*' matcher-list '' 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots)		# Include hidden files.
 # colorful man pages
 export LESS_TERMCAP_mb=$'\e[1;31m'
 export LESS_TERMCAP_md=$'\e[1;31m'
@@ -38,10 +56,14 @@ alias doc='cd ~/Documents'
 alias dev="cd ~/dev/"
 alias sd="cd ~/Documents/ && fd . $HOME/Documents"
 alias ..='cd ..'
+alias cd..="cd .."
+alias mv="mv -i"
 alias g='cd "$(ls -d */| fzy)"'
 alias ls='lsd'
-alias l='ls -ahl --color=auto'
-alias ll='ls -hl --color=auto'
+alias l='ls --color=auto'
+alias ll='ls -lhtrF --color=auto'
+alias lh='ls -lhtrdF .*'
+alias grep="grep --color=auto"
 alias r='rm -rf "$(fzf)"'
 alias v='nvim'
 alias nv='nvim'
