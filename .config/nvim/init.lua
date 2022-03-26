@@ -183,7 +183,7 @@ vim.cmd('colorscheme tokyonight')
 -- Startify config {{{
 vim.api.nvim_command([[
 highlight StartifyHeader  ctermfg=114
-let g:startify_bookmarks = [ { 'c' : '~/.zshrc'} , { 's' : '~/.config/nvim/init.lua'} , { 'd' : ''} , { 'b' : '~/.local/bin'} , { 'a' : '~/dev/ani-cli/ani-cli'} , { 'v' : ''} ]
+let g:startify_bookmarks = [ { 'c' : '~/.zshrc'} , { 's' : '~/.config/nvim/init.lua'} , { 'd' : '~/.config/skhd/skhdrc'} , { 'b' : '~/.local/bin'} , { 'a' : '~/dev/ani-cli/ani-cli'} , { 'v' : ''} ]
 let g:startify_lists = [{ 'header': ['     Recent'],'type': 'files' },{ 'header': ['     Bookmarks'],'type': 'bookmarks' },]
 let g:startify_custom_header ='startify#center(startify#fortune#cowsay())'
 hi StartifyPath ctermbg=None ctermfg=Blue
