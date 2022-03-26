@@ -74,6 +74,7 @@ alias nv='nvim'
 alias vki="vim -c ':VimwikiIndex'"
 alias vimwiki="vim -c ':VimwikiIndex'"
 alias f="fzf"
+alias ra="ranger"
 
 ### Suffix aliases
 alias -s md=nvim
@@ -177,6 +178,9 @@ open_with_nvim() {
   nvim $(fzf)
 }
 
+cote(){
+  epy ~/Documents/ebooks/cote/$(ls Documents/ebooks/cote|fzf)
+}
 
 
 ### Git
