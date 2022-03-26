@@ -44,7 +44,6 @@ export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 alias rg="rg -g '!/Library/'" 
 
 eval "$(starship init zsh)"
-eval "$(zoxide init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -62,10 +61,9 @@ alias cd..="cd .."
 alias mv="mv -i"
 alias g='cd "$(ls -d */| fzy)"'
 alias ls='lsd'
-alias l='exa --long --grid'
+alias l='ls --color=auto'
 alias ll='ls -lhtrF --color=auto'
 alias lh='ls -lhtrdF .*'
-alias tree='exa -T'
 alias grep="grep --color=auto"
 alias r='rm -rf "$(ls -d */ | fzf)"'
 alias rf='rm -i "$(find . -maxdepth 1 -type f| fzf)"'
@@ -110,7 +108,7 @@ alias of="open_with_fzf"
 alias nvf="open_with_nvim"
 alias mpf="open_with_mpv"
 alias msf="open_with_mpv_silent"
-alias imf="open_image_fzf"
+alias epf="open_with_epy"
 alias nb="newsboat"
 
 
@@ -154,18 +152,18 @@ open_pdf_fzf_mupdf() {
 }
 
 open_with_mpv() {
-  VIDEO_PATH=$(rg --files -g '!anime/' -g '!for_editing/' -g '*.{mp4,mkv,webm,m4v}' | fzf )
-    [[ -z $VIDEO_PATH ]] || (mpv "$VIDEO_PATH")
+    AUDIO_PATH=$(rg --files -g '*.{mp4,mkv,webm,m4v}'| fzf )
+    [[ -z $AUDIO_PATH ]] || (mpv "$AUDIO_PATH")
+}
+
+open_with_epy() {
+    EPUB_PATH=$(rg --files -g '*.{epub}'| fzf )
+    [[ -z $EPUB_PATH ]] || (epy "$EPUB_PATH")
 }
 
 open_with_mpv_silent() {
     VIDEO_PATH=$(rg --files -g '*.{mp3,flac,m4a}'| fzf )
     [[ -z $VIDEO_PATH ]] || (mpv --no-video "$VIDEO_PATH")
-}
-
-open_image_fzf() {
-  IMAGE_PATH=$(rg --files -g '*.{jpg,png,jpeg,webp,gif}' | fzf )
-    [[ -z $IMAGE_PATH ]] || (open "$IMAGE_PATH")
 }
 
 open_with_fzf() {
@@ -327,6 +325,12 @@ alias p="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'
 fif() {
   if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
   rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+}
+
+# fda - including hidden directories
+fda() {
+  local dir
+  dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
 }
 
 ### Other
