@@ -71,6 +71,7 @@ alias r='rm -rf "$(ls -d */ | fzf)"'
 alias rf='rm -i "$(find . -maxdepth 1 -type f| fzf)"'
 alias v='nvim'
 alias nv='nvim'
+alias lv='lvim'
 alias vki="vim -c ':VimwikiIndex'"
 alias vimwiki="vim -c ':VimwikiIndex'"
 alias f="fzf"
@@ -112,6 +113,7 @@ alias nvf="open_with_nvim"
 alias mpf="open_with_mpv"
 alias msf="open_with_mpv_silent"
 alias imf="open_image_fzf"
+alias mpe="open_with_mpv_external"
 alias nb="newsboat"
 
 
@@ -159,6 +161,13 @@ open_with_mpv() {
     [[ -z $VIDEO_PATH ]] || (mpv "$VIDEO_PATH")
 }
 
+open_with_mpv_external() {
+    cd /Volumes/EXTERNAL/chokerman
+    VIDEO_PATH=$(rg --files -g '!csgo tweaks' -g '*.{mp4,mkv,webm,m4v}'| fzf )
+    [[ -z $VIDEO_PATH ]] || (mpv "$VIDEO_PATH")
+    cd ~/
+}
+
 open_with_mpv_silent() {
     VIDEO_PATH=$(rg --files -g '*.{mp3,flac,m4a}'| fzf )
     [[ -z $VIDEO_PATH ]] || (mpv --no-video "$VIDEO_PATH")
@@ -178,12 +187,21 @@ open_with_nvim() {
   nvim $(fzf)
 }
 
+
 cote(){
   epy ~/Documents/ebooks/cote/$(ls Documents/ebooks/cote|fzf)
 }
 
 
 ### Git
+
+git config --global alias.st 'status -sb'
+git config --global alias.ll 'log --oneline'
+git config --global alias.last 'log -1 HEAD --stat'
+git config --global alias.cm 'commit -m'
+git config --global alias.rv 'remote -v'
+git config --global alias.d 'diff'
+git config --global help.autocorrect 20
 
 gc() { git clone https://github.com"$@"; }
 gci() { git clone https://github.com/iamchokerman"$@"; }
