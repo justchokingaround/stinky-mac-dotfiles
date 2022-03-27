@@ -61,13 +61,12 @@ alias sd="cd ~/Documents/ && fd . $HOME/Documents"
 alias ..='cd ..'
 alias cd..="cd .."
 alias mv="mv -i"
-alias g='cd "$(ls -d */| fzy)"'
 alias ls='lsd'
 alias l='exa --long --grid'
 alias ll='ls -lhtrF --color=auto'
 alias lh='ls -lhtrdF .*'
 alias tree='exa -T'
-alias grep="grep --color=auto"
+alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias r='rm -rf "$(ls -d */ | fzf)"'
 alias rf='rm -i "$(find . -maxdepth 1 -type f| fzf)"'
 alias v='nvim'
@@ -77,6 +76,7 @@ alias vki="vim -c ':VimwikiIndex'"
 alias vimwiki="vim -c ':VimwikiIndex'"
 alias f="fzf"
 alias ra="ranger"
+alias cd="z"
 
 ### Suffix aliases
 alias -s md=nvim
@@ -116,8 +116,8 @@ alias msf="open_with_mpv_silent"
 alias imf="open_image_fzf"
 alias mpe="open_with_mpv_external"
 alias nb="newsboat"
-alias -g L='|less'
-alias -g G='|grep'
+alias -g L='| less'
+alias -g G='| grep -i'
 
 
 ### Life one ez mode
@@ -207,7 +207,15 @@ git config --global alias.d 'diff'
 git config --global alias.r 'reset --hard'
 git config --global help.autocorrect 20
 
-gc() { git clone https://github.com"$@"; }
+alias g="git"
+alias gaa="git add all"
+alias gb="git branch"
+alias gcm="git checkout master"
+alias gf="git fetch"
+alias gm="git merge"
+alias gp="git push"
+alias glog="git log --oneline --decorate --graph"
+
 gci() { git clone https://github.com/iamchokerman"$@"; }
 
 function acp() {
