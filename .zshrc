@@ -3,6 +3,7 @@
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
+source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
 
 export EDITOR="nvim"
 export TERMINAL="kitty"
@@ -115,6 +116,8 @@ alias msf="open_with_mpv_silent"
 alias imf="open_image_fzf"
 alias mpe="open_with_mpv_external"
 alias nb="newsboat"
+alias -g L='|less'
+alias -g G='|grep'
 
 
 ### Life one ez mode
@@ -201,10 +204,17 @@ git config --global alias.last 'log -1 HEAD --stat'
 git config --global alias.cm 'commit -m'
 git config --global alias.rv 'remote -v'
 git config --global alias.d 'diff'
+git config --global alias.r 'reset --hard'
 git config --global help.autocorrect 20
 
 gc() { git clone https://github.com"$@"; }
 gci() { git clone https://github.com/iamchokerman"$@"; }
+
+function acp() {
+git add .
+git commit -m "$1"
+git push
+}
 
 # fbr - checkout git branch (including remote branches)
 fbr() {
