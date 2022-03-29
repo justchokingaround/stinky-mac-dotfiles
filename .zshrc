@@ -94,6 +94,7 @@ alias mpvq="mpv --no-video"
 # don't forget to download ffmpeg :/
 
 alias ytdl="yt-dlp -f 'bestvideo+bestaudio' --embed-thumbnail --embed-subs --embed-metadata"
+alias ytdll="yt-dlp -f 'bestvideo+bestaudio'"
 alias ytdl-mp3="yt-dlp --extract-audio --audio-format mp3 --audio-quality 0"
 alias ytdlist="yt-dlp -f 'bv*[height=1080]+ba'"
 
@@ -111,6 +112,7 @@ alias cf="change_folder"
 alias ofm="open_pdf_fzf_mupdf"
 alias of="open_with_fzf"
 alias nvf="open_with_nvim"
+alias lvf="open_with_lvim"
 alias mpf="open_with_mpv"
 alias msf="open_with_mpv_silent"
 alias imf="open_image_fzf"
@@ -118,6 +120,7 @@ alias mpe="open_with_mpv_external"
 alias nb="newsboat"
 alias -g L='| less'
 alias -g G='| grep -i'
+alias -g P='| pbcopy'
 
 
 ### Life one ez mode
@@ -190,10 +193,26 @@ open_with_nvim() {
   nvim $(fzf)
 }
 
+open_with_lvim() {
+  lvim $(fzf)
+}
 
 cote(){
   epy ~/Documents/ebooks/cote/$(ls Documents/ebooks/cote|fzf)
 }
+
+char() {
+kitty +icat $(curl -s "https://myanimelist.net/character/$(curl -s "https://myanimelist.net/character.php?q=$1&cat=character"|pup '.picSurround'|grep href|cut -d '"' -f 2|cut -d'/' -f5-|fzf)"|pup '.borderClass'|grep -m 1 src|cut -d '"' -f4)
+}
+
+cchar() {
+  kitty +icat $(curl -s "https://you-zitsu.fandom.com/wiki/$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|pup '.category-page__member'|rg href|awk 'NR%2==0 {print $0}'|awk '!/Category/ && !/small/'|cut -d '"' -f 2|cut -c 7-|sed -e 's/%C5%8D/ō/g' -e 's/%C5%AB/ū/g' -e 's/\ /_/g'|fzf|sed -e 's/ō/%C5%8D/g' -e 's/ū/%C5%AB/g')"|pup '.image-thumbnail'| cut -d '"' -f 2|head -n 1)
+}
+
+cchara() {
+  kitty +icat $(curl -s "https://you-zitsu.fandom.com/wiki/$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|pup '.category-page__member'|rg href|awk 'NR%2==0 {print $0}'|awk '!/Female/ && !/small/'|cut -d '"' -f 2|cut -c 7-|sed -e 's/%C5%8D/ō/g' -e 's/%C5%AB/ū/g' -e 's/\ /_/g'|fzf|sed -e 's/ō/%C5%8D/g' -e 's/ū/%C5%AB/g')"|pup '.image-thumbnail'|cut -d '"' -f 2|grep --invert-match -e 'scale-to-width' -e '</a>')
+}
+
 
 
 ### Git
@@ -223,6 +242,7 @@ git add .
 git commit -m "$1"
 git push
 }
+
 
 # fbr - checkout git branch (including remote branches)
 fbr() {
@@ -299,7 +319,7 @@ fcs() {
 
 w () {
   while :; do
-    tmp="$(fzf)" 
+    tmp="$(ls|fzf)" 
     if [ -z "$tmp" ]; then
       break
     fi
