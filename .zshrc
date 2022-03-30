@@ -44,7 +44,11 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
 alias rg="rg -g '!/Library/'" 
 
-eval "$(starship init zsh)"
+# .zshrc
+autoload -U promptinit; promptinit
+prompt pure
+# eval "$(starship init zsh)"
+# export STARSHIP_CONFIG=~/example/non/default/path/starship.toml
 eval "$(zoxide init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -101,9 +105,11 @@ alias ytdlist="yt-dlp -f 'bv*[height=1080]+ba'"
 
 ### Other aliases
 
+alias animdl="py ~/dev/animdl/runner.py"
 alias nf='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'
 alias nft='neofetch --iterm2 ~/.config/neofetch/neofetch.jpeg'
 alias python='python3'
+alias py='python3.9'
 alias pip='pip3'
 alias u='exec zsh'
 alias myip="curl ipinfo.io/ip"
@@ -201,6 +207,15 @@ cote(){
   epy ~/Documents/ebooks/cote/$(ls Documents/ebooks/cote|fzf)
 }
 
+anime() {
+  animdl stream "$1" -r "$2"
+}
+
+
+animeg() {
+  animdl grab "$1" -r "$2"|cut -d '"' -f 8|sed -e '1,2d'|pbcopy
+}
+
 char() {
 kitty +icat $(curl -s "https://myanimelist.net/character/$(curl -s "https://myanimelist.net/character.php?q=$1&cat=character"|pup '.picSurround'|grep href|cut -d '"' -f 2|cut -d'/' -f5-|fzf)"|pup '.borderClass'|grep -m 1 src|cut -d '"' -f4)
 }
@@ -227,6 +242,7 @@ git config --global alias.r 'reset --hard'
 git config --global help.autocorrect 20
 
 alias g="git"
+alias gc="git clone"
 alias gaa="git add all"
 alias gb="git branch"
 alias gcm="git checkout master"
