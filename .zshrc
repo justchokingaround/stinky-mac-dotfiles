@@ -1,3 +1,4 @@
+pfetch
 ### Essentials
 
 # vi mode
@@ -18,6 +19,8 @@ LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 PATH=$PATH:~/.local/bin
 PATH=$PATH:~/scripts
+PATH=$PATH:~/scripts/presence
+PATH=$PATH:~/dev/ani-cli
 # Enable colors and change prompt:
 autoload -U colors && colors
 # History in cache directory:
@@ -69,6 +72,7 @@ alias ls='lsd'
 alias l='exa --long --grid'
 alias ll='ls -lhtrF --color=auto'
 alias lh='ls -lhtrdF .*'
+alias ldir='ls -d */'
 alias tree='exa -T'
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias r='rm -rf "$(ls -d */ | fzf)"'
@@ -106,9 +110,11 @@ alias ytdlist="yt-dlp -f 'bv*[height=1080]+ba'"
 ### Other aliases
 
 alias animdl="py ~/dev/animdl/runner.py"
+alias weather="curl -s wttr.in/Lille"
+alias icat="kitty +kitten icat"
+alias pf='pfetch'
 alias nf='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'
 alias nft='neofetch --iterm2 ~/.config/neofetch/neofetch.jpeg'
-alias python='python3'
 alias py='python3.9'
 alias pip='pip3'
 alias u='exec zsh'
@@ -118,16 +124,30 @@ alias cf="change_folder"
 alias ofm="open_pdf_fzf_mupdf"
 alias of="open_with_fzf"
 alias nvf="open_with_nvim"
+alias nvfp="open_with_nvim_preview"
 alias lvf="open_with_lvim"
+alias lvfp="open_with_lvim_preview"
 alias mpf="open_with_mpv"
 alias msf="open_with_mpv_silent"
 alias imf="open_image_fzf"
 alias mpe="open_with_mpv_external"
 alias nb="newsboat"
+alias awho="animewho"
+alias atrack="trackma.sh"
 alias -g L='| less'
 alias -g G='| grep -i'
-alias -g P='| pbcopy'
-
+alias -g CUT='| cut'
+alias -g C='| pbcopy'
+alias -g P='| '
+alias -g H="| htmlq 'body' | bat --language html"
+alias -g A="| awkg -b 'from html import unescape' 'print(unescape(R0))' "
+alias -g PUP="| pup 'text{}'"
+alias -g S="| sed"
+alias pyenv="rm -rf venv/
+python3.10 -m venv venv/
+source venv/bin/activate
+python3.10 -m pip install --require-virtualenv --progress-bar pretty -r requirements.txt
+python3.10 -m pip cache purge"
 
 ### Life one ez mode
 function chst {
@@ -199,8 +219,16 @@ open_with_nvim() {
   nvim $(fzf)
 }
 
+open_with_nvim_preview() {
+  nvim "$(fzf --preview='bat {} --color always' --bind shift-up:'preview-page-up,shift-down:preview-page-down')"
+}
+
 open_with_lvim() {
   lvim $(fzf)
+}
+
+open_with_lvim_preview() {
+  lvim "$(fzf --preview='bat {} --color always' --bind shift-up:'preview-page-up,shift-down:preview-page-down')"
 }
 
 cote(){
@@ -208,16 +236,28 @@ cote(){
 }
 
 anime() {
-  animdl stream "$1" -r "$2"
+  python3.9 ~/dev/animdl/runner.py stream "$1" -r "$2"
 }
 
+fanime() {
+  python3.9 ~/dev/animdl/runner.py stream "$1" -r "$2" --auto --index 1
+}
 
 animeg() {
-  animdl grab "$1" -r "$2"|cut -d '"' -f 8|sed -e '1,2d'|pbcopy
+  python3.9 ~/dev/animdl/runner.py grab "$1" -r "$2"|cut -d '"' -f 8|sed -e '1,2d'|pbcopy
 }
 
 char() {
-kitty +icat $(curl -s "https://myanimelist.net/character/$(curl -s "https://myanimelist.net/character.php?q=$1&cat=character"|pup '.picSurround'|grep href|cut -d '"' -f 2|cut -d'/' -f5-|fzf)"|pup '.borderClass'|grep -m 1 src|cut -d '"' -f4)
+BASE="$(curl -s -X POST -H "Content-Type: application/json" -d \
+'{"query": "query($page:Int = 1 $id:Int $search:String $isBirthday:Boolean $sort:[CharacterSort]=[FAVOURITES_DESC]){Page(page:$page,perPage:20){pageInfo{total perPage currentPage lastPage hasNextPage}characters(id:$id search:$search isBirthday:$isBirthday sort:$sort){id name{userPreferred}image{large}}}}","variables":{"page": 1,"type": "CHARACTERS","search":"'"$*"'","sort": "SEARCH_MATCH"}}' \
+https://graphql.anilist.co/)"
+QUERY="$(printf "$BASE"|jq -r '.data.Page.characters[].name.userPreferred'|fzf)"
+printf "\n" ; pixcat thumbnail --size 1080 --align left $(printf "$BASE"|jq -r '.data.Page.characters[]|select(.name.userPreferred == "'"$QUERY"'")|.image.large')
+}
+
+charmal() {
+tmp=$(curl -s "https://myanimelist.net/character/$(curl -s "https://myanimelist.net/character.php?q=$1&cat=character"|pup '.picSurround'|grep href|cut -d '"' -f 2|cut -d'/' -f5-|fzf)"|pup '.borderClass'|grep -m 1 src|cut -d '"' -f4)
+printf "\n" ; pixcat thumbnail --size 1080 --align left $tmp
 }
 
 cchar() {
