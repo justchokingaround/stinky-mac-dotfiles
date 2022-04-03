@@ -1,3 +1,0 @@
-#!/bin/sh
-notify-send -i /home/zenith71/.config/dunst/music.png "🎵 Now playing 🎵" "$(basename "$(mocp -M ~/.config/moc -Q %file 2> /dev/null)" | sed 's/.mp3//')"
-
