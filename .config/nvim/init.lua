@@ -56,12 +56,6 @@ require("presence"):setup({
     main_image          = "file",
     debounce_timeout    = 20, 
     enable_line_number  = true,
-    buttons = {
-      {
-        label = "my init.lua" ,
-       url = "https://github.com/iamchokerman/dotfiles/tree/main/.config/nvim"
-      }
-    }
 })
 
 require("toggleterm").setup({
@@ -165,7 +159,7 @@ vim.o.mouse = 'a'
 vim.o.cmdheight = 2
 vim.o.expandtab = true
 vim.o.showmode = false
-vim.o.shell = '/bin/dash'
+vim.o.shell = '/bin/bash'
 vim.o.scrolloff = 999
 vim.g["mapleader"] = ","
 vim.o.autoread = true
@@ -183,7 +177,7 @@ vim.cmd('colorscheme tokyonight')
 -- Startify config {{{
 vim.api.nvim_command([[
 highlight StartifyHeader  ctermfg=114
-let g:startify_bookmarks = [ { 'c' : '~/.zshrc'} , { 's' : '~/.config/nvim/init.lua'} , { 'd' : '~/.config/skhd/skhdrc'} , { 'b' : '~/.local/bin'} , { 'a' : '~/dev/ani-cli/ani-cli'} , { 'v' : ''} ]
+let g:startify_bookmarks = [ { 'c' : '~/dotfiles/.config/zsh/.zshrc'} , { 's' : '~/.config/nvim/init.lua'} , { 'd' : '~/.config/skhd/skhdrc'} , { 'b' : '~/.local/bin'} , { 'a' : '~/dev/ani-cli/ani-cli'} , { 'v' : ''} ]
 let g:startify_lists = [{ 'header': ['     Recent'],'type': 'files' },{ 'header': ['     Bookmarks'],'type': 'bookmarks' },]
 let g:startify_custom_header ='startify#center(startify#fortune#cowsay())'
 hi StartifyPath ctermbg=None ctermfg=Blue
