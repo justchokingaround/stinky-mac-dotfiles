@@ -2,4 +2,4 @@
 
 echo "iamchokerman"|figlet|color 57
 message="will update this video soon"; for ((i=0; i<${#message}; i++)); do echo "after 40"|tclsh; printf "${message:$i:1}"|color 57; done; echo;
-kitty +icat --align left "scripts/iamchokerman/saiki.png"
+pixcat --align left "https://i0.wp.com/cdn141.picsart.com/324082635167211.png"

@@ -93,7 +93,6 @@ alias -s mkv=mpv
 
 ### Media aliases
 
-alias ani='cd ~/anime'
 alias trackma='trackma -a 1'
 alias syncplay='/Applications/Syncplay.app/Contents/MacOS/Syncplay'
 alias mpvq="mpv --no-video"
@@ -133,6 +132,8 @@ alias mpe="open_with_mpv_external"
 alias nb="newsboat"
 alias awho="animewho"
 alias atrack="trackma.sh"
+# alias pres=""
+alias epy="python3.10 ~/dev/epy/epy.py"
 alias -g L='| less'
 alias -g G='| grep -i'
 alias -g CUT='| cut'
@@ -142,6 +143,7 @@ alias -g H="| htmlq 'body' | bat --language html"
 alias -g A="| awkg -b 'from html import unescape' 'print(unescape(R0))' "
 alias -g PUP="| pup 'text{}'"
 alias -g S="| sed"
+alias -g F="| fzf"
 alias pyenv="rm -rf venv/
 python3.10 -m venv venv/
 source venv/bin/activate
@@ -149,6 +151,10 @@ python3.10 -m pip install --require-virtualenv --progress-bar pretty -r requirem
 python3.10 -m pip cache purge"
 
 ### Life one ez mode
+se() {du -a ~/dotfiles/scripts|awk '{print $2}'|fzf|xargs -r nvim}
+sel() {du -a ~/dotfiles/scripts|awk '{print $2}'|fzf|xargs -r lvim}
+
+
 function chst {
     [ -z $1 ] && echo "no args provided!" || (curl -s cheat.sh/$1 | bat --style=plain)
 }
@@ -234,8 +240,8 @@ cote(){
   epy ~/Documents/ebooks/cote/$(ls Documents/ebooks/cote|fzf)
 }
 
-anime() {
-  python3 ~/dev/animdl/runner.py stream "$1" -r "$2"
+ani(){
+  python3.9 ~/dev/animdl/runner.py stream "$1" -r "$2"
 }
 
 fanime() {
