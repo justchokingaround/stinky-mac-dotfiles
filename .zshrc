@@ -18,8 +18,8 @@ export PATH="$HOME/.emacs.d/bin:$PATH"
 LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 PATH=$PATH:~/.local/bin
-PATH=$PATH:~/scripts
-PATH=$PATH:~/scripts/presence
+PATH=$PATH:~/dotfiles/scripts
+PATH=$PATH:~/dotfiles/scripts/presence
 PATH=$PATH:~/dev/ani-cli
 # Enable colors and change prompt:
 autoload -U colors && colors
@@ -109,13 +109,12 @@ alias ytdlist="yt-dlp -f 'bv*[height=1080]+ba'"
 
 ### Other aliases
 
-alias animdl="py ~/dev/animdl/runner.py"
 alias weather="curl -s wttr.in/Lille"
 alias icat="kitty +kitten icat"
 alias pf='pfetch'
 alias nf='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'
 alias nft='neofetch --iterm2 ~/.config/neofetch/neofetch.jpeg'
-alias py='python3.9'
+alias py='python3.10'
 alias pip='pip3'
 alias u='exec zsh'
 alias myip="curl ipinfo.io/ip"
@@ -236,15 +235,15 @@ cote(){
 }
 
 anime() {
-  python3.9 ~/dev/animdl/runner.py stream "$1" -r "$2"
+  python3 ~/dev/animdl/runner.py stream "$1" -r "$2"
 }
 
 fanime() {
-  python3.9 ~/dev/animdl/runner.py stream "$1" -r "$2" --auto --index 1
+  python3 ~/dev/animdl/runner.py stream "$1" -r "$2" --auto --index 1
 }
 
 animeg() {
-  python3.9 ~/dev/animdl/runner.py grab "$1" -r "$2"|cut -d '"' -f 8|sed -e '1,2d'|pbcopy
+  python3 ~/dev/animdl/runner.py grab "$1" -r "$2"|cut -d '"' -f 8|sed -e '1,2d'|pbcopy
 }
 
 char() {
