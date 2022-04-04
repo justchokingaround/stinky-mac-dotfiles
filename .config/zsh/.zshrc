@@ -5,6 +5,8 @@ pfetch
 bindkey -v
 export KEYTIMEOUT=1
 source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
+source "$HOME/dotfiles/.config/zsh/forgit/forgit.plugin.zsh"
+PATH="$PATH:$HOME/dotfiles/.config/zsh/forgit/bin"
 
 export EDITOR="nvim"
 export TERMINAL="kitty"
@@ -42,9 +44,12 @@ export LESS_TERMCAP_se=$'\e[0m'
 export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;32m'
-export FZF_DEFAULT_COMMAND="rg ~ --files --hidden -g '!/Library/'"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTS='--height 40% --layout=reverse --border'
+export FZF_BASE="$HOME/.fzf"
+export FZF_DEFAULT_COMMAND="git ls-files --cached --others --exclude-standard | fd --type f --type l $FD_OPTIONS"
+export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
+export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
+export FZF_DEFAULT_OPTS="--no-mouse --height 50% --border -1 --reverse --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),f2:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
+FD_OPTIONS="--follow --exclude .git --exclude node_modules"
 alias rg="rg -g '!/Library/'" 
 
 # .zshrc
@@ -76,7 +81,8 @@ alias ldir='ls -d */'
 alias tree='exa -T'
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias r='rm -rf "$(ls -d */ | fzf)"'
-alias rf='rm -i "$(find . -maxdepth 1 -type f| fzf)"'
+alias rf='rm "$(find . -maxdepth 1 -type f| fzf)"'
+alias cx='chmod +x "$(find . -maxdepth 1 -type f| fzf)"'
 alias v='nvim'
 alias nv='nvim'
 alias lv='lvim'
@@ -84,12 +90,16 @@ alias vki="vim -c ':VimwikiIndex'"
 alias vimwiki="vim -c ':VimwikiIndex'"
 alias f="fzf"
 alias ra="ranger"
-alias cd="z"
+# alias cd="z"
+alias nvc="nvim ~/dotfiles/.config/zsh/.zshrc"
+alias lvc="lvim ~/dotfiles/.config/zsh/.zshrc"
 
 ### Suffix aliases
 alias -s md=nvim
 alias -s mp4=mpv
+alias -s mp3=mpv
 alias -s mkv=mpv
+alias -s jpg=open
 
 ### Media aliases
 
@@ -144,6 +154,8 @@ alias -g A="| awkg -b 'from html import unescape' 'print(unescape(R0))' "
 alias -g PUP="| pup 'text{}'"
 alias -g S="| sed"
 alias -g F="| fzf"
+alias -g X="| xargs -r"
+alias -g B="| bat"
 alias pyenv="rm -rf venv/
 python3.10 -m venv venv/
 source venv/bin/activate
@@ -151,9 +163,11 @@ python3.10 -m pip install --require-virtualenv --progress-bar pretty -r requirem
 python3.10 -m pip cache purge"
 
 ### Life one ez mode
+
 se() {du -a ~/dotfiles/scripts|awk '{print $2}'|fzf|xargs -r nvim}
 sel() {du -a ~/dotfiles/scripts|awk '{print $2}'|fzf|xargs -r lvim}
 
+cpf() {cp -v "$1" "/Users/chokerman/Documents/$(ls ~/Documents/|fzf)/"}
 
 function chst {
     [ -z $1 ] && echo "no args provided!" || (curl -s cheat.sh/$1 | bat --style=plain)
@@ -186,6 +200,13 @@ change_folder() {
     # show ls output if dir has less than 61 files
     [[ $(ls | wc -l) -le 60 ]] && (pwd; ls)
     return 0
+}
+
+# cdf - cd into the directory of the selected file
+cdf() {
+   local file
+   local dir
+   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
 }
 
 open_pdf_fzf_mupdf() {
@@ -285,6 +306,22 @@ git config --global alias.rv 'remote -v'
 git config --global alias.d 'diff'
 git config --global alias.r 'reset --hard'
 git config --global help.autocorrect 20
+git config --global core.pager "diff-so-fancy | less --tabs=4 -RFX"
+git config --global interactive.diffFilter "diff-so-fancy --patch"
+git config --global color.ui true
+
+git config --global color.diff-highlight.oldNormal    "red bold"
+git config --global color.diff-highlight.oldHighlight "red bold 52"
+git config --global color.diff-highlight.newNormal    "green bold"
+git config --global color.diff-highlight.newHighlight "green bold 22"
+
+git config --global color.diff.meta       "11"
+git config --global color.diff.frag       "magenta bold"
+git config --global color.diff.func       "146 bold"
+git config --global color.diff.commit     "yellow bold"
+git config --global color.diff.old        "red bold"
+git config --global color.diff.new        "green bold"
+git config --global color.diff.whitespace "red reverse"
 
 alias g="git"
 alias gc="git clone"
@@ -293,7 +330,7 @@ alias gb="git branch"
 alias gcm="git checkout master"
 alias gf="git fetch"
 alias gm="git merge"
-alias gp="git push"
+alias gp="git pull"
 alias glog="git log --oneline --decorate --graph"
 
 gci() { git clone https://github.com/iamchokerman"$@"; }
@@ -443,11 +480,27 @@ ae () {
 
 alias p="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
-# using ripgrep combined with preview
-# find-in-file - usage: fif <searchTerm>
+# alternative using ripgrep-all (rga) combined with fzf-tmux preview
+# This requires ripgrep-all (rga) installed: https://github.com/phiresky/ripgrep-all
+# This implementation below makes use of "open" on macOS, which can be replaced by other commands if needed.
+# allows to search in PDFs, E-Books, Office documents, zip, tar.gz, etc. (see https://github.com/phiresky/ripgrep-all)
+# find-in-file - usage: fif <searchTerm> or fif "string with spaces" or fif "regex"
 fif() {
-  if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
-  rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+    if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
+    local file
+    file="$(rga --max-count=1 --ignore-case --files-with-matches --no-messages "$*" | fzf-tmux +m --preview="rga --ignore-case --pretty --context 10 '"$*"' {}")" && echo "opening $file" && open "$file" || return 1;
+}
+
+# Modified version where you can press
+#   - CTRL-O to open with `open` command,
+#   - CTRL-E or Enter key to open with the $EDITOR
+fo() {
+  IFS=$'\n' out=("$(fzf-tmux --query="$1" --exit-0 --expect=ctrl-o,ctrl-e)")
+  key=$(head -1 <<< "$out")
+  file=$(head -2 <<< "$out" | tail -1)
+  if [ -n "$file" ]; then
+    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
+  fi
 }
 
 ### Other
