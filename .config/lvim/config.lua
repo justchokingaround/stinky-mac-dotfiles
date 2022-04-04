@@ -17,6 +17,7 @@ lvim.colorscheme = "dracula"
 lvim.leader = "space"
 -- add your own keymapping
 lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
+lvim.keys.normal_mode["<space>F"] = ":FzfLua<cr>"
 -- unmap a default keymapping
 -- lvim.keys.normal_mode["<C-Up>"] = false
 -- edit a default keymapping
@@ -142,6 +143,7 @@ lvim.plugins = {
     {"folke/tokyonight.nvim"},
     {"Mofiqul/dracula.nvim"},
     {"andweeb/presence.nvim"},
+    {"ibhagwan/fzf-lua"},
 }
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)

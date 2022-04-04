@@ -7,6 +7,7 @@ end
 
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
+  use 'ibhagwan/fzf-lua'
   use 'folke/tokyonight.nvim'
   use 'terrortylor/nvim-comment'
   use 'windwp/nvim-autopairs'
@@ -101,7 +102,7 @@ require'nvim-treesitter.configs'.setup {
 local keymap = vim.api.nvim_set_keymap
 keymap('n', '<c-f>', ':NvimTreeFindFileToggle<cr>' , {silent = true})
 vim.cmd([[
-let mapleader =","
+let mapleader =" "
 inoremap jj <Esc>
 inoremap , ,<c-g>u
 inoremap . .<c-g>u
@@ -113,8 +114,9 @@ nnoremap <leader>ss :SSave<CR>
 nnoremap <leader>sc :SClose<CR>
 nnoremap <leader>sd :SDelete<CR>
 nnoremap <leader>sl :SLoad<CR>
-nnoremap <silent> <leader><space> :noh<cr>
-nnoremap <space> :
+nnoremap <silent> <leader>h :noh<cr>
+nnoremap <silent> <leader>c :bd<cr>
+nnoremap <silent> <leader>f :FzfLua<cr>
 nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -122,7 +124,7 @@ nnoremap J mzJ`z
 
 map Q gq
 map <leader>s :!clear && shellcheck -x %<CR>
-map <leader>c :w! \| !compiler "<c-r>%"<CR>
+" map <leader>c :w! \| !compiler "<c-r>%"<CR>
 nmap <leader>y :History:<CR>
 
 " Custom commands

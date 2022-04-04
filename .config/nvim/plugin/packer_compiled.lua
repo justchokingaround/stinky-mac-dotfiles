@@ -94,6 +94,11 @@ _G.packer_plugins = {
     path = "/Users/chokerman/.local/share/nvim/site/pack/packer/start/friendly-snippets",
     url = "https://github.com/rafamadriz/friendly-snippets"
   },
+  ["fzf-lua"] = {
+    loaded = true,
+    path = "/Users/chokerman/.local/share/nvim/site/pack/packer/start/fzf-lua",
+    url = "https://github.com/ibhagwan/fzf-lua"
+  },
   ["impatient.nvim"] = {
     loaded = true,
     path = "/Users/chokerman/.local/share/nvim/site/pack/packer/start/impatient.nvim",

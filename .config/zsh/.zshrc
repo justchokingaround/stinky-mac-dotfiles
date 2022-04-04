@@ -45,10 +45,19 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;32m'
 export FZF_BASE="$HOME/.fzf"
-export FZF_DEFAULT_COMMAND="git ls-files --cached --others --exclude-standard | fd --type f --type l $FD_OPTIONS"
+export FZF_DEFAULT_COMMAND="rg ~ --files --hidden -g '!/Library/'"
 export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
+export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
-export FZF_DEFAULT_OPTS="--no-mouse --height 50% --border -1 --reverse --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),f2:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
+export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+export FZF_DEFAULT_OPTS="--no-mouse --height 50% --border -1 --reverse --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
+#DRACULA THEME FOR FZF
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+--color=dark
+--color=fg:-1,bg:-1,hl:#5fff87,fg+:-1,bg+:-1,hl+:#ffaf5f
+--color=info:#af87ff,prompt:#5fff87,pointer:#ff87d7,marker:#ff87d7,spinner:#ff87d7
+'
+export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 FD_OPTIONS="--follow --exclude .git --exclude node_modules"
 alias rg="rg -g '!/Library/'" 
 
@@ -93,6 +102,8 @@ alias ra="ranger"
 # alias cd="z"
 alias nvc="nvim ~/dotfiles/.config/zsh/.zshrc"
 alias lvc="lvim ~/dotfiles/.config/zsh/.zshrc"
+alias j=z
+alias jj="cd -"
 
 ### Suffix aliases
 alias -s md=nvim
@@ -129,7 +140,7 @@ alias u='exec zsh'
 alias myip="curl ipinfo.io/ip"
 alias ytm="ytfzf -m"
 alias cf="change_folder"
-alias ofm="open_pdf_fzf_mupdf"
+alias opdf="open_pdf_fzf_mupdf"
 alias of="open_with_fzf"
 alias nvf="open_with_nvim"
 alias nvfp="open_with_nvim_preview"
