@@ -1,9 +1,14 @@
-#cmd - return : open -na /Applications/Alacritty.app/Contents/MacOS/alacritty
-#cmd - return : open -na /Applications/iTerm.app/Contents/MacOS/iTerm2
+cmd - x [
+    "finder"      : open -na /Applications/iTerm.app/Contents/MacOS/iTerm2 --args "nv" --single-instance -d
+]
+cmd - i : open -na /Applications/iTerm.app/Contents/MacOS/iTerm2
 cmd - return : open -na /Applications/kitty.app/Contents/MacOS/kitty
 cmd - m : mpv "$(pbpaste)"
-cmd - b : open -na /Applications/Firefox.app/Contents/MacOS/firefox
+shift + cmd - b : open -na /Applications/Firefox\ Nightly.app/Contents/MacOS/firefox
 cmd - e : open -na /usr/local/Cellar/emacs-plus@27/HEAD-d7f4cc0/Emacs.app
+shift + alt - c : screencapture -c -i
+shift + alt - p : open -na /Applications/iTerm.app/Contents/MacOS/iTerm2 --args "screenshot.sh"
+shift + alt - a : "${HOME}/dotfiles/scripts/screenshot.sh"
 
 #  NOTE(koekeishiya): A list of all built-in modifier and literal keywords can
 #                     be found at https://github.com/koekeishiya/skhd/issues/1
