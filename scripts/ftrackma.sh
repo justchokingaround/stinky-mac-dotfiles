@@ -1,12 +1,8 @@
 #!/bin/sh
-if [ -z "$*" ]; then
-  read -p "> " query
-else
-  query=$*
-fi
 
-INDEX="$(trackma -a 1 search "$query"|awk '{print $2}'|sed '2q;d')"
-EPNUM="$(trackma -a 1 search "$query"|grep -Eo '[0-9]{1,3} / [0-9]{1,3}'|cut -d "/" -f 1)"
+LINE=$(trackma -a 1 ls|fzf)
+INDEX="$(echo "$LINE"|awk '{print $2}')"
+EPNUM="$(echo "$LINE"|grep -Eo '[0-9]{1,3} / [0-9]{1,3}'|cut -d "/" -f 1)"
 ANIME="$(trackma -a 1 info "$INDEX"|head -n 1)"
 
 python3 ~/dev/animdl/runner.py stream "$ANIME" -r $((EPNUM+1)) --auto --index 1
