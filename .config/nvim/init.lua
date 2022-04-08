@@ -7,25 +7,20 @@ end
 
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
+  use 'neovim/nvim-lspconfig'
+  use 'monsonjeremy/onedark.nvim'
+  use 'shaunsingh/nord.nvim'
   use 'ibhagwan/fzf-lua'
-  use 'folke/tokyonight.nvim'
   use 'terrortylor/nvim-comment'
+  use 'andweeb/presence.nvim'
   use 'windwp/nvim-autopairs'
   use 'marko-cerovac/material.nvim'
   use "lukas-reineke/indent-blankline.nvim"
   use "akinsho/toggleterm.nvim"
   use 'lewis6991/impatient.nvim'
-  use 'neovim/nvim-lspconfig'
   use 'akinsho/bufferline.nvim'
-  use 'hrsh7th/nvim-cmp'
-  use 'andweeb/presence.nvim'
-  use 'hrsh7th/cmp-nvim-lsp'
-  use 'L3MON4D3/luasnip'
-  use 'saadparwaiz1/cmp_luasnip'
-  use 'rafamadriz/friendly-snippets'
   use 'mhinz/vim-startify'
   use 'vimwiki/vimwiki'
-  use 'mhartington/formatter.nvim'
   use 'nvim-treesitter/nvim-treesitter'
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
@@ -66,7 +61,7 @@ require("toggleterm").setup({
 })
 
 vim.g.nvim_tree_width = 25
-require'nvim-tree'.setup {auto_open = 1, auto_close = 1, gitignore = 1}
+require'nvim-tree'.setup {auto_open = 1, gitignore = 1}
 
 require("indent_blankline").setup {
     show_current_context = true,
@@ -100,7 +95,6 @@ require'nvim-treesitter.configs'.setup {
 
 -- Setting some keybindings {{{
 local keymap = vim.api.nvim_set_keymap
-keymap('n', '<c-f>', ':NvimTreeFindFileToggle<cr>' , {silent = true})
 vim.cmd([[
 let mapleader =" "
 inoremap jj <Esc>
@@ -117,6 +111,9 @@ nnoremap <leader>sl :SLoad<CR>
 nnoremap <silent> <leader>h :noh<cr>
 nnoremap <silent> <leader>c :bd<cr>
 nnoremap <silent> <leader>f :FzfLua<cr>
+nnoremap <silent> <leader>w :FzfLua grep_cword<cr>
+nnoremap <leader>ps :PackerSync<cr>
+nnoremap <silent> <leader>e :NvimTreeFindFileToggle<cr>
 nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -163,17 +160,17 @@ vim.o.expandtab = true
 vim.o.showmode = false
 vim.o.shell = '/bin/bash'
 vim.o.scrolloff = 999
-vim.g["mapleader"] = ","
 vim.o.autoread = true
 -- }}}
 
 -- Colorscheme config {{{
-vim.g.tokyonight_style = "night"
-vim.g.tokyonight_italic_functions = true
-vim.g.tokyonight_transparent = true
-vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer"}
-vim.g.tokyonight_colors = {hint = "orange", error = "#ff0000"}
-vim.cmd('colorscheme tokyonight')
+require("onedark").setup({
+  functionStyle = "italic",
+  sidebars = {"qf", "vista_kind", "terminal", "packer"},
+
+  -- Change the "hint" color to the "orange" color, and make the "error" color bright red
+  colors = {hint = "orange", error = "#ff0000"}
+})
 -- }}}
 
 -- Startify config {{{

@@ -521,3 +521,4 @@ emoji() {
   selected_emoji=$(echo $emojis | fzf)
   echo "$selected_emoji" | awk '{print $1}' | pbcopy
 } 
+export PATH=$PATH:/Users/ivan/.spicetify
