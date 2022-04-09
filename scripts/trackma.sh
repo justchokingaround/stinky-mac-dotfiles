@@ -1,11 +1,12 @@
 #!/bin/sh
+# I know there is a lot of code duplication in this script, I'll fix/clean it up later
 if [[ "$OSTYPE" == "darwin"* ]]; then
 	SED="gsed"
 elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	SED="sed"
 fi
 
-PROMPT=$(printf "watch\nbinge\nadd\ndelete\nlist\nupdate_episodes\nupdate_status\ninfo"|fzf)
+PROMPT=$(printf "watch\nbinge\nadd\ndelete\nlist\nupdate_episodes\nupdate_status\ninfo\naltname"|fzf)
 
 main() {
   case $PROMPT in
@@ -61,11 +62,16 @@ main() {
         printf "filter $STATUS\nstatus $INDEX $NEWSTATUS"|trackma > /dev/null
       ;;
     info)
-      STATUS=$(printf "watching\ncompleted\nrewatching\npaused\ndropped\nplantowatch"|fzf)
-      INDEX="$(printf "filter $STATUS\nls"|trackma|$SED 's/\x1b\[[0-9;]*m//g'|
-          $SED -n '/^|/,${p;/results/q}'|$SED '$ d'|fzf|awk '{print $2}')"
-      printf "filter $STATUS\ninfo $INDEX"|trackma|sed -n '/https/,/Status/p'|sed -e 's/<[^>]*>//g'
-      ;;
+        STATUS=$(printf "watching\ncompleted\nrewatching\npaused\ndropped\nplantowatch"|fzf)
+        INDEX="$(printf "filter $STATUS\nls"|trackma|$SED 's/\x1b\[[0-9;]*m//g'|
+            $SED -n '/^|/,${p;/results/q}'|$SED '$ d'|fzf|awk '{print $2}')"
+        printf "filter $STATUS\ninfo $INDEX"|trackma|sed -n '/https/,/Status/p'|sed -e 's/<[^>]*>//g'
+        ;;
+    altname)
+        INDEX="$(printf "ls"|trackma|$SED 's/\x1b\[[0-9;]*m//g'|$SED -n '/^|/,${p;/results/q}'|$SED '$ d'|fzf|awk '{print $2}')"
+        read -p "What is the new name? " NEWNAME
+        printf "altname $INDEX $NEWNAME"|trackma > /dev/null
+        ;;
   esac
 }
 
