@@ -6,6 +6,8 @@ bindkey -v
 export KEYTIMEOUT=1
 source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
 source "$HOME/dotfiles/.config/zsh/forgit/forgit.plugin.zsh"
+# used for tab completion with fzf 
+source /Users/ivan/dotfiles/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
 PATH="$PATH:$HOME/dotfiles/.config/zsh/forgit/bin"
 
 export EDITOR="nvim"
@@ -72,13 +74,11 @@ eval "$(zoxide init zsh)"
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-
 ### File managing aliases
 
 alias down='cd ~/Downloads'
 alias doc='cd ~/Documents'
 alias dev="cd ~/dev/"
-alias sd="cd ~/Documents/ && fd . $HOME/Documents"
 alias ..='cd ..'
 alias cd..="cd .."
 alias mv="mv -i"
@@ -90,7 +90,6 @@ alias ldir='ls -d */'
 alias tree='exa -T'
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias r='rm -rf "$(ls -d */ | fzf)"'
-alias rf='rm "$(find . -maxdepth 1 -type f| fzf)"'
 alias cx='chmod +x "$(find . -maxdepth 1 -type f| fzf)"'
 alias v='nvim'
 alias nv='nvim'
@@ -104,6 +103,8 @@ alias nvc="nvim ~/dotfiles/.config/zsh/.zshrc"
 alias lvc="lvim ~/dotfiles/.config/zsh/.zshrc"
 alias j=z
 alias jj="cd -"
+alias bi="brew install"
+alias bu="brew uninstall"
 
 ### Suffix aliases
 alias -s md=nvim
@@ -121,10 +122,13 @@ alias mpvq="mpv --no-video"
 ### yt-dlp aliases
 # don't forget to download ffmpeg :/
 
-alias ytdl="yt-dlp -f 'bestvideo+bestaudio' --embed-thumbnail --embed-subs --embed-metadata"
-alias ytdll="yt-dlp -f 'bestvideo+bestaudio'"
-alias ytdl-mp3="yt-dlp --extract-audio --audio-format mp3 --audio-quality 0"
+alias ytdl="yt-dlp -f 'bv*+ba' --embed-thumbnail --embed-subs --merge-output-format mp4"
+alias ytdl-mp3="yt-dlp --embed-metadata --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail"
 alias ytdlist="yt-dlp -f 'bv*[height=1080]+ba'"
+alias gedl='yt-dlp -f "bv*+ba" --embed-thumbnail --embed-subs --merge-output-format mp4 -P "$(find ~/good_edits -maxdepth 1 -type d|fzf)" "$(pbpaste)"'
+alias fytdl='yt-dlp -f "bv*+ba" --embed-thumbnail --embed-subs --merge-output-format mp4 -P "$(fd . "/Users/ivan" --type d -E Library -E go/|fzf)" "$(pbpaste)"'
+alias fytdl-mp3='yt-dlp --embed-metadata --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail -P "$(fd . "/Users/ivan" --type d -E Library -E go/|fzf)" "$(pbpaste)"'
+alias fytdlist='yt-dlp -f "bv*[height=1080]+ba" -P "$(fd . "/Users/ivan" --type d -E Library -E go/|fzf)" "$(pbpaste)"'
 
 
 ### Other aliases
@@ -180,8 +184,30 @@ sel() {du -a ~/dotfiles/scripts|awk '{print $2}'|fzf|xargs -r lvim}
 
 cpf() {cp -v "$1" "/Users/chokerman/Documents/$(ls ~/Documents/|fzf)/"}
 
+# quickly access any alias or function i have
+function qa() {
+    CMD=$(
+        (
+            (alias)
+            (functions | grep "()" | cut -d ' ' -f1 | grep -v "^_" )
+        ) | fzf | cut -d '=' -f1
+    );
+
+    eval $CMD
+}
+
 function chst {
     [ -z $1 ] && echo "no args provided!" || (curl -s cheat.sh/$1 | bat --style=plain)
+}
+
+function rf() {
+  if [[ "$#" -eq 0 ]]; then
+    local files
+    files=$(find . -maxdepth 1 -type f | fzf --multi)
+    echo $files | xargs -I '{}' rm {} #we use xargs to capture filenames with spaces in them properly
+  else
+    command rm "$@"
+  fi
 }
 
 mkcd() {
@@ -284,6 +310,13 @@ animeg() {
   python3 ~/dev/animdl/runner.py grab "$1" -r "$2"|cut -d '"' -f 8|sed -e '1,2d'|pbcopy
 }
 
+animecover() {
+BASE="$(curl -s -X POST -H "Content-Type: application/json" -d \
+'{"query": "query($id:Int $search:String){Media (id: $id, search: $search, type: ANIME) {id coverImage {large}}}", "variables":{"search":"'"$*"'"}}' https://graphql.anilist.co/)"
+pixcat thumbnail --size 1080 --align left $(printf "$BASE" | jq -r '.data.Media.coverImage.large')
+}
+
+
 char() {
 BASE="$(curl -s -X POST -H "Content-Type: application/json" -d \
 '{"query": "query($page:Int = 1 $id:Int $search:String $isBirthday:Boolean $sort:[CharacterSort]=[FAVOURITES_DESC]){Page(page:$page,perPage:20){pageInfo{total perPage currentPage lastPage hasNextPage}characters(id:$id search:$search isBirthday:$isBirthday sort:$sort){id name{userPreferred}image{large}}}}","variables":{"page": 1,"type": "CHARACTERS","search":"'"$*"'","sort": "SEARCH_MATCH"}}' \
@@ -344,7 +377,9 @@ alias gm="git merge"
 alias gp="git pull"
 alias glog="git log --oneline --decorate --graph"
 
-gci() { git clone https://github.com/iamchokerman"$@"; }
+gci() {
+  git clone "https://github.com/$(curl -s 'https://api.github.com/users/iamchokerman/repos' | jq -r '.[].full_name' | fzf)"
+  }
 
 function acp() {
 git add .
@@ -487,7 +522,7 @@ ae () {
 }
 
 
-### Fzf funtions
+### Fzf functions
 
 alias p="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
@@ -512,6 +547,12 @@ fo() {
   if [ -n "$file" ]; then
     [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
   fi
+}
+
+function fzf-env-vars() {
+  local out
+  out=$(env | fzf)
+  echo $(echo $out | cut -d= -f2)
 }
 
 ### Other
