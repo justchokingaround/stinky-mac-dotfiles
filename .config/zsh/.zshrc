@@ -4,10 +4,11 @@ pfetch
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
-source "$HOME/.zsh/plugins/zsh-system-clipboard/zsh-system-clipboard.zsh"
+source "$HOME/dotfiles/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
 source "$HOME/dotfiles/.config/zsh/forgit/forgit.plugin.zsh"
 # used for tab completion with fzf 
 source /Users/ivan/dotfiles/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
+source /Users/ivan/dotfiles/.config/zsh/zsh-abbr/zsh-abbr.zsh
 PATH="$PATH:$HOME/dotfiles/.config/zsh/forgit/bin"
 
 export EDITOR="nvim"
@@ -19,6 +20,10 @@ export IMAGE="/Applications/qView.app/Contents/MacOS/qView"
 export OPENER="open"
 export NVIMRC="~/.config/nvim/init.lua"
 export PATH="$HOME/.emacs.d/bin:$PATH"
+export GOPATH=$HOME/go-workspace # don't forget to change your path correctly!
+export GOROOT=/usr/local/opt/go/libexec
+export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$GOROOT/bin
 LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 PATH=$PATH:~/.local/bin
@@ -82,14 +87,14 @@ alias dev="cd ~/dev/"
 alias ..='cd ..'
 alias cd..="cd .."
 alias mv="mv -i"
-alias ls='lsd'
+alias ls='exa -Fa'
+alias ll='exa -Fal'
 alias l='exa --long --grid'
-alias ll='ls -lhtrF --color=auto'
-alias lh='ls -lhtrdF .*'
-alias ldir='ls -d */'
+alias lh="find . -mindepth 1 -maxdepth 1 -name '.*'|fzf"
+alias ldir='exa -D'
 alias tree='exa -T'
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
-alias r='rm -rf "$(ls -d */ | fzf)"'
+alias rd='rm -rf "$(exa -D| fzf)"'
 alias cx='chmod +x "$(find . -maxdepth 1 -type f| fzf)"'
 alias v='nvim'
 alias nv='nvim'
@@ -112,6 +117,7 @@ alias -s mp4=mpv
 alias -s mp3=mpv
 alias -s mkv=mpv
 alias -s jpg=open
+alias -s pdf=mupdf-gl
 
 ### Media aliases
 
@@ -176,13 +182,14 @@ python3.10 -m venv venv/
 source venv/bin/activate
 python3.10 -m pip install --require-virtualenv --progress-bar pretty -r requirements.txt
 python3.10 -m pip cache purge"
+alias watchgoodedits='cd "$(fd . "/Users/ivan/good_edits" --max-depth 1 --type d|fzf --cycle)" && mpv *'
 
 ### Life one ez mode
 
 se() {du -a ~/dotfiles/scripts|awk '{print $2}'|fzf|xargs -r nvim}
 sel() {du -a ~/dotfiles/scripts|awk '{print $2}'|fzf|xargs -r lvim}
 
-cpf() {cp -v "$1" "/Users/chokerman/Documents/$(ls ~/Documents/|fzf)/"}
+cpf() {cp -v "$1" "/Users/ivan/Documents/$(ls ~/Documents/|fzf)/"}
 
 # quickly access any alias or function i have
 function qa() {
@@ -203,7 +210,7 @@ function chst {
 function rf() {
   if [[ "$#" -eq 0 ]]; then
     local files
-    files=$(find . -maxdepth 1 -type f | fzf --multi)
+    files=$(fd . --max-depth 1 --type f | fzf --multi)
     echo $files | xargs -I '{}' rm {} #we use xargs to capture filenames with spaces in them properly
   else
     command rm "$@"
@@ -247,34 +254,34 @@ cdf() {
 }
 
 open_pdf_fzf_mupdf() {
-    PDF_PATH=$(rg --files -t pdf| fzf )
+    PDF_PATH=$(rg --files -t pdf| fzf --cycle)
     [[ -z $PDF_PATH ]] || (mupdf-gl "$PDF_PATH" &> /dev/null)
 }
 
 open_with_mpv() {
-  VIDEO_PATH=$(rg --files -g '!anime/' -g '!for_editing/' -g '*.{mp4,mkv,webm,m4v}' | fzf )
+  VIDEO_PATH=$(rg --files -g '!anime/' -g '!for_editing/' -g '*.{mp4,mkv,webm,m4v}' | fzf --cycle)
     [[ -z $VIDEO_PATH ]] || (mpv "$VIDEO_PATH")
 }
 
 open_with_mpv_external() {
     cd /Volumes/EXTERNAL/chokerman
-    VIDEO_PATH=$(rg --files -g '!csgo tweaks' -g '*.{mp4,mkv,webm,m4v}'| fzf )
+    VIDEO_PATH=$(rg --files -g '!csgo tweaks' -g '*.{mp4,mkv,webm,m4v}'| fzf --cycle)
     [[ -z $VIDEO_PATH ]] || (mpv "$VIDEO_PATH")
     cd ~/
 }
 
 open_with_mpv_silent() {
-    VIDEO_PATH=$(rg --files -g '*.{mp3,flac,m4a}'| fzf )
+    VIDEO_PATH=$(rg --files -g '*.{mp3,flac,m4a}'| fzf --cycle)
     [[ -z $VIDEO_PATH ]] || (mpv --no-video "$VIDEO_PATH")
 }
 
 open_image_fzf() {
-  IMAGE_PATH=$(rg --files -g '*.{jpg,png,jpeg,webp,gif}' | fzf )
+  IMAGE_PATH=$(rg --files -g '*.{jpg,png,jpeg,webp,gif}' | fzf --cycle)
     [[ -z $IMAGE_PATH ]] || (open "$IMAGE_PATH")
 }
 
 open_with_fzf() {
-    FILE=$(rg --files | fzf )
+    FILE=$(rg --files | fzf --cycle)
     [[ -z "$FILE" ]] || (open "$FILE" &> /dev/null)
 }
 
@@ -295,11 +302,11 @@ open_with_lvim_preview() {
 }
 
 cote(){
-  epy ~/Documents/ebooks/cote/$(ls Documents/ebooks/cote|fzf)
+  epy ~/Documents/ebooks/cote/$(ls ~/Documents/ebooks/cote|fzf --cycle)
 }
 
 ani(){
-  python3.9 ~/dev/animdl/runner.py stream "$1" -r "$2"
+  python3 ~/dev/animdl/runner.py stream "$1" -r "$2"
 }
 
 fanime() {
@@ -525,17 +532,6 @@ ae () {
 ### Fzf functions
 
 alias p="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
-
-# alternative using ripgrep-all (rga) combined with fzf-tmux preview
-# This requires ripgrep-all (rga) installed: https://github.com/phiresky/ripgrep-all
-# This implementation below makes use of "open" on macOS, which can be replaced by other commands if needed.
-# allows to search in PDFs, E-Books, Office documents, zip, tar.gz, etc. (see https://github.com/phiresky/ripgrep-all)
-# find-in-file - usage: fif <searchTerm> or fif "string with spaces" or fif "regex"
-fif() {
-    if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
-    local file
-    file="$(rga --max-count=1 --ignore-case --files-with-matches --no-messages "$*" | fzf-tmux +m --preview="rga --ignore-case --pretty --context 10 '"$*"' {}")" && echo "opening $file" && open "$file" || return 1;
-}
 
 # Modified version where you can press
 #   - CTRL-O to open with `open` command,

@@ -6,7 +6,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	SED="sed"
 fi
 
-PROMPT=$(printf "watch\nbinge\nadd\ndelete\nlist\nupdate_episodes\nupdate_status\ninfo\naltname"|fzf)
+PROMPT=$(printf "watch\nbinge\nadd\ndelete\nlist\nupdate_episodes\nupdate_status\ninfo\naltname\nretrieve"|fzf)
 
 main() {
   case $PROMPT in
@@ -72,11 +72,14 @@ main() {
         read -p "What is the new name? " NEWNAME
         printf "altname $INDEX $NEWNAME"|trackma > /dev/null
         ;;
+    retrieve)
+        printf "retrieve"|trackma
   esac
 }
 
 main
 
+osascript -e 'quit app "Terminal"'
 # printf "filter $STATUS\ninfo $INDEX"|trackma
 # NEWSTATUS=$(printf "watching\ncompleted\nrewatching\npaused\ndropped\nplantowatch"|fzf)
 # printf "filter $STATUS\nstatus $INDEX $NEWSTATUS"|trackma

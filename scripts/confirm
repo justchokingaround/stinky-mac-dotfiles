@@ -1,0 +1,18 @@
+#!/bin/bash
+
+debug_trap () {
+    echo "executing $BASH_COMMAND"
+    echo "Allow?"
+    select choice in yes no
+    do
+        if [ "$choice" = "yes" ]
+        then break
+        elif [ "$choice" = "no" ]
+        then return 1
+        fi
+    done
+}
+
+shopt -s extdebug
+trap debug_trap DEBUG
+echo "hour $(ddiff '2022-04-12 15:45:00' "$(date +'%Y-%m-%d %H:%M:%S')" -f '%H')"
