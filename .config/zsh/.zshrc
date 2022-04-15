@@ -272,7 +272,7 @@ open_with_mpv_external() {
 
 open_with_mpv_silent() {
     VIDEO_PATH=$(rg --files -g '*.{mp3,flac,m4a}'| fzf --cycle)
-    [[ -z $VIDEO_PATH ]] || (mpv --no-video "$VIDEO_PATH")
+    [[ -z $VIDEO_PATH ]] || (mpv --no-video --loop=inf "$VIDEO_PATH")
 }
 
 open_image_fzf() {

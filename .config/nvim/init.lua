@@ -8,6 +8,7 @@ end
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
   use 'neovim/nvim-lspconfig'
+  use 'Mofiqul/dracula.nvim'
   use 'monsonjeremy/onedark.nvim'
   use 'shaunsingh/nord.nvim'
   use 'ibhagwan/fzf-lua'
@@ -110,17 +111,19 @@ nnoremap <leader>sd :SDelete<CR>
 nnoremap <leader>sl :SLoad<CR>
 nnoremap <silent> <leader>h :noh<cr>
 nnoremap <silent> <leader>c :bd<cr>
+nnoremap <C-s> = :w<cr>
 nnoremap <silent> <leader>f :FzfLua<cr>
 nnoremap <silent> <leader>w :FzfLua grep_cword<cr>
+nnoremap <silent> <leader>s :FzfLua files<cr>
 nnoremap <leader>ps :PackerSync<cr>
 nnoremap <silent> <leader>e :NvimTreeFindFileToggle<cr>
+nnoremap <silent> <leader>j :!javac % && java %<cr>
 nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap J mzJ`z
 
 map Q gq
-map <leader>s :!clear && shellcheck -x %<CR>
 " map <leader>c :w! \| !compiler "<c-r>%"<CR>
 nmap <leader>y :History:<CR>
 
@@ -171,6 +174,7 @@ require("onedark").setup({
   -- Change the "hint" color to the "orange" color, and make the "error" color bright red
   colors = {hint = "orange", error = "#ff0000"}
 })
+vim.cmd('colorscheme dracula')
 -- }}}
 
 -- Startify config {{{
@@ -197,10 +201,10 @@ let g:vimwiki_list = [{'path': '~/stuff/vimwiki/', 'syntax': 'markdown', 'ext': 
 
 -- Autocommands{{{
 vim.api.nvim_command([[
-autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
-au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif
 ]])
+vim.cmd[[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o]]
 -- }}}
 
 -- vim:foldmethod=marker

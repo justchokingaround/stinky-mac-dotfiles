@@ -74,6 +74,11 @@ _G.packer_plugins = {
     path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
     url = "https://github.com/akinsho/bufferline.nvim"
   },
+  ["dracula.nvim"] = {
+    loaded = true,
+    path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/dracula.nvim",
+    url = "https://github.com/Mofiqul/dracula.nvim"
+  },
   ["fzf-lua"] = {
     loaded = true,
     path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/fzf-lua",
