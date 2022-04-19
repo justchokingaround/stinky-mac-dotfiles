@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/fzf-lua",
     url = "https://github.com/ibhagwan/fzf-lua"
   },
+  ["gv.vim"] = {
+    loaded = true,
+    path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/gv.vim",
+    url = "https://github.com/junegunn/gv.vim"
+  },
   ["impatient.nvim"] = {
     loaded = true,
     path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/impatient.nvim",
@@ -103,11 +108,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/material.nvim",
     url = "https://github.com/marko-cerovac/material.nvim"
-  },
-  ["nord.nvim"] = {
-    loaded = true,
-    path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/nord.nvim",
-    url = "https://github.com/shaunsingh/nord.nvim"
   },
   ["nvim-autopairs"] = {
     loaded = true,
@@ -139,11 +139,6 @@ _G.packer_plugins = {
     path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
-  ["onedark.nvim"] = {
-    loaded = true,
-    path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/onedark.nvim",
-    url = "https://github.com/monsonjeremy/onedark.nvim"
-  },
   ["packer.nvim"] = {
     loaded = true,
     path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/packer.nvim",
@@ -159,15 +154,15 @@ _G.packer_plugins = {
     path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/toggleterm.nvim",
     url = "https://github.com/akinsho/toggleterm.nvim"
   },
+  ["vim-fugitive"] = {
+    loaded = true,
+    path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/vim-fugitive",
+    url = "https://github.com/tpope/vim-fugitive"
+  },
   ["vim-startify"] = {
     loaded = true,
     path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/vim-startify",
     url = "https://github.com/mhinz/vim-startify"
-  },
-  vimwiki = {
-    loaded = true,
-    path = "/Users/ivan/.local/share/nvim/site/pack/packer/start/vimwiki",
-    url = "https://github.com/vimwiki/vimwiki"
   }
 }
 

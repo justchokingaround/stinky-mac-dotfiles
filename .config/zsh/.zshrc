@@ -4,6 +4,7 @@ pfetch
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
+bindkey -s '^f' 'change_folder^M'
 source "$HOME/dotfiles/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
 source "$HOME/dotfiles/.config/zsh/forgit/forgit.plugin.zsh"
 # used for tab completion with fzf 
@@ -29,7 +30,7 @@ LC_ALL=en_US.UTF-8
 PATH=$PATH:~/.local/bin
 PATH=$PATH:~/dotfiles/scripts
 PATH=$PATH:~/dotfiles/scripts/presence
-PATH=$PATH:~/dev/ani-cli
+PATH=$PATH:~/.local/share
 # Enable colors and change prompt:
 autoload -U colors && colors
 # History in cache directory:
@@ -65,7 +66,7 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
 --color=info:#af87ff,prompt:#5fff87,pointer:#ff87d7,marker:#ff87d7,spinner:#ff87d7
 '
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-FD_OPTIONS="--follow --exclude .git --exclude node_modules"
+FD_OPTIONS="--follow --exclude .git --exclude node_modules -E Library -E go/"
 alias rg="rg -g '!/Library/'" 
 
 # .zshrc
@@ -87,7 +88,7 @@ alias dev="cd ~/dev/"
 alias ..='cd ..'
 alias cd..="cd .."
 alias mv="mv -i"
-alias ls='exa -Fa'
+alias ls='exa'
 alias ll='exa -Fal'
 alias l='exa --long --grid'
 alias lh="find . -mindepth 1 -maxdepth 1 -name '.*'|fzf"
@@ -139,7 +140,7 @@ alias fytdlist='yt-dlp -f "bv*[height=1080]+ba" -P "$(fd . "/Users/ivan" --type 
 
 ### Other aliases
 
-alias weather="curl -s wttr.in/Lille"
+alias weather="curl -s wttr.in/Heilbronn"
 alias icat="kitty +kitten icat"
 alias pf='pfetch'
 alias nf='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'
@@ -153,9 +154,9 @@ alias cf="change_folder"
 alias opdf="open_pdf_fzf_mupdf"
 alias of="open_with_fzf"
 alias nvf="open_with_nvim"
-alias nvfp="open_with_nvim_preview"
+alias nvj="open_with_nvim_java"
 alias lvf="open_with_lvim"
-alias lvfp="open_with_lvim_preview"
+alias lvj="open_with_lvim_java"
 alias mpf="open_with_mpv"
 alias msf="open_with_mpv_silent"
 alias imf="open_image_fzf"
@@ -177,6 +178,7 @@ alias -g S="| sed"
 alias -g F="| fzf"
 alias -g X="| xargs -r"
 alias -g B="| bat"
+alias -g J="| jq"
 alias pyenv="rm -rf venv/
 python3.10 -m venv venv/
 source venv/bin/activate
@@ -286,19 +288,23 @@ open_with_fzf() {
 }
 
 open_with_nvim() {
-  nvim $(fzf)
+	FILE=$(fzf)
+	[[ -z "$FILE" ]] || (nvim "$FILE")
 }
 
-open_with_nvim_preview() {
-  nvim "$(fzf --preview='bat {} --color always' --bind shift-up:'preview-page-up,shift-down:preview-page-down')"
+open_with_nvim_java() {
+	FILE=$(fd . '/Users/ivan' -e java -E '/Library/'| fzf --cycle)
+	[[ -z "$FILE" ]] || (nvim -c ":set filetype=java" "$FILE")
 }
 
 open_with_lvim() {
-  lvim $(fzf)
+	FILE=$(fzf)
+	[[ -z "$FILE" ]] || (lvim "$FILE")
 }
 
-open_with_lvim_preview() {
-  lvim "$(fzf --preview='bat {} --color always' --bind shift-up:'preview-page-up,shift-down:preview-page-down')"
+open_with_lvim_java() {
+	FILE=$(fd . '/Users/ivan' -e java -E '/Library/'| fzf --cycle)
+	[[ -z "$FILE" ]] || (lvim -c ":set filetype=java" "$FILE")
 }
 
 cote(){
@@ -375,7 +381,9 @@ git config --global color.diff.new        "green bold"
 git config --global color.diff.whitespace "red reverse"
 
 alias g="git"
-alias gc="git clone"
+gc() {
+  git clone "$1" && cd "$(basename "$1" .git)"
+}
 alias gaa="git add all"
 alias gb="git branch"
 alias gcm="git checkout master"
@@ -385,7 +393,7 @@ alias gp="git pull"
 alias glog="git log --oneline --decorate --graph"
 
 gci() {
-  git clone "https://github.com/$(curl -s 'https://api.github.com/users/iamchokerman/repos' | jq -r '.[].full_name' | fzf)"
+  git clone "https://github.com/$(curl -s 'https://api.github.com/users/iamchokerman/repos' | jq -r '.[].full_name' | fzf)" && cd "$(basename "$_" .git)"
   }
 
 function acp() {
@@ -480,7 +488,24 @@ w () {
   }
 
 te () {
-    dir="/Volumes/EXTERNAL/chokerman/media/tv shows"
+    dir="/Volumes/EXTERNAL/chokerman/media/tv_shows"
+    tmp3="$(ls "$dir" | fzf)"
+    tmp="$tmp3/$(ls "$dir/$tmp3" | fzf)"
+    if [ -z "$tmp" ]; then
+      break
+    fi
+    while :; do
+              tmp2="$(ls "$dir/"$tmp"/" | fzf)"
+        if [ -z "$tmp2" ]; then
+          break
+        fi
+        mpv "$dir/"$tmp"/$tmp2"
+        rm -vi "$dir/"$tmp"/$tmp2"
+    done
+}
+
+tl () {
+    dir="/Users/ivan/Videos/tv_shows"
     tmp3="$(ls "$dir" | fzf)"
     tmp="$tmp3/$(ls "$dir/$tmp3" | fzf)"
     if [ -z "$tmp" ]; then

@@ -7,21 +7,20 @@ end
 
 require('packer').startup(function(use)
   use 'wbthomason/packer.nvim'
-  use 'neovim/nvim-lspconfig'
-  use 'Mofiqul/dracula.nvim'
-  use 'monsonjeremy/onedark.nvim'
-  use 'shaunsingh/nord.nvim'
-  use 'ibhagwan/fzf-lua'
+	use 'neovim/nvim-lspconfig'
+	use 'ibhagwan/fzf-lua'
   use 'terrortylor/nvim-comment'
-  use 'andweeb/presence.nvim'
   use 'windwp/nvim-autopairs'
+	use 'junegunn/gv.vim'
+	use 'tpope/vim-fugitive'
   use 'marko-cerovac/material.nvim'
+	use 'Mofiqul/dracula.nvim'
   use "lukas-reineke/indent-blankline.nvim"
   use "akinsho/toggleterm.nvim"
   use 'lewis6991/impatient.nvim'
   use 'akinsho/bufferline.nvim'
+  use 'andweeb/presence.nvim'
   use 'mhinz/vim-startify'
-  use 'vimwiki/vimwiki'
   use 'nvim-treesitter/nvim-treesitter'
   use 'kyazdani42/nvim-web-devicons'
   use 'kyazdani42/nvim-tree.lua'
@@ -36,9 +35,15 @@ end)
 -- }}}
 
 -- Starting some plugins {{{
-vim.cmd[[autocmd FileType c,cpp lua require "c-ide"]]
-
 require("packer.compile")
+
+require'lspconfig'.pyright.setup{}
+
+require('lualine').setup {
+  options = {
+    theme = 'dracula-nvim'
+  }
+ }
 
 require('bufferline').setup {
   options = {
@@ -53,6 +58,12 @@ require("presence"):setup({
     main_image          = "file",
     debounce_timeout    = 20, 
     enable_line_number  = true,
+    buttons = {
+      {
+        label = "Neovim > Emacs" ,
+        url = "https://github.com/iamchokerman/dotfiles" 
+      }
+    }
 })
 
 require("toggleterm").setup({
@@ -67,7 +78,7 @@ require'nvim-tree'.setup {auto_open = 1, gitignore = 1}
 require("indent_blankline").setup {
     show_current_context = true,
     show_current_context_start = true,
-    filetype_exclude = { "startify" , "NvimTree", "packer" , "zsh" }
+    filetype_exclude = { "startify" , "NvimTree", "packer" , "toggleterm" }
 }
 
 require('nvim_comment').setup({comment_empty = false})
@@ -79,7 +90,7 @@ require('lualine').setup{
 }
 
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = { "c" , "lua" , "vim" , "bash" },
+  ensure_installed = { "lua" , "vim" , "bash" , "go" },
   highlight = {
     enable = true,
     additional_vim_regex_highlighting = true,
@@ -96,6 +107,21 @@ require'nvim-treesitter.configs'.setup {
 
 -- Setting some keybindings {{{
 local keymap = vim.api.nvim_set_keymap
+
+keymap('n', '<c-f>', ':NvimTreeFindFileToggle<cr>' , {silent = true})
+keymap('n', '<C-h>', '<C-w>h', {noremap = true, silent = true})
+keymap('n', '<C-l>', '<C-w>l', {noremap = true, silent = true})
+keymap('n', '<C-n>', '<C-w>n', {noremap = true, silent = true})
+keymap('n', '<C-j>', '<C-w>j', {noremap = true, silent = true})
+keymap('n', '<C-k>', '<C-w>k', {noremap = true, silent = true})
+keymap('n', '<C-w>q' , ':bdelete!<CR>' , {silent = true})
+keymap("n", "<C-Up>", ":resize -2<CR>", {silent = true})
+keymap("n", "<C-Down>", ":resize +2<CR>", {silent = true})
+keymap("n", "<C-Left>", ":vertical resize -2<CR>", {silent = true})
+keymap("n", "<C-Right>", ":vertical resize +2<CR>", {silent = true})
+keymap("n", "<S-h>", ":BufferLineCyclePrev<cr>", {silent = true})
+keymap("n", "<S-l>", ":BufferLineCycleNext<cr>", {silent = true})
+
 vim.cmd([[
 let mapleader =" "
 inoremap jj <Esc>
@@ -103,7 +129,6 @@ inoremap , ,<c-g>u
 inoremap . .<c-g>u
 inoremap ! !<c-g>u
 inoremap ? ?<c-g>u
-
 nnoremap S :%s//g<Left><Left>
 nnoremap <leader>ss :SSave<CR>
 nnoremap <leader>sc :SClose<CR>
@@ -118,15 +143,15 @@ nnoremap <silent> <leader>s :FzfLua files<cr>
 nnoremap <leader>ps :PackerSync<cr>
 nnoremap <silent> <leader>e :NvimTreeFindFileToggle<cr>
 nnoremap <silent> <leader>j :!javac % && java %<cr>
+nnoremap <silent> <leader>P :!python3 %<cr>
+nnoremap <silent> <leader>r :!cargo run<cr>
 nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv
 nnoremap J mzJ`z
-
 map Q gq
 " map <leader>c :w! \| !compiler "<c-r>%"<CR>
 nmap <leader>y :History:<CR>
-
 " Custom commands
 command -nargs=* Rename %s/tmp/\=printf('<args>_%03d', line('.'))/
 command -bar Minus %s/_-_/-/g
@@ -136,7 +161,6 @@ command -bar Underminus %s/_-/-/g
 command -bar Underdot %s/_\././g
 command -bar Square %norm 0f[lda]
 command -bar Cleanup :Spaces | :Minus | :Square | :Minus3 | :Underminus | :Underdot
-
 ]])
 -- }}}
 
@@ -159,22 +183,27 @@ vim.o.shiftwidth = 2
 vim.o.clipboard = "unnamedplus"
 vim.o.mouse = 'a'
 vim.o.cmdheight = 2
-vim.o.expandtab = true
 vim.o.showmode = false
-vim.o.shell = '/bin/bash'
+vim.o.shell = '/bin/dash'
 vim.o.scrolloff = 999
+vim.g["mapleader"] = ","
+vim.g.material_style = "darker"
 vim.o.autoread = true
+vim.opt.syntax = "ON"
+vim.opt.termguicolors = true
 -- }}}
 
 -- Colorscheme config {{{
-require("onedark").setup({
-  functionStyle = "italic",
-  sidebars = {"qf", "vista_kind", "terminal", "packer"},
-
-  -- Change the "hint" color to the "orange" color, and make the "error" color bright red
-  colors = {hint = "orange", error = "#ff0000"}
+require('material').setup({
+	italics = {comments = true},
+	disable = {
+		borders = true,
+		background = true,
+	},
+	lualine_style = "stealth"
 })
-vim.cmd('colorscheme dracula')
+vim.cmd('colorscheme material')
+-- vim.cmd('colorscheme dracula')
 -- }}}
 
 -- Startify config {{{
@@ -193,12 +222,6 @@ autocmd TabNewEntered * Startify
 ]])
 -- }}}
 
--- Vimwiki config {{{
-vim.api.nvim_command([[
-let g:vimwiki_list = [{'path': '~/stuff/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
-]])
--- }}}
-
 -- Autocommands{{{
 vim.api.nvim_command([[
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -208,3 +231,4 @@ vim.cmd[[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatopt
 -- }}}
 
 -- vim:foldmethod=marker
+

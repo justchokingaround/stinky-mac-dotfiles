@@ -20,6 +20,8 @@ lvim.keys.normal_mode["<C-s>"] = ":w<cr>"
 lvim.keys.normal_mode ["S"] = ":%s//g<Left><Left>"
 lvim.keys.normal_mode["<leader>F"] = ":FzfLua<cr>"
 lvim.keys.normal_mode ["<leader>j"] = ":!javac % && java %<cr>"
+lvim.keys.normal_mode ["<leader>P"] = ":!python3 %<cr>"
+lvim.keys.normal_mode ["<leader>r"] = ":!cargo run <cr>"
 
 
 -- unmap a default keymapping
