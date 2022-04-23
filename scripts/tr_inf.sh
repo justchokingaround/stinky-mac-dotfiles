@@ -6,6 +6,7 @@ elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 	SED="sed"
 fi
 
+while true; do
 PROMPT=$(printf "watch\nbinge\nadd\ndelete\nlist\nupdate_episodes\nupdate_status\ninfo\naltname\nretrieve"|fzf)
 
 main() {
@@ -82,9 +83,4 @@ main() {
 }
 
 main
-
-osascript -e 'quit app "Terminal"'
-# printf "filter $STATUS\ninfo $INDEX"|trackma
-# NEWSTATUS=$(printf "watching\ncompleted\nrewatching\npaused\ndropped\nplantowatch"|fzf)
-# printf "filter $STATUS\nstatus $INDEX $NEWSTATUS"|trackma
-# printf "del 1\ny"|trackma
+done

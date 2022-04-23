@@ -1,4 +1,4 @@
-pfetch
+# pfetch
 ### Essentials
 
 # vi mode
@@ -58,6 +58,7 @@ export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
+# export FZF_DEFAULT_OPTS="--no-mouse --height 50%"
 export FZF_DEFAULT_OPTS="--no-mouse --height 50% --border -1 --reverse --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
 #DRACULA THEME FOR FZF
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
@@ -390,6 +391,7 @@ alias gcm="git checkout master"
 alias gf="git fetch"
 alias gm="git merge"
 alias gp="git pull"
+alias grh="git reset --hard"
 alias glog="git log --oneline --decorate --graph"
 
 gci() {
@@ -576,6 +578,14 @@ function fzf-env-vars() {
   echo $(echo $out | cut -d= -f2)
 }
 
+function delete-branches() {
+  git branch |
+    grep --invert-match '\*' |
+    cut -c 3- |
+    fzf --multi --preview="git log {} --" |
+    xargs --no-run-if-empty git branch --delete --force
+}
+
 ### Other
 
 emoji() {
@@ -584,3 +594,20 @@ emoji() {
   echo "$selected_emoji" | awk '{print $1}' | pbcopy
 } 
 export PATH=$PATH:/Users/ivan/.spicetify
+
+# fzf --bind 'f1:execute(less -f {}),ctrl-y:execute-silent(echo {} | pbcopy)+abort'
+
+function pr-checkout() {
+  local pr_number
+
+  pr_number=$(
+    gh api 'repos/pystardust/ani-cli/pulls' |
+    jq --raw-output '.[] | "#\(.number) \(.title)"' |
+    fzf |
+    gsed 's/^#\([0-9]\+\).*/\1/'
+  )
+
+  if [ -n "$pr_number" ]; then
+    gh pr checkout "$pr_number"
+  fi
+}
