@@ -31,6 +31,7 @@ PATH=$PATH:~/.local/bin
 PATH=$PATH:~/dotfiles/scripts
 PATH=$PATH:~/dotfiles/scripts/presence
 PATH=$PATH:~/.local/share
+PATH=$PATH:/Users/ivan/dev/trackma-wrapper
 # Enable colors and change prompt:
 autoload -U colors && colors
 # History in cache directory:
