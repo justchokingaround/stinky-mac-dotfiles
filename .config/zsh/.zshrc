@@ -4,6 +4,10 @@
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
+# Edit line in vim with ctrl-e:
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^e' edit-command-line
+
 bindkey -s '^f' 'change_folder^M'
 source "$HOME/dotfiles/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
 source "$HOME/dotfiles/.config/zsh/forgit/forgit.plugin.zsh"
