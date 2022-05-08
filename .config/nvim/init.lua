@@ -73,7 +73,8 @@ require("toggleterm").setup({
 })
 
 vim.g.nvim_tree_width = 25
-require'nvim-tree'.setup {auto_open = 1, gitignore = 1}
+require'nvim-tree'.setup {
+}
 
 require("indent_blankline").setup {
     show_current_context = true,
@@ -142,9 +143,11 @@ nnoremap <silent> <leader>w :FzfLua grep_cword<cr>
 nnoremap <silent> <leader>s :FzfLua files<cr>
 nnoremap <leader>ps :PackerSync<cr>
 nnoremap <silent> <leader>e :NvimTreeFindFileToggle<cr>
-nnoremap <silent> <leader>j :!javac % && java %<cr>
+nnoremap <silent> <leader>J :!javac % && java %<cr>
 nnoremap <silent> <leader>P :!python3 %<cr>
-nnoremap <silent> <leader>r :!cargo run<cr>
+nnoremap <silent> <leader>R :!cargo run<cr>
+nnoremap <silent> <leader>C :!gcc % && ./a.out<cr>
+nnoremap <silent> <leader>G :!gradle build && gradle run<cr>
 nnoremap Y y$
 nnoremap n nzzzv
 nnoremap N Nzzzv

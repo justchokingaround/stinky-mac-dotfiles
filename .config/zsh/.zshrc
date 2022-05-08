@@ -65,12 +65,17 @@ export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
 export FZF_ALT_C_OPTS="--preview 'tree -C {} | head -200'"
 # export FZF_DEFAULT_OPTS="--no-mouse --height 50%"
 export FZF_DEFAULT_OPTS="--no-mouse --height 50% --border -1 --reverse --multi --inline-info --preview='[[ \$(file --mime {}) =~ binary ]] && echo {} is a binary file || (bat --style=numbers --color=always {} || cat {}) 2> /dev/null | head -300' --preview-window='right:hidden:wrap' --bind='f3:execute(bat --style=numbers {} || less -f {}),?:toggle-preview,ctrl-d:half-page-down,ctrl-u:half-page-up,ctrl-a:select-all+accept,ctrl-y:execute-silent(echo {+} | pbcopy)'"
-#DRACULA THEME FOR FZF
+#TOKYONIGHT THEME FOR FZF
+
 export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
---color=dark
---color=fg:-1,bg:-1,hl:#5fff87,fg+:-1,bg+:-1,hl+:#ffaf5f
---color=info:#af87ff,prompt:#5fff87,pointer:#ff87d7,marker:#ff87d7,spinner:#ff87d7
+--color=dark --color=fg:-1,bg:-1,hl:#2ac3de,fg+:#73daca,bg+:#24283b,hl+:#ff9e64 
+--color=info:#bb9af7,prompt:#9ece6a,pointer:#7aa2f7,marker:#7aa2f7
 '
+# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
+# --color=dark
+# --color=fg:-1,bg:-1,hl:#5fff87,fg+:-1,bg+:-1,hl+:#ffaf5f
+# --color=info:#af87ff,prompt:#5fff87,pointer:#ff87d7,marker:#ff87d7,spinner:#ff87d7
+# '
 export FZF_CTRL_R_OPTS="--preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
 FD_OPTIONS="--follow --exclude .git --exclude node_modules -E Library -E go/"
 alias rg="rg -g '!/Library/'" 
@@ -112,7 +117,7 @@ alias f="fzf"
 alias ra="ranger"
 # alias cd="z"
 alias nvc="nvim ~/dotfiles/.config/zsh/.zshrc"
-alias lvc="lvim ~/dotfiles/.config/zsh/.zshrc"
+alias nvs="nvim ~/.config/nvim/init.lua"
 alias j=z
 alias jj="cd -"
 alias bi="brew install"
@@ -403,10 +408,10 @@ gci() {
   git clone "https://github.com/$(curl -s 'https://api.github.com/users/iamchokerman/repos' | jq -r '.[].full_name' | fzf)" && cd "$(basename "$_" .git)"
   }
 
-function acp() {
-git add .
-git commit -m "$1"
-git push
+acp() {
+	git add .
+	git commit -m "$1"
+	git push
 }
 
 
