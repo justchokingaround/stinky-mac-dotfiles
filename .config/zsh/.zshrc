@@ -58,7 +58,7 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;32m'
 export FZF_BASE="$HOME/.fzf"
-export FZF_DEFAULT_COMMAND="rg ~ --files --hidden -g '!/Library/'"
+export FZF_DEFAULT_COMMAND="rg ~ --files --hidden -g '!/Library'"
 export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
@@ -169,6 +169,7 @@ alias nvj="open_with_nvim_java"
 alias lvf="open_with_lvim"
 alias lvj="open_with_lvim_java"
 alias mpf="open_with_mpv"
+alias mpfq="open_with_mpv_quiet"
 alias msf="open_with_mpv_silent"
 alias imf="open_image_fzf"
 alias mpe="open_with_mpv_external"
@@ -276,6 +277,11 @@ open_with_mpv() {
     [[ -z $VIDEO_PATH ]] || (mpv "$VIDEO_PATH")
 }
 
+open_with_mpv_quiet() {
+  VIDEO_PATH=$(rg --files -g '!Library/' -g '!for_editing/' -g '*.{mp4,mkv,webm,m4v}' | fzf --cycle)
+    [[ -z $VIDEO_PATH ]] || (mpv --no-video --loop="inf" "$VIDEO_PATH")
+}
+
 open_with_mpv_external() {
     cd /Volumes/EXTERNAL/chokerman
     VIDEO_PATH=$(rg --files -g '!csgo tweaks' -g '*.{mp4,mkv,webm,m4v}'| fzf --cycle)
@@ -355,11 +361,12 @@ printf "\n" ; pixcat thumbnail --size 1080 --align left $tmp
 }
 
 cchar() {
-  kitty +icat $(curl -s "https://you-zitsu.fandom.com/wiki/$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|pup '.category-page__member'|rg href|awk 'NR%2==0 {print $0}'|awk '!/Category/ && !/small/'|cut -d '"' -f 2|cut -c 7-|sed -e 's/%C5%8D/ō/g' -e 's/%C5%AB/ū/g' -e 's/\ /_/g'|fzf|sed -e 's/ō/%C5%8D/g' -e 's/ū/%C5%AB/g')"|pup '.image-thumbnail'| cut -d '"' -f 2|head -n 1)
+	page=$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|awk -F '"' '/category-page__member-link/&&!/Category/ {print $2,$6}'|fzf --with-nth 2..|awk '{print $1}')
+	pixcat "$(curl -s "https://you-zitsu.fandom.com$page"|awk -F '"' '/pi-image-thumbnail/ {print $2}')"
 }
 
 cchara() {
-  kitty +icat $(curl -s "https://you-zitsu.fandom.com/wiki/$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|pup '.category-page__member'|rg href|awk 'NR%2==0 {print $0}'|awk '!/Female/ && !/small/'|cut -d '"' -f 2|cut -c 7-|sed -e 's/%C5%8D/ō/g' -e 's/%C5%AB/ū/g' -e 's/\ /_/g'|fzf|sed -e 's/ō/%C5%8D/g' -e 's/ū/%C5%AB/g')"|pup '.image-thumbnail'|cut -d '"' -f 2|grep --invert-match -e 'scale-to-width' -e '</a>')
+	kitty +icat $(curl -s "https://you-zitsu.fandom.com$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|pup '.category-page__member'|awk -F '"' '/category-page__member-link/&&!/Category/ {print $2,$6}'|fzf --with-nth 2..|awk '{print $1}')"|awk -F '"' '/image-thumbnail/&&/src/ {print $2}')
 }
 
 
