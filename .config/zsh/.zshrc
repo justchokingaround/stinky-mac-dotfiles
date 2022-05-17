@@ -58,7 +58,8 @@ export LESS_TERMCAP_so=$'\e[01;33m'
 export LESS_TERMCAP_ue=$'\e[0m'
 export LESS_TERMCAP_us=$'\e[1;4;32m'
 export FZF_BASE="$HOME/.fzf"
-export FZF_DEFAULT_COMMAND="rg ~ --files --hidden -g '!/Library'"
+export FZF_DEFAULT_COMMAND="fd -t file -E '/Library/' -E 'go-workspace/' -E 'node_modules' -E 'Pictures/Photos' -E 'powercord' -E 'go/pkg' -E 'miniconda3'"
+export SKIM_DEFAULT_COMMAND="fd -t file -E '/Library/' -E 'go-workspace/' -E 'node_modules' -E 'Pictures/Photos' -E 'powercord' -E 'go/pkg' -E 'miniconda3'"
 export FZF_CTRL_T_COMMAND="fd $FD_OPTIONS"
 export FZF_CTRL_T_OPTS="--preview '(highlight -O ansi -l {} 2> /dev/null || cat {} || tree -C {}) 2> /dev/null | head -200'"
 export FZF_ALT_C_COMMAND="fd --type d $FD_OPTIONS"
@@ -117,7 +118,7 @@ alias f="fzf"
 alias ra="ranger"
 # alias cd="z"
 alias nvc="nvim ~/dotfiles/.config/zsh/.zshrc"
-alias nvs="nvim ~/.config/nvim/init.lua"
+alias nvs="nvim ~/.config/nvim/lua/custom/chadrc.lua"
 alias j=z
 alias jj="cd -"
 alias bi="brew install"
@@ -305,8 +306,8 @@ open_with_fzf() {
 }
 
 open_with_nvim() {
-	FILE=$(fzf)
-	[[ -z "$FILE" ]] || (nvim "$FILE")
+	FILE=$(sk --reverse --height 50%)
+        [[ -z "$FILE" ]] || nvim "$FILE" && cd $(dirname "$FILE") 
 }
 
 open_with_nvim_java() {
