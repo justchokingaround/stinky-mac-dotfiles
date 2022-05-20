@@ -330,15 +330,15 @@ cote(){
 }
 
 ani(){
-  python3 ~/dev/animdl/runner.py stream "$1" -r "$2"
+  animdl stream "$1" -r "$2"
 }
 
 fanime() {
-  python3 ~/dev/animdl/runner.py stream "$1" -r "$2" --auto --index 1
+  animdl stream "$1" -r "$2" --auto --index 1
 }
 
 animeg() {
-  python3 ~/dev/animdl/runner.py grab "$1" -r "$2"|cut -d '"' -f 8|sed -e '1,2d'|pbcopy
+  animdl grab "$1" -r "$2"|cut -d '"' -f 8|sed -e '1,2d'|pbcopy
 }
 
 animecover() {
