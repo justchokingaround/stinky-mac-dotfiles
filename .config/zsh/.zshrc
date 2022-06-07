@@ -178,7 +178,6 @@ alias mpe="open_with_mpv_external"
 alias nb="newsboat"
 alias awho="animewho"
 alias atrack="trackma.sh"
-# alias pres=""
 alias epy="python3.10 ~/dev/epy/epy.py"
 alias -g L='| less'
 alias -g G='| grep -i'
