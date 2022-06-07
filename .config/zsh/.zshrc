@@ -9,11 +9,11 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 bindkey -s '^f' 'change_folder^M'
-source "$HOME/dotfiles/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
-source "$HOME/dotfiles/.config/zsh/forgit/forgit.plugin.zsh"
+# source "$HOME/dotfiles/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
+# source "$HOME/dotfiles/.config/zsh/forgit/forgit.plugin.zsh"
 # used for tab completion with fzf 
-source /Users/ivan/dotfiles/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
-source /Users/ivan/dotfiles/.config/zsh/zsh-abbr/zsh-abbr.zsh
+# source /Users/ivan/dotfiles/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
+# source /Users/ivan/dotfiles/.config/zsh/zsh-abbr/zsh-abbr.zsh
 PATH="$PATH:$HOME/dotfiles/.config/zsh/forgit/bin"
 
 export EDITOR="nvim"
@@ -29,6 +29,7 @@ export GOPATH=$HOME/go-workspace # don't forget to change your path correctly!
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$GOROOT/bin
+export PATH=$PATH:$HOME/Library/Python/3.8/bin/
 LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 PATH=$PATH:~/.local/bin
@@ -136,6 +137,7 @@ alias -s pdf=mupdf-gl
 
 alias trackma='trackma -a 1'
 alias syncplay='/Applications/Syncplay.app/Contents/MacOS/Syncplay'
+alias flameshot='/Applications/flameshot.app/Contents/MacOS/flameshot'
 alias mpvq="mpv --no-video"
 
 ### yt-dlp aliases
@@ -156,7 +158,7 @@ alias weather="curl -s wttr.in/Heilbronn"
 alias icat="kitty +kitten icat"
 alias pf='pfetch'
 alias nf='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'
-alias py='python3.10'
+alias py='python3'
 alias pip='pip3'
 alias u='exec zsh'
 alias myip="curl ipinfo.io/ip"
@@ -310,7 +312,7 @@ open_with_nvim() {
 }
 
 open_with_nvim_java() {
-	FILE=$(fd . '/Users/ivan' -e java -E '/Library/'| fzf --cycle)
+	FILE=$(fd . '/Users/justchokingaround' -e java -E '/Library/'| fzf --cycle)
 	[[ -z "$FILE" ]] || (nvim -c ":set filetype=java" "$FILE")
 }
 
@@ -320,7 +322,7 @@ open_with_lvim() {
 }
 
 open_with_lvim_java() {
-	FILE=$(fd . '/Users/ivan' -e java -E '/Library/'| fzf --cycle)
+	FILE=$(fd . '/Users/justchokingaround' -e java -E '/Library/'| fzf --cycle)
 	[[ -z "$FILE" ]] || (lvim -c ":set filetype=java" "$FILE")
 }
 
@@ -628,3 +630,4 @@ function pr-checkout() {
     gh pr checkout "$pr_number"
   fi
 }
+export PATH=$PATH:/Users/justchokingaround/.spicetify
