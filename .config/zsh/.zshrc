@@ -9,11 +9,11 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 bindkey -s '^f' 'change_folder^M'
-# source "$HOME/dotfiles/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
-# source "$HOME/dotfiles/.config/zsh/forgit/forgit.plugin.zsh"
+source "$HOME/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
+source "$HOME/.config/zsh/forgit/forgit.plugin.zsh"
 # used for tab completion with fzf 
-# source /Users/ivan/dotfiles/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
-# source /Users/ivan/dotfiles/.config/zsh/zsh-abbr/zsh-abbr.zsh
+source "$HOME/.config/zsh/fzf-tab/fzf-tab.plugin.zsh"
+source "$HOME/.config/zsh/zsh-abbr/zsh-abbr.zsh"
 PATH="$PATH:$HOME/dotfiles/.config/zsh/forgit/bin"
 
 export EDITOR="nvim"
