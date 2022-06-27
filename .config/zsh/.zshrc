@@ -9,12 +9,11 @@ autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
 
 bindkey -s '^f' 'change_folder^M'
-source "$HOME/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
-source "$HOME/.config/zsh/forgit/forgit.plugin.zsh"
 # used for tab completion with fzf 
 source "$HOME/.config/zsh/fzf-tab/fzf-tab.plugin.zsh"
-source "$HOME/.config/zsh/zsh-abbr/zsh-abbr.zsh"
-PATH="$PATH:$HOME/dotfiles/.config/zsh/forgit/bin"
+source "$HOME/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
+source "$HOME/.config/zsh/forgit/forgit.plugin.zsh"
+source "$HOME//.config/zsh/zsh-abbr/zsh-abbr.zsh"
 
 export EDITOR="nvim"
 export TERMINAL="kitty"
@@ -28,15 +27,16 @@ export PATH="$HOME/.emacs.d/bin:$PATH"
 export GOPATH=$HOME/go-workspace # don't forget to change your path correctly!
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin
+export PATH=$PATH:$HOME/.spicetify
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$HOME/Library/Python/3.8/bin/
 LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 PATH=$PATH:~/.local/bin
+PATH=$PATH:/usr/bin
 PATH=$PATH:~/dotfiles/scripts
 PATH=$PATH:~/dotfiles/scripts/presence
 PATH=$PATH:~/.local/share
-PATH=$PATH:/Users/ivan/dev/trackma-wrapper
 # Enable colors and change prompt:
 autoload -U colors && colors
 # History in cache directory:
@@ -119,7 +119,7 @@ alias f="fzf"
 alias ra="ranger"
 # alias cd="z"
 alias nvc="nvim ~/dotfiles/.config/zsh/.zshrc"
-alias nvs="nvim ~/.config/nvim/lua/custom/chadrc.lua"
+alias nvs="nvim ~/.config/nvim/lua/user/init.lua"
 alias j=z
 alias jj="cd -"
 alias bi="brew install"
@@ -147,13 +147,15 @@ alias ytdl="yt-dlp -f 'bv*+ba' --embed-thumbnail --embed-subs --merge-output-for
 alias ytdl-mp3="yt-dlp --embed-metadata --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail"
 alias ytdlist="yt-dlp -f 'bv*[height=1080]+ba'"
 alias gedl='yt-dlp -f "bv*+ba" --embed-thumbnail --embed-subs --merge-output-format mp4 -P "$(find ~/good_edits -maxdepth 1 -type d|fzf)" "$(pbpaste)"'
-alias fytdl='yt-dlp -f "bv*+ba" --embed-thumbnail --embed-subs --merge-output-format mp4 -P "$(fd . "/Users/ivan" --type d -E Library -E go/|fzf)" "$(pbpaste)"'
-alias fytdl-mp3='yt-dlp --embed-metadata --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail -P "$(fd . "/Users/ivan" --type d -E Library -E go/|fzf)" "$(pbpaste)"'
-alias fytdlist='yt-dlp -f "bv*[height=1080]+ba" -P "$(fd . "/Users/ivan" --type d -E Library -E go/|fzf)" "$(pbpaste)"'
+alias fytdl='yt-dlp -f "bv*+ba" --embed-thumbnail --embed-subs --merge-output-format mp4 -P "$(fd . "/Users/justchokingaround" --type d -E Library -E go/|fzf)" "$(pbpaste)"'
+alias fytdl-mp3='yt-dlp --embed-metadata --extract-audio --audio-format mp3 --audio-quality 0 --embed-thumbnail -P "$(fd . "/Users/justchokingaround" --type d -E Library -E go/|fzf)" "$(pbpaste)"'
+alias fytdlist='yt-dlp -f "bv*[height=1080]+ba" -P "$(fd . "/Users/justchokingaround" --type d -E Library -E go/|fzf)" "$(pbpaste)"'
 
 
 ### Other aliases
 
+alias holycrushade="java -XX:+ShowCodeDetailsInExceptionMessages @/var/folders/44/zm8rwyr10fdgcy8d281z6jdh0000gn/T/cp_5lpzurai52dyl3vsvizg9rcze.argfile de.tum.in.ase.eist.ServerApplication"
+alias holycrushade-gui="/usr/bin/env /Users/justchokingaround/Library/Java/JavaVirtualMachines/corretto-17.0.3/Contents/Home/bin/java -XX:+ShowCodeDetailsInExceptionMessages @/var/folders/44/zm8rwyr10fdgcy8d281z6jdh0000gn/T/cp_dstw193t9ib5fzlif06rjh3rs.argfile de.tum.in.ase.eist.Starter"
 alias weather="curl -s wttr.in/Heilbronn"
 alias icat="kitty +kitten icat"
 alias pf='pfetch'
@@ -173,12 +175,13 @@ alias lvj="open_with_lvim_java"
 alias mpf="open_with_mpv"
 alias mpfq="open_with_mpv_quiet"
 alias msf="open_with_mpv_silent"
+alias ipf="open_with_iina"
 alias imf="open_image_fzf"
 alias mpe="open_with_mpv_external"
 alias nb="newsboat"
 alias awho="animewho"
 alias atrack="trackma.sh"
-alias epy="python3.10 ~/dev/epy/epy.py"
+alias epy="python3 ~/dev/epy/epy.py"
 alias -g L='| less'
 alias -g G='| grep -i'
 alias -g CUT='| cut'
@@ -192,19 +195,14 @@ alias -g F="| fzf"
 alias -g X="| xargs -r"
 alias -g B="| bat"
 alias -g J="| jq"
-alias pyenv="rm -rf venv/
-python3.10 -m venv venv/
-source venv/bin/activate
-python3.10 -m pip install --require-virtualenv --progress-bar pretty -r requirements.txt
-python3.10 -m pip cache purge"
-alias watchgoodedits='cd "$(fd . "/Users/ivan/good_edits" --max-depth 1 --type d|fzf --cycle)" && mpv *'
+alias watchgoodedits='cd "$(fd . "/Users/justchokingaround/good_edits" --max-depth 1 --type d|fzf --cycle)" && mpv *'
 
 ### Life one ez mode
 
 se() {du -a ~/dotfiles/scripts|awk '{print $2}'|fzf|xargs -r nvim}
 sel() {du -a ~/dotfiles/scripts|awk '{print $2}'|fzf|xargs -r lvim}
 
-cpf() {cp -v "$1" "/Users/ivan/Documents/$(ls ~/Documents/|fzf)/"}
+cpf() {cp -v "$1" "/Users/justchokingaround/Documents/$(ls ~/Documents/|fzf)/"}
 
 # quickly access any alias or function i have
 function qa() {
@@ -293,6 +291,11 @@ open_with_mpv_external() {
 open_with_mpv_silent() {
     VIDEO_PATH=$(rg --files -g '*.{mp3,flac,m4a}'| fzf --cycle)
     [[ -z $VIDEO_PATH ]] || (mpv --no-video --loop=inf "$VIDEO_PATH")
+}
+
+open_with_iina() {
+  VIDEO_PATH=$(rg --files -g '!anime/' -g '!for_editing/' -g '*.{mp4,mkv,webm,m4v}' | fzf --cycle)
+    [[ -z $VIDEO_PATH ]] || (iina "$VIDEO_PATH")
 }
 
 open_image_fzf() {
@@ -413,7 +416,7 @@ alias grh="git reset --hard"
 alias glog="git log --oneline --decorate --graph"
 
 gci() {
-  git clone "https://github.com/$(curl -s 'https://api.github.com/users/iamchokerman/repos' | jq -r '.[].full_name' | fzf)" && cd "$(basename "$_" .git)"
+  git clone "https://github.com/$(curl -s 'https://api.github.com/users/justchokingaround/repos' | jq -r '.[].full_name' | fzf)" && cd "$(basename "$_" .git)"
   }
 
 acp() {
@@ -421,7 +424,6 @@ acp() {
 	git commit -m "$1"
 	git push
 }
-
 
 # fbr - checkout git branch (including remote branches)
 fbr() {
@@ -525,7 +527,7 @@ te () {
 }
 
 tl () {
-    dir="/Users/ivan/Videos/tv_shows"
+    dir="/Users/justchokingaround/Videos/tv_shows"
     tmp3="$(ls "$dir" | fzf)"
     tmp="$tmp3/$(ls "$dir/$tmp3" | fzf)"
     if [ -z "$tmp" ]; then
@@ -611,7 +613,7 @@ emoji() {
   selected_emoji=$(echo $emojis | fzf)
   echo "$selected_emoji" | awk '{print $1}' | pbcopy
 } 
-export PATH=$PATH:/Users/ivan/.spicetify
+export PATH=$PATH:/Users/justchokingaround/.spicetify
 
 # fzf --bind 'f1:execute(less -f {}),ctrl-y:execute-silent(echo {} | pbcopy)+abort'
 
@@ -629,4 +631,3 @@ function pr-checkout() {
     gh pr checkout "$pr_number"
   fi
 }
-export PATH=$PATH:/Users/justchokingaround/.spicetify
