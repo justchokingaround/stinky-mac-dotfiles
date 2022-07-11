@@ -1,7 +1,6 @@
 hyper - w : yabai -m space --destroy
 lalt - space : yabai -m window --toggle float; sketchybar --trigger window_focus
 shift + lalt - f : yabai -m window --toggle zoom-fullscreen; sketchybar --trigger window_focus
-# lalt - f : yabai -m window --toggle zoom-parent; sketchybar --trigger window_focus
 cmd - x [
     "finder"      : open -na /Applications/iTerm.app/Contents/MacOS/iTerm2 --args "nv" --single-instance -d
 ]
