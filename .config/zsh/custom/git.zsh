@@ -25,18 +25,10 @@ git config --global color.diff.old        "red bold"
 git config --global color.diff.new        "green bold"
 git config --global color.diff.whitespace "red reverse"
 
-alias g="git"
 gc() {
   git clone "$1" && cd "$(basename "$1" .git)"
 }
-alias gaa="git add all"
-alias gb="git branch"
-alias gcm="git checkout master"
-alias gf="git fetch"
-alias gm="git merge"
 alias gp="git pull"
-alias grh="git reset --hard"
-alias glog="git log --oneline --decorate --graph"
 
 gci() {
   git clone "https://github.com/$(curl -s 'https://api.github.com/users/justchokingaround/repos' | jq -r '.[].full_name' | fzf)" && cd "$(basename "$_" .git)"
