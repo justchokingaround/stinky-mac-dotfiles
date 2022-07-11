@@ -212,76 +212,7 @@ w () {
   done
   }
 
-te () {
-    dir="/Volumes/EXTERNAL/chokerman/media/tv_shows"
-    tmp3="$(ls "$dir" | fzf)"
-    tmp="$tmp3/$(ls "$dir/$tmp3" | fzf)"
-    if [ -z "$tmp" ]; then
-      break
-    fi
-    while :; do
-              tmp2="$(ls "$dir/"$tmp"/" | fzf)"
-        if [ -z "$tmp2" ]; then
-          break
-        fi
-        mpv "$dir/"$tmp"/$tmp2"
-        rm -vi "$dir/"$tmp"/$tmp2"
-    done
-}
-
-tl () {
-    dir="/Users/justchokingaround/Videos/tv_shows"
-    tmp3="$(ls "$dir" | fzf)"
-    tmp="$tmp3/$(ls "$dir/$tmp3" | fzf)"
-    if [ -z "$tmp" ]; then
-      break
-    fi
-    while :; do
-              tmp2="$(ls "$dir/"$tmp"/" | fzf)"
-        if [ -z "$tmp2" ]; then
-          break
-        fi
-        mpv "$dir/"$tmp"/$tmp2"
-        rm -vi "$dir/"$tmp"/$tmp2"
-    done
-}
-
-me () {
-    dir="/Volumes/EXTERNAL/chokerman/media/movies"
-    tmp="$(ls "$dir" | fzf)"
-    if [ -z "$tmp" ]; then
-      break
-    fi
-    while :; do
-              tmp2="$(ls "$dir/"$tmp"/" | fzf)"
-        if [ -z "$tmp2" ]; then
-          break
-        fi
-        mpv "$dir/"$tmp"/$tmp2"
-        rm -vi "$dir/"$tmp"/$tmp2"
-    done
-}
-
-ae () {
-    dir="/Volumes/EXTERNAL/chokerman/media/anime"
-    tmp="$(ls "$dir" | fzf)"
-    if [ -z "$tmp" ]; then
-      break
-    fi
-    while :; do
-              tmp2="$(ls "$dir/"$tmp"/" | fzf)"
-        if [ -z "$tmp2" ]; then
-          break
-        fi
-        mpv "$dir/"$tmp"/$tmp2"
-        rm -vi "$dir/"$tmp"/$tmp2"
-    done
-}
-
-
 ### Fzf functions
-
-alias p="fzf --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
 # Modified version where you can press
 #   - CTRL-O to open with `open` command,
@@ -316,9 +247,6 @@ emoji() {
   selected_emoji=$(echo $emojis | fzf)
   echo "$selected_emoji" | awk '{print $1}' | pbcopy
 } 
-export PATH=$PATH:/Users/justchokingaround/.spicetify
-
-# fzf --bind 'f1:execute(less -f {}),ctrl-y:execute-silent(echo {} | pbcopy)+abort'
 
 function pr-checkout() {
   local pr_number

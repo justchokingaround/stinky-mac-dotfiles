@@ -37,6 +37,7 @@ PATH=$PATH:/usr/bin
 PATH=$PATH:~/dotfiles/scripts
 PATH=$PATH:~/dotfiles/scripts/presence
 PATH=$PATH:~/.local/share
+PATH=$PATH:$HOME/.spicetify
 
 autoload -U colors && colors
 HISTSIZE=1000
