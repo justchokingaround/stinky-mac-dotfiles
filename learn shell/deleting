@@ -1,5 +1,0 @@
-#!/bin/sh
-
-#be careful with this, add -i flag for confirmation before deleting
-read -p "what file do you want to delete: " file
-rm $file
