@@ -11,7 +11,7 @@ an executable
 -- general
 lvim.log.level = "warn"
 lvim.format_on_save = true
-lvim.colorscheme = "material"
+lvim.colorscheme = "NeoSolarized"
 
 -- keymappings [view all the defaults by pressing <leader>Lk]
 lvim.leader = "space"
@@ -35,30 +35,30 @@ lvim.keys.normal_mode["<leader>G"] = ":!gradle build && gradle run<cr>"
 -- we use protected-mode (pcall) just in case the plugin wasn't loaded yet.
 local _, actions = pcall(require, "telescope.actions")
 lvim.builtin.telescope.defaults.mappings = {
-        -- for input mode
-        i = {
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-                ["<C-n>"] = actions.cycle_history_next,
-                ["<C-p>"] = actions.cycle_history_prev,
-        },
-        -- for normal mode
-        n = {
-                ["<C-j>"] = actions.move_selection_next,
-                ["<C-k>"] = actions.move_selection_previous,
-        },
+  -- for input mode
+  i = {
+    ["<C-j>"] = actions.move_selection_next,
+    ["<C-k>"] = actions.move_selection_previous,
+    ["<C-n>"] = actions.cycle_history_next,
+    ["<C-p>"] = actions.cycle_history_prev,
+  },
+  -- for normal mode
+  n = {
+    ["<C-j>"] = actions.move_selection_next,
+    ["<C-k>"] = actions.move_selection_previous,
+  },
 }
 
 -- Use which-key to add extra bindings with the leader-key prefix
 -- lvim.builtin.which_key.mappings["P"] = { "<cmd>Telescope projects<CR>", "Projects" }
 lvim.builtin.which_key.mappings["t"] = {
-        name = "+Trouble",
-        r = { "<cmd>Trouble lsp_references<cr>", "References" },
-        f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
-        d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
-        q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
-        l = { "<cmd>Trouble loclist<cr>", "LocationList" },
-        w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
+  name = "+Trouble",
+  r = { "<cmd>Trouble lsp_references<cr>", "References" },
+  f = { "<cmd>Trouble lsp_definitions<cr>", "Definitions" },
+  d = { "<cmd>Trouble lsp_document_diagnostics<cr>", "Diagnostics" },
+  q = { "<cmd>Trouble quickfix<cr>", "QuickFix" },
+  l = { "<cmd>Trouble loclist<cr>", "LocationList" },
+  w = { "<cmd>Trouble lsp_workspace_diagnostics<cr>", "Diagnostics" },
 }
 
 -- TODO: User Config for predefined plugins
@@ -68,22 +68,22 @@ lvim.builtin.alpha.mode = "startify"
 lvim.builtin.notify.active = true
 lvim.builtin.terminal.active = true
 lvim.builtin.nvimtree.setup.view.side = "left"
-lvim.builtin.nvimtree.show_icons.git = 0
+-- lvim.builtin.nvimtree.show_icons.git = 0
 
 -- if you don't want all the parsers change this to a table of the ones you want
 lvim.builtin.treesitter.ensure_installed = {
-        "bash",
-        "c",
-        "javascript",
-        "json",
-        "lua",
-        "python",
-        "typescript",
-        "tsx",
-        "css",
-        "rust",
-        "java",
-        "yaml",
+  "bash",
+  "c",
+  "javascript",
+  "json",
+  "lua",
+  "python",
+  "typescript",
+  "tsx",
+  "css",
+  "rust",
+  "java",
+  "yaml",
 }
 
 lvim.builtin.treesitter.ignore_install = { "haskell" }
@@ -131,38 +131,39 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- -- set additional linters
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
-        { command = "flake8", filetypes = { "python" } },
-        {
-                -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
-                command = "shellcheck",
-                ---@usage arguments to pass to the formatter
-                -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
-                extra_args = { "--severity", "warning" },
-        },
-        {
-                command = "codespell",
-                ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-                filetypes = { "javascript", "python" },
-        },
+  { command = "flake8", filetypes = { "python" } },
+  {
+    -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
+    command = "shellcheck",
+    ---@usage arguments to pass to the formatter
+    -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
+    extra_args = { "--severity", "warning" },
+  },
+  {
+    command = "codespell",
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    filetypes = { "javascript", "python" },
+  },
 }
 
 -- Additional Plugins
 lvim.plugins = {
-        { "folke/tokyonight.nvim" },
-        { "Mofiqul/dracula.nvim" },
-        { "andweeb/presence.nvim" },
-        { "ibhagwan/fzf-lua" },
-        { "github/copilot.vim" },
-        { "kaicataldo/material.vim" },
-        { "safv12/andromeda.vim" },
+  { "folke/tokyonight.nvim" },
+  { "Mofiqul/dracula.nvim" },
+  { "andweeb/presence.nvim" },
+  { "ibhagwan/fzf-lua" },
+  { "github/copilot.vim" },
+  { "kaicataldo/material.vim" },
+  { "safv12/andromeda.vim" },
+  { "overcache/NeoSolarized" },
 }
 
 lvim.transparent_window = true
 
 local theme_styles = {
-        night = "night",
-        day = "day",
-        storm = "storm",
+  night = "night",
+  day = "day",
+  storm = "storm",
 }
 
 vim.g.tokyonight_style = theme_styles.night
@@ -178,21 +179,17 @@ vim.g.copilot_assume_mapped = true
 vim.g.copilot_tab_fallback = ""
 local cmp = require "cmp"
 lvim.builtin.cmp.mapping["<C-e>"] = function(fallback)
-        cmp.mapping.abort()
-        local copilot_keys = vim.fn["copilot#Accept"]()
-        if copilot_keys ~= "" then
-                vim.api.nvim_feedkeys(copilot_keys, "i", true)
-        else
-                fallback()
-        end
+  cmp.mapping.abort()
+  local copilot_keys = vim.fn["copilot#Accept"]()
+  if copilot_keys ~= "" then
+    vim.api.nvim_feedkeys(copilot_keys, "i", true)
+  else
+    fallback()
+  end
 end
 
 
 -- Autocommands (https://neovim.io/doc/user/autocmd.html)
-lvim.autocommands.custom_groups = {
-        { "BufWinEnter", "*.lua", "setlocal ts=8 sw=8" },
-}
-
 vim.api.nvim_command([[
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 autocmd FocusGained,BufEnter,CursorHold,CursorHoldI * if mode() != 'c' | checktime | endif

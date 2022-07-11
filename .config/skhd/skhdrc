@@ -1,125 +1,113 @@
+hyper - w : yabai -m space --destroy
+lalt - space : yabai -m window --toggle float; sketchybar --trigger window_focus
+shift + lalt - f : yabai -m window --toggle zoom-fullscreen; sketchybar --trigger window_focus
+# lalt - f : yabai -m window --toggle zoom-parent; sketchybar --trigger window_focus
 cmd - x [
     "finder"      : open -na /Applications/iTerm.app/Contents/MacOS/iTerm2 --args "nv" --single-instance -d
 ]
-cmd - i : open -na /Applications/iTerm.app/Contents/MacOS/iTerm2
-cmd - return : open -na /Applications/kitty.app/Contents/MacOS/kitty
+# cmd - return : open -na /Applications/iTerm.app/Contents/MacOS/iTerm2
+cmd - return : open -na /Applications/Alacritty.app/Contents/MacOS/alacritty
+cmd - i : open -na /Applications/kitty.app/Contents/MacOS/kitty
 cmd - m : mpv "$(pbpaste)"
-shift + cmd - b : open -na /Applications/Firefox\ Nightly.app/Contents/MacOS/firefox
-cmd - e : open -a /System/Volumes/Data/usr/local/Cellar/emacs-plus@28/28.1/Emacs.app
+# shift + cmd - b : open -na /Applications/Firefox\ Nightly.app/Contents/MacOS/firefox
+# cmd - e : open -a /System/Volumes/Data/usr/local/Cellar/emacs-plus@28/28.1/Emacs.app
 shift + alt - c : screencapture -c -i
 shift + ctrl - c : screencapture -c
-shift + alt - a : open -a terminal "$HOME/dotfiles/scripts/screenshot.sh"
-shift + alt - d : open -a terminal "$HOME/dotfiles/scripts/ytdl_to_any_dir.sh"
-shift + alt - t : open -a terminal "$HOME/dotfiles/scripts/tr.sh"
-shift + alt - s : open -a terminal "$HOME/dotfiles/scripts/share.sh"
-shift + alt - m : open -a terminal "$HOME/dotfiles/scripts/discordshare.sh"
-shift + alt - o : open -gja terminal "$HOME/dotfiles/scripts/cotescreenshot.sh"
-shift + alt - f : discord_formatting
-shift + alt - h : discord_formatting_sh
+hyper - g : chokegenerator
+# shift + alt - a : open -a terminal "$HOME/dotfiles/scripts/screenshot.sh"
+# shift + alt - d : open -a terminal "$HOME/dotfiles/scripts/ytdl_to_any_dir.sh"
+# shift + alt - t : open -a terminal "$HOME/dotfiles/scripts/tr.sh"
+# shift + alt - s : open -a terminal "$HOME/dotfiles/scripts/share.sh"
+# shift + alt - m : open -a terminal "$HOME/dotfiles/scripts/discordshare.sh"
+# shift + alt - o : open -gja terminal "$HOME/dotfiles/scripts/cotescreenshot.sh"
+# shift + alt - f : discord_formatting
+# shift + alt - h : discord_formatting_sh
 
-#  NOTE(koekeishiya): A list of all built-in modifier and literal keywords can
-#                     be found at https://github.com/koekeishiya/skhd/issues/1
-#
-#                     A hotkey is written according to the following rules:
-#
-#                       hotkey       = <mode> '<' <action> | <action>
-#
-#                       mode         = 'name of mode' | <mode> ',' <mode>
-#
-#                       action       = <keysym> '[' <proc_map_lst> ']' | <keysym> '->' '[' <proc_map_lst> ']'
-#                                      <keysym> ':' <command>          | <keysym> '->' ':' <command>
-#                                      <keysym> ';' <mode>             | <keysym> '->' ';' <mode>
-#
-#                       keysym       = <mod> '-' <key> | <key>
-#
-#                       mod          = 'modifier keyword' | <mod> '+' <mod>
-#
-#                       key          = <literal> | <keycode>
-#
-#                       literal      = 'single letter or built-in keyword'
-#
-#                       keycode      = 'apple keyboard kVK_<Key> values (0x3C)'
-#
-#                       proc_map_lst = * <proc_map>
-#
-#                       proc_map     = <string> ':' <command> | <string>     '~' |
-#                                      '*'      ':' <command> | '*'          '~'
-#
-#                       string       = '"' 'sequence of characters' '"'
-#
-#                       command      = command is executed through '$SHELL -c' and
-#                                      follows valid shell syntax. if the $SHELL environment
-#                                      variable is not set, it will default to '/bin/bash'.
-#                                      when bash is used, the ';' delimeter can be specified
-#                                      to chain commands.
-#
-#                                      to allow a command to extend into multiple lines,
-#                                      prepend '\' at the end of the previous line.
-#
-#                                      an EOL character signifies the end of the bind.
-#
-#                       ->           = keypress is not consumed by skhd
-#
-#                       *            = matches every application not specified in <proc_map_lst>
-#
-#                       ~            = application is unbound and keypress is forwarded per usual, when specified in a <proc_map>
-#
-#  NOTE(koekeishiya): A mode is declared according to the following rules:
-#
-#                       mode_decl = '::' <name> '@' ':' <command> | '::' <name> ':' <command> |
-#                                   '::' <name> '@'               | '::' <name>
-#
-#                       name      = desired name for this mode,
-#
-#                       @         = capture keypresses regardless of being bound to an action
-#
-#                       command   = command is executed through '$SHELL -c' and
-#                                   follows valid shell syntax. if the $SHELL environment
-#                                   variable is not set, it will default to '/bin/bash'.
-#                                   when bash is used, the ';' delimeter can be specified
-#                                   to chain commands.
-#
-#                                   to allow a command to extend into multiple lines,
-#                                   prepend '\' at the end of the previous line.
-#
-#                                   an EOL character signifies the end of the bind.
+#SKHD STUFF
 
-# add an on_enter command to the default mode
-# :: default : chunkc border::color 0xff775759
-#
-# defines a new mode 'test' with an on_enter command, that captures keypresses
-# :: test @ : chunkc border::color 0xff24ccaa
-#
-# from 'default' mode, activate mode 'test'
-# cmd - x ; test
-#
-# from 'test' mode, activate mode 'default'
-# test < cmd - x ; default
-#
-# launch a new terminal instance when in either 'default' or 'test' mode
-# default, test < cmd - return : open -na /Applications/Terminal.app
+# if you're having troubles finding key codes for a key just type skhd --observe in a terminal and type a key. Pretty cool! Or just check the wiki.
 
-# application specific bindings
-#
-# cmd - n [
-#     "kitty"       : echo "hello kitty"
-#     *             : echo "hello everyone"
-#     "qutebrowser" : echo "hello qutebrowser"
-#     "terminal"    ~
-#     "finder"      : false
-# ]
+## HYPER == SHIFT + CMD + ALT + OPTION
 
-# specify a file that should be included as an additional config-file.
-# treated as an absolutepath if the filename begins with '/' otherwise
-# the file is relative to the path of the config-file it was loaded from.
-#
-# .load "/Users/Koe/.config/partial_skhdrc"
-# .load "partial_skhdrc"
+## Quickly restart the yabai launch agent
+ctrl + alt + cmd - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
 
-# prevent skhd from monitoring events for specific applications.
-#
-# .blacklist [
-#    "kitty"
-#    "terminal"
-#    "qutebrowser"
-# ]
+## Toggle window fullscreen zoom
+hyper - f : yabai -m window --toggle zoom-fullscreen
+alt - f : yabai -m window --toggle native-fullscreen
+
+# Navigation
+alt - p : yabai -m window --focus stack.prev || yabai -m window --focus prev || yabai -m window --focus last
+alt - tab : yabai -m space --focus recent
+
+# Moving windows
+shift + alt - h : yabai -m window --warp west
+shift + alt - j : yabai -m window --warp south
+shift + alt - k : yabai -m window --warp north
+#shift + alt - l : yabai -m window --warp east
+
+# Move focus container to workspace
+shift + alt - m : yabai -m window --space last; yabai -m space --focus last
+shift + alt - p : yabai -m window --space prev; yabai -m space --focus prev
+shift + alt - n : yabai -m window --space next; yabai -m space --focus next
+shift + alt - 0x12 : yabai -m window --space 1; yabai -m space --focus 1
+shift + alt - 0x13 : yabai -m window --space 2; yabai -m space --focus 2
+shift + alt - 0x14 : yabai -m window --space 3; yabai -m space --focus 3
+shift + alt - 0x15 : yabai -m window --space 4; yabai -m space --focus 4
+##yes 0x17 and 0x16 are inverted by default, blame azerty
+#shift + alt - 0x17 : yabai -m window --space 5; yabai -m space --focus 5
+shift + alt - 0x16 : yabai -m window --space 6; yabai -m space --focus 6
+
+# Focus desktop
+hyper - 0x12 : yabai -m space --focus 1 #0x12 = &
+hyper - 0x13 : yabai -m space --focus 2 #0x13 = é
+hyper - 0x14 : yabai -m space --focus 3 #0x14 = "
+hyper - 0x15 : yabai -m space --focus 4 #0x15 = '
+##yes 0x17 and 0x16 are inverted by default, blame azerty
+hyper - 0x17 : yabai -m space --focus 5 #0x17 = (
+hyper - 0x16 : yabai -m space --focus 6 #0x16 = (
+
+# Toggle window border
+shift + alt - b : yabai -m window --toggle border
+
+# Toggle window split type
+alt - s : yabai -m window --toggle split
+
+# Close active application
+hyper - c : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+
+# Float / Unfloat window
+shift + alt - t : \
+    yabai -m window --toggle float; \
+    yabai -m window --toggle border
+
+# Resize windows
+hyper - h : yabai -m window --resize left:-50:0; \
+                  yabai -m window --resize right:-50:0
+hyper - j : yabai -m window --resize bottom:0:50; \
+                  yabai -m window --resize top:0:50
+hyper - k : yabai -m window --resize top:0:-50; \
+                  yabai -m window --resize bottom:0:-50
+hyper - l : yabai -m window --resize right:50:0; \
+                  yabai -m window --resize left:50:0
+
+# Equalize size of windows
+ctrl + alt - e : yabai -m space --balance
+
+# Rotate windows clockwise and anticlockwise
+alt - r         : yabai -m space --rotate 270
+shift + alt - r : yabai -m space --rotate 90
+
+# Create desktop and follow focus
+hyper - n : yabai -m space --create && \
+index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
+yabai -m space --focus "${index}"
+
+
+# Destroy desktop
+cmd + alt - w : yabai -m space --destroy
+
+# toggle picture-in-picture
+hyper - p : yabai -m window --toggle border && \
+          yabai -m window --toggle pip
+

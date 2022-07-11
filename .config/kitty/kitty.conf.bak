@@ -1,0 +1,17 @@
+hide_window_decorations titlebar-only
+background_opacity         0.8
+dynamic_background_opacity yes
+font_family      ComicCodeLigatures
+bold_font        ComicCodeLigatures Bold
+italic_font      ComicCodeLigatures Italic
+bold_italic_font ComicCodeLigatures Bold Italic
+font_size        18
+map cmd+c        copy_to_clipboard
+map cmd+v        paste_from_clipboard
+map shift+insert paste_from_clipboard
+copy_on_select yes
+mouse_map ctrl+left press ungrabbed,grabbed mouse_click_url
+tab_bar_edge top
+macos_option_as_alt no
+confirm_os_window_close 0
+include dracula.conf

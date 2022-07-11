@@ -10,10 +10,10 @@ bindkey '^e' edit-command-line
 
 bindkey -s '^f' 'change_folder^M'
 # used for tab completion with fzf 
-source "$HOME/.config/zsh/fzf-tab/fzf-tab.plugin.zsh"
-source "$HOME/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
-source "$HOME/.config/zsh/forgit/forgit.plugin.zsh"
-source "$HOME//.config/zsh/zsh-abbr/zsh-abbr.zsh"
+source "$HOME/dotfiles/.config/zsh/fzf-tab/fzf-tab.plugin.zsh"
+source "$HOME/dotfiles/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"
+source "$HOME/dotfiles/.config/zsh/forgit/forgit.plugin.zsh"
+source "$HOME/dotfiles/.config/zsh/zsh-abbr/zsh-abbr.zsh"
 
 export EDITOR="nvim"
 export TERMINAL="kitty"
@@ -83,10 +83,10 @@ FD_OPTIONS="--follow --exclude .git --exclude node_modules -E Library -E go/"
 alias rg="rg -g '!/Library/'" 
 
 # .zshrc
-autoload -U promptinit; promptinit
-prompt pure
-# eval "$(starship init zsh)"
-# export STARSHIP_CONFIG=~/example/non/default/path/starship.toml
+# autoload -U promptinit; promptinit
+# prompt pure
+eval "$(starship init zsh)"
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 eval "$(zoxide init zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
@@ -118,8 +118,8 @@ alias vimwiki="vim -c ':VimwikiIndex'"
 alias f="fzf"
 alias ra="ranger"
 # alias cd="z"
-alias nvc="nvim ~/dotfiles/.config/zsh/.zshrc"
-alias nvs="nvim ~/.config/nvim/lua/user/init.lua"
+alias nvs="nvim ~/dotfiles/.config/zsh/.zshrc"
+alias nvc="nvim ~/.config/nvim/lua/user/options.lua"
 alias j=z
 alias jj="cd -"
 alias bi="brew install"
@@ -159,7 +159,8 @@ alias holycrushade-gui="/usr/bin/env /Users/justchokingaround/Library/Java/JavaV
 alias weather="curl -s wttr.in/Heilbronn"
 alias icat="kitty +kitten icat"
 alias pf='pfetch'
-alias nf='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'
+alias nft='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'
+alias nf='neofetch'
 alias py='python3'
 alias pip='pip3'
 alias u='exec zsh'
@@ -421,7 +422,7 @@ gci() {
 
 acp() {
 	git add .
-	git commit -m "$1"
+	git commit -m "$*"
 	git push
 }
 
@@ -631,3 +632,28 @@ function pr-checkout() {
     gh pr checkout "$pr_number"
   fi
 }
+
+
+# sketchybar stuff
+
+function brew() {
+  command brew "$@" 
+
+  if [[ $* =~ "upgrade" ]] || [[ $* =~ "update" ]] || [[ $* =~ "outdated" ]]; then
+    sketchybar --trigger brew_upgrade
+  fi
+}
+
+function mas() {
+  command mas "$@" 
+
+  if [[ $* =~ "upgrade" ]] || [[ $* =~ "update" ]] || [[ $* =~ "outdated" ]]; then
+    sketchybar --trigger brew_upgrade
+  fi
+}
+
+function push() {
+  command git push
+  sketchybar --trigger git_push
+}
+

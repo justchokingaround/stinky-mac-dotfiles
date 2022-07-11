@@ -1,0 +1,7 @@
+default_provider: animixplay
+default_player: mpv
+discord_presence: true
+fzf:
+    executable: fzf
+    opts: []
+    state: true
