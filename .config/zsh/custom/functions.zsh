@@ -93,7 +93,7 @@ change_folder() {
 }
 
 # cdf - cd into the directory of the selected file
-cdf() {
+ji() {
    local file
    local dir
    file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
@@ -162,12 +162,8 @@ ani(){
   animdl stream "$1" -r "$2"
 }
 
-fanime() {
-  animdl stream "$1" -r "$2" --auto --index 1
-}
-
 animeg() {
-  animdl grab "$1" -r "$2"|cut -d '"' -f 8|sed -e '1,2d'|pbcopy
+  animdl grab "$1" -r "$2" --index 1|sed -nE 's|.*stream_url": "(.*)".*|\1|p'|pbcopy
 }
 
 animecover() {
@@ -175,7 +171,6 @@ BASE="$(curl -s -X POST -H "Content-Type: application/json" -d \
 '{"query": "query($id:Int $search:String){Media (id: $id, search: $search, type: ANIME) {id coverImage {large}}}", "variables":{"search":"'"$*"'"}}' https://graphql.anilist.co/)"
 pixcat thumbnail --size 1080 --align left $(printf "$BASE" | jq -r '.data.Media.coverImage.large')
 }
-
 
 char() {
 BASE="$(curl -s -X POST -H "Content-Type: application/json" -d \
@@ -185,22 +180,12 @@ QUERY="$(printf "$BASE"|jq -r '.data.Page.characters[].name.userPreferred'|fzf)"
 printf "\n" ; pixcat thumbnail --size 1080 --align left $(printf "$BASE"|jq -r '.data.Page.characters[]|select(.name.userPreferred == "'"$QUERY"'")|.image.large')
 }
 
-charmal() {
-tmp=$(curl -s "https://myanimelist.net/character/$(curl -s "https://myanimelist.net/character.php?q=$1&cat=character"|pup '.picSurround'|grep href|cut -d '"' -f 2|cut -d'/' -f5-|fzf)"|pup '.borderClass'|grep -m 1 src|cut -d '"' -f4)
-printf "\n" ; pixcat thumbnail --size 1080 --align left $tmp
-}
-
 cchar() {
 	page=$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|awk -F '"' '/category-page__member-link/&&!/Category/ {print $2,$6}'|fzf --with-nth 2..|awk '{print $1}')
 	pixcat "$(curl -s "https://you-zitsu.fandom.com$page"|awk -F '"' '/pi-image-thumbnail/ {print $2}')"
 }
 
-cchara() {
-	kitty +icat $(curl -s "https://you-zitsu.fandom.com$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|pup '.category-page__member'|awk -F '"' '/category-page__member-link/&&!/Category/ {print $2,$6}'|fzf --with-nth 2..|awk '{print $1}')"|awk -F '"' '/image-thumbnail/&&/src/ {print $2}')
-}
-
 ### Media
-
 w () {
   while :; do
     tmp="$(ls|fzf)" 
