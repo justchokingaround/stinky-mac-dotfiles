@@ -1,0 +1,17 @@
+[[language]]
+name = "rust"
+auto-format = false
+indent = { tab-width = 2, unit = "\t"}
+
+[[language]]
+name = "html"
+indent = { tab-width = 2, unit = "\t"}
+
+[[language]]
+name = "css"
+indent = { tab-width = 2, unit = "\t"}
+
+[[language]]
+name = "java"
+indent = { tab-width = 2, unit = "\t"}
+

@@ -67,6 +67,7 @@ alias u='exec zsh'
 alias myip="curl ipinfo.io/ip"
 alias ytm="ytfzf -m"
 alias nvf="open_with_nvim"
+alias hxf="open_with_helix"
 alias nvj="open_with_nvim_java"
 alias lvf="open_with_lvim"
 alias lvj="open_with_lvim_java"

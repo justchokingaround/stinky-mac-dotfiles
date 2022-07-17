@@ -3,6 +3,13 @@
 se() {du -a ~/dotfiles/scripts|awk '{print $2}'|fzf|xargs -r nvim}
 cpf() {cp -v "$1" "$HOME/Documents/$(ls ~/Documents/|fzf)/"}
 
+# symlink_file() {
+#   source=$(fd -E 'Library/' -E 'go-workspace' -t f -a|fzf --cycle)
+#   target=$(fd -E '~/' -e -t f -a|fzf --cycle)
+#   printf "source: %s" "$source"
+#   printf "target: %s" "$target"
+# }
+
 # quickly access any alias or function i have
 function qa() {
     CMD=$(
@@ -136,7 +143,12 @@ open_with_fzf() {
 
 open_with_nvim() {
 	FILE=$(fzf --reverse --height 50%)
-        [[ -z "$FILE" ]] || nvim "$FILE" && cd $(dirname "$FILE") 
+  [[ -z "$FILE" ]] || nvim "$FILE" && cd $(dirname "$FILE") 
+}
+
+open_with_helix() {
+	FILE=$(fzf --reverse --height 50%)
+  [[ -z "$FILE" ]] || hx "$FILE" && cd $(dirname "$FILE") 
 }
 
 open_with_nvim_java() {
