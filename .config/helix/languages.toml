@@ -3,6 +3,14 @@ name = "rust"
 auto-format = false
 indent = { tab-width = 2, unit = "\t"}
 
+[[grammar]]
+name = "rust"
+source = { git = "https://github.com/tree-sitter/tree-sitter-rust", rev = "a250c4582510ff34767ec3b7dcdd3c24e8c8aa68" }
+
+[[grammar]]
+name = "c"
+source = { path = "/path/to/tree-sitter-c" }
+
 [[language]]
 name = "html"
 indent = { tab-width = 2, unit = "\t"}

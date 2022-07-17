@@ -10,17 +10,16 @@ window:
 font:
   normal:
     family: Liga SFMono Nerd Font
+    # family: ComicCodeLigatures
   bold:
-    family: Liga SFMono Nerd Font
     style: Bold
   italic:
-    family: Liga SFMono Nerd Font
     style: Italic
   bold_italic:
-    family: Liga SFMono Nerd Font
     style: Bold Italic
   size: 16.0
   use_thin_strokes: true
+  draw_bold_text_with_bright_colors: true
 colors:
   primary:
     background: '0x282828'

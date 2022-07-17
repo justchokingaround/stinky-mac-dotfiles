@@ -16,10 +16,18 @@ hidden = true
 display-messages = true
 
 [keys.normal]
-"C-r" = [":sh cargo run"]
+"space" = { R = ":sh cargo run" }
+"C-r" = [":config-reload"]
+"C-s" = [":w"]
+"C-o" = [":open ~/.config/helix/config.toml"]
+"g" = { a = "code_action" }
+"Z" = { Q = ":quit!" ,  Z = ":write-quit!" }
 "D" = ["extend_to_line_bounds", "delete_selection"]
 "0" = ["goto_line_start"]
 "$" = ["goto_line_end"]
+
+[keys.insert]
+j = { j = "normal_mode", k = "normal_mode" }
 
 [keys.select]
 "D" = ["extend_to_line_bounds", "delete_selection"]

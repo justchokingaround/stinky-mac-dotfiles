@@ -31,6 +31,7 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:$HOME/.spicetify
 export PATH=$PATH:$GOROOT/bin
 export PATH=$PATH:$HOME/Library/Python/3.8/bin/
+export BAT_CONFIG_PATH="$HOME/.config/bat"
 LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 PATH=$PATH:~/.local/bin
