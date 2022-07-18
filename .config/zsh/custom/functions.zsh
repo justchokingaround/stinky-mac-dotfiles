@@ -179,22 +179,24 @@ animeg() {
 }
 
 animecover() {
-BASE="$(curl -s -X POST -H "Content-Type: application/json" -d \
-'{"query": "query($id:Int $search:String){Media (id: $id, search: $search, type: ANIME) {id coverImage {large}}}", "variables":{"search":"'"$*"'"}}' https://graphql.anilist.co/)"
-pixcat thumbnail --size 1080 --align left $(printf "$BASE" | jq -r '.data.Media.coverImage.large')
+  BASE="$(curl -s -X POST -H "Content-Type: application/json" -d \
+  '{"query": "query($id:Int $search:String){Media (id: $id, search: $search, type: ANIME) {id coverImage {large}}}", "variables":{"search":"'"$*"'"}}' https://graphql.anilist.co/)"
+    pixcat thumbnail --size 1080 --align left $(printf "$BASE"|sed -nE 's_.*{"large":"([^"]*)".*_\1_p'|tr -d "\\")
 }
 
 char() {
-BASE="$(curl -s -X POST -H "Content-Type: application/json" -d \
-'{"query": "query($page:Int = 1 $id:Int $search:String $isBirthday:Boolean $sort:[CharacterSort]=[FAVOURITES_DESC]){Page(page:$page,perPage:20){pageInfo{total perPage currentPage lastPage hasNextPage}characters(id:$id search:$search isBirthday:$isBirthday sort:$sort){id name{userPreferred}image{large}}}}","variables":{"page": 1,"type": "CHARACTERS","search":"'"$*"'","sort": "SEARCH_MATCH"}}' \
-https://graphql.anilist.co/)"
-QUERY="$(printf "$BASE"|jq -r '.data.Page.characters[].name.userPreferred'|fzf)"
-printf "\n" ; pixcat thumbnail --size 1080 --align left $(printf "$BASE"|jq -r '.data.Page.characters[]|select(.name.userPreferred == "'"$QUERY"'")|.image.large')
+  BASE="$(curl -s -X POST -H "Content-Type: application/json" -d \
+  '{"query": "query($page:Int = 1 $id:Int $search:String $isBirthday:Boolean $sort:[CharacterSort]=[FAVOURITES_DESC]){Page(page:$page,perPage:20){pageInfo{total perPage currentPage lastPage hasNextPage}characters(id:$id search:$search isBirthday:$isBirthday sort:$sort){id name{userPreferred}image{large}}}}","variables":{"page": 1,"type": "CHARACTERS","search":"'"$*"'","sort": "SEARCH_MATCH"}}' \
+  https://graphql.anilist.co/)"
+  QUERY="$(printf "$BASE"|tr "," "\n"|sed -nE 's_.*"userPreferred":"([^"]*)"}_\1_p'|fzf)"
+  printf "\n" ; pixcat thumbnail --size 1080 --align left $(printf "$BASE"|
+    tr "," "\n"|grep -A2 $QUERY|sed -nE 's_"image":.*"large":"(https:[^"]*)".*_\1_p'|tr -d "\\")
 }
 
 cchar() {
-	page=$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|awk -F '"' '/category-page__member-link/&&!/Category/ {print $2,$6}'|fzf --with-nth 2..|awk '{print $1}')
-	pixcat "$(curl -s "https://you-zitsu.fandom.com$page"|awk -F '"' '/pi-image-thumbnail/ {print $2}')"
+  page=$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|
+    sed -nE 's_.*<a href="([^"]*)" title="([^"]*)">_\1\t\2_p'|fzf --with-nth 2..|cut -f1)
+  pixcat "$(curl -s "https://you-zitsu.fandom.com${page}"|sed -nE 's_<img src="([^"]*)".*class="pi-image-thumbnail".*_\1_p'|tr -d "\t")"
 }
 
 ### Media
@@ -229,14 +231,6 @@ function fzf-env-vars() {
   echo $(echo $out | cut -d= -f2)
 }
 
-function delete-branches() {
-  git branch |
-    grep --invert-match '\*' |
-    cut -c 3- |
-    fzf --multi --preview="git log {} --" |
-    xargs --no-run-if-empty git branch --delete --force
-}
-
 ### Other
 
 emoji() {
@@ -244,19 +238,3 @@ emoji() {
   selected_emoji=$(echo $emojis | fzf)
   echo "$selected_emoji" | awk '{print $1}' | pbcopy
 } 
-
-function pr-checkout() {
-  local pr_number
-
-  pr_number=$(
-    gh api 'repos/pystardust/ani-cli/pulls' |
-    jq --raw-output '.[] | "#\(.number) \(.title)"' |
-    fzf |
-    gsed 's/^#\([0-9]\+\).*/\1/'
-  )
-
-  if [ -n "$pr_number" ]; then
-    gh pr checkout "$pr_number"
-  fi
-}
-

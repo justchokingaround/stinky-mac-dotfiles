@@ -57,6 +57,7 @@ alias fytdlist='yt-dlp -f "bv*[height=1080]+ba" -P "$(fd . "/Users/justchokingar
 
 ### Other aliases
 
+alias share='printf $(curl -# "https://oshi.at" -F "f=@$(fd -t f|fzf)"|sed -nE "s_DL: (.*)_\1_p")|pbcopy'
 alias weather="curl -s wttr.in/Heilbronn"
 alias pf='pfetch'
 alias nft='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'
