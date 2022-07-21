@@ -18,6 +18,7 @@ alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias rd='rm -rI "$(exa -D| fzf --height=20% --preview="exa -l {}")"'
 alias cx='chmod +x "$(find . -maxdepth 1 -type f| fzf)"'
 alias nv='nvim'
+alias v='nvim'
 alias lv='lvim'
 alias f="fzf"
 alias ra="ranger"
