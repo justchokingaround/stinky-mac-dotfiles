@@ -238,3 +238,9 @@ emoji() {
   selected_emoji=$(echo $emojis | fzf)
   echo "$selected_emoji" | awk '{print $1}' | pbcopy
 } 
+
+#   Update all Wallpapers
+wallpaper() {
+  sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db "update data set value = '$(readlink -f $1)'" && killall Dock 
+}
+

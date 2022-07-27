@@ -11,4 +11,4 @@ export FZF_DEFAULT_OPTS="--no-mouse --border -1 --reverse --multi --inline-info 
 # fzf --bind 'ctrl-d:reload:mv /tmp/list /tmp/list-dup; grep -v ^{1}$ /tmp/list-dup | tee /tmp/list' < /tmp/list
 
 #GRUVBOX THEME FOR FZF
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#ebdbb2,bg:#282828,hl:#cc241d --color=fg+:#fbf1c7,bg+:#282828,hl+:#fb4934 --color=info:#98971a,prompt:#d79921,pointer:#b16286 --color=marker:#b8bb26,spinner:#fabd2f,header:#d3869b'
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#ebdbb2,hl:#cc241d --color=fg+:#fbf1c7,bg+:#282828,hl+:#fb4934 --color=info:#98971a,prompt:#d79921,pointer:#b16286 --color=marker:#b8bb26,spinner:#fabd2f,header:#d3869b'

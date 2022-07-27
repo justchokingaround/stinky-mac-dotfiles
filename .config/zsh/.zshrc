@@ -1,6 +1,10 @@
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
+_fix_cursor() {
+   echo -ne '\e[5 q'
+}
+precmd_functions+=(_fix_cursor)
 # edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
@@ -16,31 +20,6 @@ source "$HOME/dotfiles/.config/zsh/custom/aliases.zsh"
 source "$HOME/dotfiles/.config/zsh/custom/functions.zsh"
 source "$HOME/dotfiles/.config/zsh/custom/git.zsh"
 
-export EDITOR="nvim"
-export TERMINAL="kitty"
-export READER="mupdf -gl"
-export VISUAL="nvim"
-export VIDEO="mpv"
-export IMAGE="/Applications/qView.app/Contents/MacOS/qView"
-export OPENER="open"
-export BROWSER="/Applications/Firefox Nightly.app/Contents/MacOS/firefox"
-export PATH="$HOME/.emacs.d/bin:$PATH"
-export GOPATH=$HOME/go-workspace # don't forget to change your path correctly!
-export GOROOT=/usr/local/opt/go/libexec
-export PATH=$PATH:$GOPATH/bin
-export PATH=$PATH:$HOME/.spicetify
-export PATH=$PATH:$GOROOT/bin
-export PATH=$PATH:$HOME/Library/Python/3.8/bin/
-export BAT_CONFIG_PATH="$HOME/.config/bat"
-LC_CTYPE=en_US.UTF-8
-LC_ALL=en_US.UTF-8
-PATH=$PATH:~/.local/bin
-PATH=$PATH:/usr/bin
-PATH=$PATH:~/dotfiles/scripts
-PATH=$PATH:~/dotfiles/scripts/presence
-PATH=$PATH:~/.local/share
-PATH=$PATH:$HOME/.spicetify
-
 autoload -U colors && colors
 HISTSIZE=1000
 SAVEHIST=1000
@@ -52,12 +31,10 @@ zmodload zsh/complist
 compinit
 _comp_options+=(globdots)
 
-# colorful man pages
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-eval "$(starship init zsh)"
-export STARSHIP_CONFIG=~/.config/starship/starship.toml
 # very important, otherwise zoxide will not work
 eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
+export STARSHIP_CONFIG=~/.config/starship/starship.toml
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
@@ -82,4 +59,3 @@ function push() {
   command git push
   sketchybar --trigger git_push
 }
-

@@ -164,6 +164,11 @@ _G.packer_plugins = {
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
   },
+  ["nnn.vim"] = {
+    loaded = true,
+    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/nnn.vim",
+    url = "https://github.com/mcchrish/nnn.vim"
+  },
   ["null-ls.nvim"] = {
     loaded = true,
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/null-ls.nvim",
