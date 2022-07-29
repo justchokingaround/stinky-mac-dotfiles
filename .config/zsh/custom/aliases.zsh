@@ -16,19 +16,19 @@ alias lh="exa -a"
 alias tree='exa -T'
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias rd='rm -rI "$(exa -D| fzf --height=20% --preview="exa -l {}")"'
-alias cx='chmod +x "$(find . -maxdepth 1 -type f| fzf)"'
+alias cx='chmod +x "$(rg --files -g "*.sh"|fzf -1 --height=20% --preview-window=hidden)"'
 alias nv='nvim'
 alias n='nnn -a'
+alias vg='nvim $(gum filter)'
 alias v='nvim'
 alias lv='lvim'
 alias f="fzf"
 alias ra="ranger"
-alias nvs="cd ~/dotfiles/.config/zsh && nvim ~/dotfiles/.config/zsh/.zshrc"
-alias nvc="cd ~/dotfiles/.config/nvim/lua/user && nvim ~/dotfiles/.config/nvim/lua/user/options.lua"
 alias j=z
 alias jj="cd -"
 alias bi="brew install"
 alias bu="brew uninstall"
+alias brew_uninstall="brew list|gum choose --no-limit|xargs brew uninstall"
 
 ### Suffix aliases
 alias -s md=nvim
@@ -59,40 +59,26 @@ alias fytdlist='yt-dlp -f "bv*[height=1080]+ba" -P "$(fd . "/Users/justchokingar
 
 ### Other aliases
 
-alias share='printf $(curl -# "https://oshi.at" -F "f=@$(fd -t f|fzf)"|sed -nE "s_DL: (.*)_\1_p")|pbcopy'
+# quickly share a file
+alias share='printf $(curl -# "https://oshi.at" -F "f=@$(fd -t f -d 1|fzf)"|sed -nE "s_DL: (.*)_\1_p")|pbcopy'
 alias weather="curl -s wttr.in/Heilbronn"
 alias pf='pfetch'
 alias nft='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'
 alias nf='neofetch'
 alias py='python3'
 alias pip='pip3'
-alias u='exec zsh'
+alias u="zsh &&    echo -ne '\e[5 q'"
 alias myip="curl ipinfo.io/ip"
+alias ytfzf="ytfzf -t --thumb-viewer=kitty"
 alias ytm="ytfzf -m"
 alias nvf="open_with_nvim"
-alias hxf="open_with_helix"
-alias nvj="open_with_nvim_java"
-alias lvf="open_with_lvim"
-alias lvj="open_with_lvim_java"
+alias nvff="open_with_nvim_filetype"
 alias mpf="open_with_mpv"
-alias mpfq="open_with_mpv_quiet"
-alias msf="open_with_mpv_silent"
-alias ipf="open_with_iina"
-alias imf="open_image_fzf"
-alias mpe="open_with_mpv_external"
 alias nb="newsboat"
-alias awho="animewho"
 alias epy="python3 ~/dev/epy/epy.py"
 alias -g L='| less'
-alias -g G='| grep -i'
-alias -g CUT='| cut'
 alias -g C='| pbcopy'
-alias -g P='| '
-alias -g H="| htmlq 'body' | bat --language html"
-alias -g A="| awkg -b 'from html import unescape' 'print(unescape(R0))' "
-alias -g PUP="| pup 'text{}'"
 alias -g S="| sed"
 alias -g F="| fzf"
-alias -g X="| xargs -r"
 alias -g B="| bat"
 alias -g J="| jq"

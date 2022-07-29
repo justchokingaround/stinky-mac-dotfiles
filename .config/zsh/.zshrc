@@ -1,14 +1,14 @@
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
-_fix_cursor() {
-   echo -ne '\e[5 q'
-}
-precmd_functions+=(_fix_cursor)
+# _fix_cursor() {
+#    echo -ne '\e[5 q'
+# }
+# precmd_functions+=(_fix_cursor)
 # edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line
-bindkey -s '^f' 'change_folder^M'
+bindkey -s '^f' 'change_folder .^M'
 
 source "$HOME/dotfiles/.config/zsh/fzf-tab/fzf-tab.plugin.zsh"
 source "$HOME/dotfiles/.config/zsh/zsh-system-clipboard/zsh-system-clipboard.zsh"

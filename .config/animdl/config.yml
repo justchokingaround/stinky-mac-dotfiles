@@ -3,5 +3,5 @@ default_player: mpv
 discord_presence: false
 fzf:
     executable: fzf
-    opts: []
+    opts: [--reverse, --height=35%, --preview-window=hidden]
     state: true
