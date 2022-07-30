@@ -64,6 +64,7 @@ return packer.startup(function(use)
   use { "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" }
   use 'andweeb/presence.nvim'
   use 'mcchrish/nnn.vim'
+  use { 'CRAG666/code_runner.nvim', requires = 'nvim-lua/plenary.nvim' }
   -- Colorschemes
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
   use { "lunarvim/darkplus.nvim", commit = "2584cdeefc078351a79073322eb7f14d7fbb1835" }

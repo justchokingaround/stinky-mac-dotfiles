@@ -1,61 +1,56 @@
-# add_newline = false
-# scan_timeout = 10
-#
-# format = """
-# (fg:#fff1cf)$username$directory$git_branch$git_status$time$shell$character"""
-#
-# [line_break]
-# disabled = false
-#
-# [fill]
-# symbol = " "
-# style = "fg:#252525 bg:#6f6565"
-#
-# [character]
-# success_symbol = "[](bold cyan)"
-# error_symbol = "[](bold red)"
-#
-# [battery]
-# full_symbol = ""
-# format = "[ $symbol$percentage ](fg:#fff1cf)"
-#
-# [[battery.display]]
-# threshold = 100
-#
-# [time]
-# format = '[\[$time\] ](fg:#fff1cf bg:#6f6565)'
-# utc_time_offset = "local"
-# time_format = "%T"
-# disabled = false
-# time_range = "-"
-#
-# [git_branch]
-# format = "[$symbol$branch](bg:#252525)[ ](fg:#252525 bg:#6f6565 bold)"
-# symbol = " "
-#
-# [shell]
-# bash_indicator = "[](fg:#c4c431 bg:#6f6565)[BSH-MODE](fg:#fff1cf bg:#c4c431)[](fg:#c4c431 bg:#6f6565)[  ](fg:#c4c431 bg:#6f6565)[](fg:#6f6565)"
-# zsh_indicator = "[](fg:#94b3a8 bg:#6f6565)[ZSH-MODE](fg:#fff1cf bg:#94b3a8)[](fg:#94b3a8 bg:#6f6565)[  ](fg:#94b3a8 bg:#6f6565)[](fg:#6f6565)"
-# nu_indicator = "[](fg:#fe6142 bg:#6f6565)[NSH-MODE](fg:#fff1cf bg:#fe6142)[](fg:#fe6142 bg:#6f6565)[  ](fg:#fe6142 bg:#6f6565)[](fg:#6f6565)"
-# fish_indicator = "[](fg:#5442f5 bg:#6f6565)[FSH-MODE](fg:#fff1cf bg:#5442f5)[](fg:#5442f5 bg:#6f6565)[  ](fg:#5442f5 bg:#6f6565)[](fg:#6f6565)"
-# elvish_indicator = "[](fg:#a742f5 bg:#6f6565)[ESH-MODE](fg:#fff1cf bg:#a742f5)[](fg:#a742f5 bg:#6f6565)[  ](fg:#a742f5 bg:#6f6565)[](fg:#6f6565)"
-# xonsh_indicator = "[](fg:#70ff24 bg:#6f6565)[XSH-MODE](fg:#fff1cf bg:#70ff24)[](fg:#70ff24 bg:#6f6565)[  ](fg:#70ff24 bg:#6f6565)[](fg:#6f6565)"
-# unknown_indicator = "[](fg:#fff1cf bg:#6f6565)[???-MODE][](fg:#6f6565)"
-# style = "fg:#fff1cf bg:#6f6565"
-# disabled = false
-#
-# [directory]
-# format = "[$path]($style)[$read_only](fg:#fff bg:#6f6565)[ ](fg:#6f6565 bg:#252525 bold)"
-# style = "fg:#fff1cf bg:#6f6565"
-# truncation_symbol = "…/"
-# truncate_to_repo = false
-# truncation_length = 100
-# home_symbol = " "
-#
-# [git_status]
-# format = '([\[$all_status$ahead_behind\]](fg:#fff1cf bg:#6f6565)[ ](fg:#fff1cf bg:#6f6565))'
-#
-# [username]
-# format = "[](fg:#fff1cf bold)[ ](fg:#252525 bg:#fff1cf bold)[ ](fg:#fff1cf bg:#6f6565 bold)"
-# show_always = true
-# disabled = false
+"$schema" = 'https://starship.rs/config-schema.json'
+add_newline = false
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[➜](bold red)"
+
+[directory]
+home_symbol = " "
+truncation_length = 8
+truncate_to_repo = false
+read_only = "🔒"
+read_only_style	= "red"
+
+[package]
+disabled = true
+[git_branch]
+format = "on [$symbol$branch]($style) "
+symbol = "🍣 "
+style = "bold yellow"
+
+[git_commit]
+commit_hash_length = 8
+style = "bold white"
+
+[git_state]
+format = '[\($state( $progress_current of $progress_total)\)]($style) '
+
+[git_status]
+conflicted = "⚔️ "
+ahead = "🏎️ 💨×${count} "
+behind = "🐢×${count} "
+diverged = "🔱 🏎️ 💨×{ahead_count} 🐢×${behind_count} "
+untracked = "🛤️ ×${count} "
+stashed = "📦 "
+modified = "📝×${count} "
+staged = "🗃️ ×${count} "
+renamed = "📛×${count} "
+deleted = "🗑️ ×${count} "
+style = "brightwhite"
+format = "$all_status$ahead_behind"
+
+[python]
+format = "[$symbol$version]($style) "
+style = "bold green"
+
+[nodejs]
+disabled = true
+
+[rust]
+format = "[$symbol$version]($style) "
+style = "bold green"
+
+[golang]
+format = "[$symbol$version]($style) "
+style = "bold green"

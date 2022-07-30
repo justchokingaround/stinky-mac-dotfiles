@@ -1,10 +1,7 @@
 # vi mode
 bindkey -v
 export KEYTIMEOUT=1
-# _fix_cursor() {
-#    echo -ne '\e[5 q'
-# }
-# precmd_functions+=(_fix_cursor)
+echo '\e[5 q'
 # edit line in vim with ctrl-e:
 autoload edit-command-line; zle -N edit-command-line
 bindkey '^e' edit-command-line

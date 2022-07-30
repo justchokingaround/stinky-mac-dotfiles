@@ -79,13 +79,17 @@ keymap("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", opts)
 keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
 keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
 
+-- Running code
+keymap('n', '<leader>r', ':RunCode<CR>', { noremap = true, silent = false })
+keymap('n', '<leader>rf', ':RunFile<CR>', { noremap = true, silent = false })
+keymap('n', '<leader>rft', ':RunFile tab<CR>', { noremap = true, silent = false })
+keymap('n', '<leader>rp', ':RunProject<CR>', { noremap = true, silent = false })
+keymap('n', '<leader>rc', ':RunClose<CR>', { noremap = true, silent = false })
+keymap('n', '<leader>crf', ':CRFiletype<CR>', { noremap = true, silent = false })
+keymap('n', '<leader>crp', ':CRProjects<CR>', { noremap = true, silent = false })
+
 -- Custom
 keymap("n", "<leader>ps", ":PackerSync<CR>", opts)
 keymap("n", "<leader>T", ":TransparentToggle<CR>", opts)
 keymap("n", "<C-s>", ":w<cr>", opts)
-keymap("n", "<leader>J", ":!javac % && java %<cr>", opts)
-keymap("n", "<leader>P", ":!python3 %<cr>", opts)
-keymap("n", "<leader>R", ":!cargo run<cr>", opts)
-keymap("n", "<leader>C", ":!gcc % && ./a.out<cr>", opts)
-keymap("n", "<leader>G", ":!gradle build && gradle run<cr>", opts)
 keymap("n", "<leader>H", ":!shellcheck %<cr>", opts)

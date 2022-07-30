@@ -5,9 +5,11 @@ end
 
 toggleterm.setup({
 	size = 20,
-	open_mapping = [[<leader>tt]],
+	-- open_mapping = [[<leader>tt]],
+	open_mapping = [[<C-e>]],
 	hide_numbers = true,
 	shade_terminals = true,
+  shade_filetypes = { "none", "fzf" },
 	shading_factor = 2,
 	start_in_insert = true,
 	insert_mappings = true,

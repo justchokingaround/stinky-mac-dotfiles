@@ -33,6 +33,12 @@ nvc() {
   [ -z "$file" ] || $EDITOR $file
 }
 
+# quickly edit config files
+vc() {
+  file=$(fd . "$HOME/dotfiles/.config" -t f|fzf -d"/" --with-nth -1.. --height=95%)
+  [ -z "$file" ] || $EDITOR $file
+}
+
 # quickly access any alias or function i have
 qa() { eval $( (alias && functions|sed -nE 's@^([^_].*)\(\).*@\1@p')|cut -d"=" -f1|fzf --reverse) }
 
@@ -48,7 +54,7 @@ mkcd() { mkdir -p "$1" && cd "$1"; }
 # use fzf with tree preview to go into a directory
 change_folder() {
   CHOSEN=$(fd '.' -d 1 -H -t d $DIR|fzf --cycle --height=95% --preview="exa -T {}" --reverse)
-  [ -z $CHOSEN ] && return 0 || cd "$CHOSEN" && [ $(ls|wc -l) -le 60 ] && (pwd; ls)
+  [ -z $CHOSEN ] && return 0 || cd "$CHOSEN" && [ $(ls|wc -l) -le 60 ] && ls
 }
 
 # search for file and go into its directory
@@ -68,8 +74,8 @@ open_with_nvim() {
 
 open_with_nvim_filetype() {
   [ -z "$*" ] && filetype=$(gum filter --indicator="→ " \
-    --placeholder="Choose a filetype" \
-    --indicator.foreground="360" --text.foreground="360" \
+    --placeholder="Choose a filetype" --match.foreground="212" \
+    --indicator.foreground="212" --text.foreground="360" \
     < ~/dev/sh_scripts/extensions.txt) || filetype=$*
   [ -z "$filetype" ] || FILE=$(rg --files -g "*.$filetype"|
     sort|fzf --cycle --reverse --height 95% -0)
@@ -82,6 +88,21 @@ animes(){
 
 animeg() {
   animdl grab "$1" -r "$2" --index 1|sed -nE 's|.*stream_url": "(.*)".*|\1|p'|pbcopy
+}
+
+cchar() {
+  char=$(curl -s "https://you-zitsu.fandom.com/wiki/Category:Characters"|
+    grep -B6 'class="category-page__member-thumbnail "'|
+    sed -nE 's_.*href="([^"]*)".*_\1_p; s_.*data-src="([^"]*)".*_\1_p; s_.*alt="([^"]*)".*_\1_p'|
+    sed -e 'N;N;s/\n/\t/g' -e 's_/width/[[:digit:]]\{1,3\}_/width/800_g' \
+    -e 's_/height/[[:digit:]]\{1,3\}_/height/600_g'|
+    fzf --with-nth 3.. --cycle --preview="kitty +kitten icat --clear --transfer-mode file; \
+    kitty +kitten icat --place "190x12@10x10" --scale-up --transfer-mode file {2}"|cut -f1)
+  [ -z "$char" ] && exit 1 || images=$(curl -sL "https://you-zitsu.fandom.com"$char|
+    sed -nE 's_.*src="([^"]*)".*class="pi-image-thumbnail".*alt="([^"]*)".*_\1\t\2_p')
+  [ $(printf "%s" "$images"|wc -l) -lt 2 ] && kitty +kitten icat $(printf "%s" "$images"|cut -f1) ||
+  printf "%s" "$images"|fzf --with-nth 2.. --cycle --preview="kitty +kitten icat --clear --transfer-mode file; \
+    kitty +kitten icat --place "190x12@10x10" --scale-up --transfer-mode file {1}" > /dev/null
 }
 
 ### Fzf functions
@@ -102,8 +123,8 @@ fo() {
 
 emoji() {
   emojis=$(curl -sSL 'https://git.io/JXXO7')
-  selected_emoji=$(echo $emojis|fzf)
-  echo "$selected_emoji"|awk '{print $1}'|pbcopy
+  selected_emoji=$(printf "%s" $emojis|fzf --preview-window=hidden --cycle)
+  [ -z "$selected_emoji" ] || printf "%s" "$selected_emoji"|cut -d" " -f1|pbcopy
 } 
 
 # pick an image with fzf and copy it to the clipboard
