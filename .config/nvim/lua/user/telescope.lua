@@ -8,8 +8,8 @@ local actions = require "telescope.actions"
 telescope.setup {
   defaults = {
 
-    prompt_prefix = " ",
-    selection_caret = " ",
+    prompt_prefix = "🔍 ",
+    selection_caret = "➜ ",
     vimgrep_arguments = {
           "rg",
           "--color=never",
@@ -18,6 +18,8 @@ telescope.setup {
           "--line-number",
           "--column",
           "--smart-case",
+          "--hidden",
+          "--ignore",
         },
 
     entry_prefix = "	",
@@ -56,8 +58,8 @@ telescope.setup {
 
     mappings = {
       i = {
-        ["<Down>"] = actions.cycle_history_next,
-        ["<Up>"] = actions.cycle_history_prev,
+        ["<Down>"] = actions.move_selection_next,
+        ["<Up>"] = actions.move_selection_previous,
         ["<C-j>"] = actions.move_selection_next,
         ["<C-k>"] = actions.move_selection_previous,
       },
