@@ -12,6 +12,7 @@ cmd - m : mpv "$(pbpaste)"
 # cmd - e : open -a /System/Volumes/Data/usr/local/Cellar/emacs-plus@28/28.1/Emacs.app
 shift + alt - c : screencapture -c -i
 shift + ctrl - c : screencapture -c
+hyper - n : neovide
 hyper - g : chokegenerator
 # shift + alt - a : open -a terminal "$HOME/dotfiles/scripts/screenshot.sh"
 # shift + alt - d : open -a terminal "$HOME/dotfiles/scripts/ytdl_to_any_dir.sh"

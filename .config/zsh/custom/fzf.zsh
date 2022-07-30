@@ -11,5 +11,8 @@ export FZF_COMPLETION_OPTS='--border --info=inline'
 export FZF_DEFAULT_OPTS="--no-mouse --reverse --border -1 --inline-info \
   --preview 'bat --style=numbers --color=always --line-range :500 {}'"
 
-#GRUVBOX THEME FOR FZF
-export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#ebdbb2,hl:#cc241d --color=fg+:#fbf1c7,bg+:#282828,hl+:#fb4934 --color=info:#98971a,prompt:#d79921,pointer:#b16286 --color=marker:#b8bb26,spinner:#fabd2f,header:#d3869b'
+# GRUVBOX THEME FOR FZF
+# export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#ebdbb2,hl:#cc241d --color=fg+:#fbf1c7,bg+:#282828,hl+:#fb4934 --color=info:#98971a,prompt:#d79921,pointer:#b16286 --color=marker:#b8bb26,spinner:#fabd2f,header:#d3869b'
+
+# Custom Pink & Black theme
+export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS' --color=fg:#ff5f87,hl:#008ec4 --color=fg+:#d75f87,bg+:#4e4e4e,hl+:#5fd7ff --color=info:#afaf87,prompt:#c30771,pointer:#af5fff --color=marker:#c30771,spinner:#af5fff,header:#a790d5'

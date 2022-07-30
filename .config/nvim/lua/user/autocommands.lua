@@ -53,11 +53,10 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
   end
 })
 
--- Set transparency setting for Neovide
--- let g:neovide_transparency=0.95
+-- Neovide stuff
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function ()
-   vim.cmd ":let g:neovide_transparency=0.7"
+  vim.cmd ":let g:neovide_transparency=0.7"
   end
 })
 
@@ -72,6 +71,13 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function ()
    vim.cmd ":lua require'lightspeed'.init_highlight(true)"
+  end
+})
+
+-- Remap <C-e> to :ToggleTerm
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  callback = function ()
+    vim.cmd "nnoremap <C-e> :ToggleTerm<CR>"
   end
 })
 

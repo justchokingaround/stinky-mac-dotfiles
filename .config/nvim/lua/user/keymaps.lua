@@ -3,7 +3,7 @@ local keymap = vim.keymap.set
 -- Silent keymap option
 local opts = { silent = true }
 
---Remap space as leader key
+-- Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "
 
@@ -100,3 +100,4 @@ keymap("n", "<leader>ps", ":PackerSync<CR>", opts)
 keymap("n", "<leader>T", ":TransparentToggle<CR>", opts)
 keymap("n", "<C-s>", ":w<cr>", opts)
 keymap("n", "<leader>H", ":!shellcheck %<cr>", opts)
+keymap("n", "<leader>a", ":Alpha<CR>", opts)
