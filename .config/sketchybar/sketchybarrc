@@ -81,14 +81,15 @@ source "$ITEM_DIR/network.sh"
 
 source "$ITEM_DIR/github.sh"
 source "$ITEM_DIR/calendar.sh"
-# source "$ITEM_DIR/system.sh"
+source "$ITEM_DIR/system.sh"
 source "$ITEM_DIR/cpu.sh"
-# source "$ITEM_DIR/spotify.sh"
+source "$ITEM_DIR/spotify.sh"
 
 ############## FINALIZING THE SETUP ##############
 sketchybar --update
 
 ############## Animation ########################
+
 # sketchybar --animate sin 30 \
 #            --bar y_offset=0 \
 #                  notch_width=200 \

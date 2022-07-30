@@ -17,10 +17,11 @@ alias tree='exa -T'
 alias grep="grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn}"
 alias rd='rm -rI "$(exa -D| fzf --height=20% --preview="exa -l {}")"'
 alias cx='chmod +x "$(rg --files -g "*.sh"|fzf -1 --height=20% --preview-window=hidden)"'
+alias v='nvim'
 alias nv='nvim'
+alias ni="neovide && osascript -e 'quit app \"'$TERMINAL'\"'"
 alias n='nnn -a'
 alias vg='nvim $(gum filter)'
-alias v='nvim'
 alias lv='lvim'
 alias f="fzf"
 alias ra="ranger"
@@ -71,8 +72,10 @@ alias u="zsh &&    echo -ne '\e[5 q'"
 alias myip="curl ipinfo.io/ip"
 alias ytfzf="ytfzf -t --thumb-viewer=kitty"
 alias ytm="ytfzf -m"
-alias nvf="open_with_nvim"
-alias nvff="open_with_nvim_filetype"
+alias nvf="open_with_nvim nvim"
+alias nvff="open_with_nvim_filetype nvim"
+alias nif="open_with_nvim neovide && osascript -e 'quit app \"'$TERMINAL'\"'"
+alias niff="open_with_nvim_filetype neovide && osascript -e 'quit app \"'$TERMINAL'\"'"
 alias mpf="open_with_mpv"
 alias nb="newsboat"
 alias epy="python3 ~/dev/epy/epy.py"

@@ -6,6 +6,7 @@ require('code_runner').setup({
 		typescript = "deno run",
 		rust = "cd $dir && rustc $fileName && $dir/$fileNameWithoutExt",
     sh = "sh",
+    c = "cd $dir && gcc $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt && rm $fileNameWithoutExt",
 	},
 	-- filetype_path = vim.fn.expand('~/.config/nvim/code_runner.json'),
 	-- project_path = vim.fn.expand('~/.config/nvim/project_manager.json')

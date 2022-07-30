@@ -65,12 +65,21 @@ return packer.startup(function(use)
   use 'andweeb/presence.nvim'
   use 'mcchrish/nnn.vim'
   use { 'CRAG666/code_runner.nvim', requires = 'nvim-lua/plenary.nvim' }
+  -- use 'karb94/neoscroll.nvim'
+  use { 'declancm/cinnamon.nvim' }
+  use { 'rainbowhxch/beacon.nvim' }
+	use { 'xiyaowong/accelerated-jk.nvim' }
+  use { 'ggandor/lightspeed.nvim' }
+
   -- Colorschemes
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
   use { "lunarvim/darkplus.nvim", commit = "2584cdeefc078351a79073322eb7f14d7fbb1835" }
   use { "xiyaowong/nvim-transparent" }
   use { "sainnhe/edge" }
   use { "ellisonleao/gruvbox.nvim" }
+  use 'rockerBOO/boo-colorscheme-nvim'
+  use 'bluz71/vim-moonfly-colors'
+  use 'nikolvs/vim-sunbather'
 
   -- cmp plugins
   use { "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" } -- The completion plugin
@@ -103,11 +112,6 @@ return packer.startup(function(use)
 
   -- Git
   use { "lewis6991/gitsigns.nvim", commit = "c18e016864c92ecf9775abea1baaa161c28082c3" }
-
-  -- DAP
-  use { "mfussenegger/nvim-dap", commit = "014ebd53612cfd42ac8c131e6cec7c194572f21d" }
-  use { "rcarriga/nvim-dap-ui", commit = "d76d6594374fb54abf2d94d6a320f3fd6e9bb2f7" }
-  use { "ravenxrz/DAPInstall.nvim", commit = "8798b4c36d33723e7bba6ed6e2c202f84bb300de" }
 
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins

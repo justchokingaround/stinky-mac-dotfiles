@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
 next () {
   osascript -e 'tell application "Spotify" to play next track'

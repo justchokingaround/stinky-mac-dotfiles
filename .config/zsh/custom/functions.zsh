@@ -39,6 +39,12 @@ vc() {
   [ -z "$file" ] || $EDITOR $file
 }
 
+# quickly copy a file or directory from ~/Downloads to current directory
+cpd() {
+  file=$(fd . "$HOME/Downloads" -t f|fzf -d"/" --with-nth -1.. --height=95%)
+  [ ! -z "$file" ] && cp $file . && gum confirm "Delete the original file?" && rm $file || exit 1
+}
+
 # quickly access any alias or function i have
 qa() { eval $( (alias && functions|sed -nE 's@^([^_].*)\(\).*@\1@p')|cut -d"=" -f1|fzf --reverse) }
 
@@ -69,17 +75,17 @@ open_with_mpv() {
 
 open_with_nvim() {
   FILE=$(rg --files -g '!*.{gif,png,jp(e)g,mp4,mkv,webm,m4v,mov,MOV}'|fzf --reverse --height 95%)
-  [[ -z $FILE ]] || nvim "$FILE"
+  [[ -z $FILE ]] || $1 "$FILE"
 }
 
 open_with_nvim_filetype() {
-  [ -z "$*" ] && filetype=$(gum filter --indicator="→ " \
+  filetype=$(gum filter --indicator="→ " \
     --placeholder="Choose a filetype" --match.foreground="212" \
     --indicator.foreground="212" --text.foreground="360" \
     < ~/dev/sh_scripts/extensions.txt) || filetype=$*
   [ -z "$filetype" ] || FILE=$(rg --files -g "*.$filetype"|
     sort|fzf --cycle --reverse --height 95% -0)
-  [[ -z "$FILE" ]] || nvim "$FILE"
+  [[ -z "$FILE" ]] || $1 "$FILE"
 }
 
 animes(){

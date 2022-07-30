@@ -74,25 +74,40 @@ _G.packer_plugins = {
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/Comment.nvim",
     url = "https://github.com/numToStr/Comment.nvim"
   },
-  ["DAPInstall.nvim"] = {
-    loaded = true,
-    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/DAPInstall.nvim",
-    url = "https://github.com/ravenxrz/DAPInstall.nvim"
-  },
   LuaSnip = {
     loaded = true,
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
+  },
+  ["accelerated-jk.nvim"] = {
+    loaded = true,
+    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/accelerated-jk.nvim",
+    url = "https://github.com/xiyaowong/accelerated-jk.nvim"
   },
   ["alpha-nvim"] = {
     loaded = true,
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/alpha-nvim",
     url = "https://github.com/goolord/alpha-nvim"
   },
+  ["beacon.nvim"] = {
+    loaded = true,
+    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/beacon.nvim",
+    url = "https://github.com/rainbowhxch/beacon.nvim"
+  },
+  ["boo-colorscheme-nvim"] = {
+    loaded = true,
+    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/boo-colorscheme-nvim",
+    url = "https://github.com/rockerBOO/boo-colorscheme-nvim"
+  },
   ["bufferline.nvim"] = {
     loaded = true,
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/bufferline.nvim",
     url = "https://github.com/akinsho/bufferline.nvim"
+  },
+  ["cinnamon.nvim"] = {
+    loaded = true,
+    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/cinnamon.nvim",
+    url = "https://github.com/declancm/cinnamon.nvim"
   },
   ["cmp-buffer"] = {
     loaded = true,
@@ -164,6 +179,11 @@ _G.packer_plugins = {
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/indent-blankline.nvim",
     url = "https://github.com/lukas-reineke/indent-blankline.nvim"
   },
+  ["lightspeed.nvim"] = {
+    loaded = true,
+    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/lightspeed.nvim",
+    url = "https://github.com/ggandor/lightspeed.nvim"
+  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/lualine.nvim",
@@ -188,16 +208,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/nvim-cmp",
     url = "https://github.com/hrsh7th/nvim-cmp"
-  },
-  ["nvim-dap"] = {
-    loaded = true,
-    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/nvim-dap",
-    url = "https://github.com/mfussenegger/nvim-dap"
-  },
-  ["nvim-dap-ui"] = {
-    loaded = true,
-    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/nvim-dap-ui",
-    url = "https://github.com/rcarriga/nvim-dap-ui"
   },
   ["nvim-lsp-installer"] = {
     loaded = true,
@@ -283,6 +293,16 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/vim-illuminate",
     url = "https://github.com/RRethy/vim-illuminate"
+  },
+  ["vim-moonfly-colors"] = {
+    loaded = true,
+    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/vim-moonfly-colors",
+    url = "https://github.com/bluz71/vim-moonfly-colors"
+  },
+  ["vim-sunbather"] = {
+    loaded = true,
+    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/vim-sunbather",
+    url = "https://github.com/nikolvs/vim-sunbather"
   }
 }
 

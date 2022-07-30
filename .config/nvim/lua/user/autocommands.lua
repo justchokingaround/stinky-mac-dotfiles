@@ -48,8 +48,30 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 -- Launch Nvim with Transparent Background
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function ()
-   vim.cmd ":TransparentEnable"
+   -- vim.cmd ":TransparentEnable"
+   vim.cmd ":TransparentDisable"
   end
 })
 
+-- Set transparency setting for Neovide
+-- let g:neovide_transparency=0.95
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  callback = function ()
+   vim.cmd ":let g:neovide_transparency=0.7"
+  end
+})
+
+-- highlight Beacon guibg=white ctermbg=15
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+  callback = function ()
+   vim.cmd ":hi Beacon guibg=black ctermbg=12"
+  end
+})
+
+-- lightspeed stuff
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  callback = function ()
+   vim.cmd ":lua require'lightspeed'.init_highlight(true)"
+  end
+})
 

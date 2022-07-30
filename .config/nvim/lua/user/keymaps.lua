@@ -42,8 +42,8 @@ keymap("n", "<leader>c", "<cmd>Bdelete!<CR>", opts)
 keymap("v", "p", '"_dP', opts)
 
 -- Insert --
--- Press jk fast to enter
-keymap("i", "jk", "<ESC>", opts)
+-- Press jj fast to enter
+keymap("i", "jj", "<ESC>", opts)
 
 -- Visual --
 -- Stay in indent mode
@@ -60,6 +60,7 @@ keymap("n", "<leader>ff", ":Telescope find_files find_command=rg,--ignore,--hidd
 keymap("n", "<leader>ft", ":Telescope live_grep<CR>", opts)
 keymap("n", "<leader>fp", ":Telescope projects<CR>", opts)
 keymap("n", "<leader>fb", ":Telescope buffers<CR>", opts)
+keymap("n", "<leader>fc", ":Telescope colorscheme<CR>", opts)
 
 -- Git
 keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
@@ -67,17 +68,6 @@ keymap("n", "<leader>gg", "<cmd>lua _LAZYGIT_TOGGLE()<CR>", opts)
 -- Comment
 keymap("n", "<leader>/", "<cmd>lua require('Comment.api').toggle_current_linewise()<CR>", opts)
 keymap("x", "<leader>/", '<ESC><CMD>lua require("Comment.api").toggle_linewise_op(vim.fn.visualmode())<CR>')
-
--- DAP
-keymap("n", "<leader>db", "<cmd>lua require'dap'.toggle_breakpoint()<cr>", opts)
-keymap("n", "<leader>dc", "<cmd>lua require'dap'.continue()<cr>", opts)
-keymap("n", "<leader>di", "<cmd>lua require'dap'.step_into()<cr>", opts)
-keymap("n", "<leader>do", "<cmd>lua require'dap'.step_over()<cr>", opts)
-keymap("n", "<leader>dO", "<cmd>lua require'dap'.step_out()<cr>", opts)
-keymap("n", "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", opts)
-keymap("n", "<leader>dl", "<cmd>lua require'dap'.run_last()<cr>", opts)
-keymap("n", "<leader>du", "<cmd>lua require'dapui'.toggle()<cr>", opts)
-keymap("n", "<leader>dt", "<cmd>lua require'dap'.terminate()<cr>", opts)
 
 -- Running code
 keymap('n', '<leader>r', ':RunCode<CR>', { noremap = true, silent = false })
@@ -87,6 +77,23 @@ keymap('n', '<leader>rp', ':RunProject<CR>', { noremap = true, silent = false })
 keymap('n', '<leader>rc', ':RunClose<CR>', { noremap = true, silent = false })
 keymap('n', '<leader>crf', ':CRFiletype<CR>', { noremap = true, silent = false })
 keymap('n', '<leader>crp', ':CRProjects<CR>', { noremap = true, silent = false })
+
+-- Cinnamon
+vim.keymap.set({ 'n', 'x' }, 'k', "<Cmd>lua Scroll('k', 0, 1)<CR>")
+vim.keymap.set({ 'n', 'x' }, 'j', "<Cmd>lua Scroll('j', 0, 1)<CR>")
+vim.keymap.set({ 'n', 'x' }, 'h', "<Cmd>lua Scroll('h', 0, 1)<CR>")
+vim.keymap.set({ 'n', 'x' }, 'l', "<Cmd>lua Scroll('l', 0, 1)<CR>")
+keymap({ 'n', 'x' }, '<ScrollWheelUp>', "<Cmd>lua Scroll('<ScrollWheelUp>')<CR>")
+keymap({ 'n', 'x' }, '<ScrollWheelDown>', "<Cmd>lua Scroll('<ScrollWheelDown>')<CR>")
+keymap('n', 'n', "<Cmd>lua Scroll('n', 1)<CR>")
+keymap('n', 'N', "<Cmd>lua Scroll('N', 1)<CR>")
+keymap('n', '*', "<Cmd>lua Scroll('*', 1)<CR>")
+keymap('n', '#', "<Cmd>lua Scroll('#', 1)<CR>")
+keymap('n', 'g*', "<Cmd>lua Scroll('g*', 1)<CR>")
+keymap('n', 'g#', "<Cmd>lua Scroll('g#', 1)<CR>")
+keymap({ 'n', 'x' }, '0', "<Cmd>lua Scroll('0')<CR>")
+keymap({ 'n', 'x' }, '^', "<Cmd>lua Scroll('^')<CR>")
+keymap({ 'n', 'x' }, '$', "<Cmd>lua Scroll('$', 0, 1)<CR>")
 
 -- Custom
 keymap("n", "<leader>ps", ":PackerSync<CR>", opts)

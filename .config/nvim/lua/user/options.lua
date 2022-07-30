@@ -38,3 +38,5 @@ vim.opt.fillchars.eob=" "
 vim.opt.shortmess:append "c"
 vim.opt.whichwrap:append("<,>,[,],h,l")
 vim.opt.iskeyword:append("-")
+-- vim.opt.guifont = { "FiraCode NF", "h16" }
+vim.opt.guifont = { "Hack Nerd Font Mono", "h16" }
