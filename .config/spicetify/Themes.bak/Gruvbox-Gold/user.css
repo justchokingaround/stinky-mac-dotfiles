@@ -1,0 +1,73 @@
+/*Thinner scrollbar*/
+/* ::-webkit-scrollbar {
+    height: 6px !important;
+    width: 0px !important;
+    background-color: transparent;
+} */
+
+.TableCellSong__label {
+    color: var(--modspotify_main_fg);
+    border: 1px solid var(--modspotify_main_fg);
+}
+
+* {
+	font-family: ComicCodeLigatures;
+}
+
+.ellipsis-one-line {
+	font-family: Montserrat;
+}
+
+
+@font-face {
+    font-family: "ComicCodeLigatures";
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "ComicCodeLigatures";
+    font-style: normal;
+    font-weight: 500;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 500;
+}
+
+body {
+    --glue-font-family: "ComicCodeLigatures","Roboto",spotify-circular,spotify-circular-cyrillic,spotify-circular-arabic,spotify-circular-hebrew,Helvetica Neue,helvetica,arial,Hiragino Kaku Gothic Pro,Meiryo,MS Gothic,sans-serif;
+    --info-font-family: "Roboto",spotify-circular,spotify-circular-cyrillic,spotify-circular-arabic,spotify-circular-hebrew,Helvetica Neue,helvetica,arial,Hiragino Kaku Gothic Pro,Meiryo,MS Gothic,sans-serif;
+    font-family: var(--glue-font-family);
+    letter-spacing: normal;
+}
+
+.main-type-mesto,
+.main-type-mestoBold,
+.main-type-ballad,
+.main-type-balladBold,
+.main-type-canon {
+    font-family: var(--info-font-family);
+    letter-spacing: normal;
+}
+
+.main-type-bass {
+    font-family: var(--glue-font-family);
+}
+
+.main-type-ballad {
+    font-weight: 500;
+}
+
+.lyrics-lyricsContainer-LyricsLine {
+    font-family: var(--glue-font-family);
+    letter-spacing: -.03em !important;
+}

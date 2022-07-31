@@ -74,7 +74,12 @@ shift + alt - b : yabai -m window --toggle border
 alt - s : yabai -m window --toggle split
 
 # Close active application
-hyper - c : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+hyper - c [ 
+  * : $(yabai -m window $(yabai -m query --windows --window | jq -re ".id") --close)
+  "kitty" : osascript -e 'quit app "kitty"'
+  "nightly" : osascript -e 'quit app "nightly"'
+  "neovide" : osascript -e 'quit app "neovide"'
+]
 
 # Float / Unfloat window
 shift + alt - t : \

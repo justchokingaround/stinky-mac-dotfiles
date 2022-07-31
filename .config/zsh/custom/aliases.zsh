@@ -62,6 +62,8 @@ alias fytdlist='yt-dlp -f "bv*[height=1080]+ba" -P "$(fd . "/Users/justchokingar
 
 # quickly share a file
 alias share='printf $(curl -# "https://oshi.at" -F "f=@$(fd -t f -d 1|fzf)"|sed -nE "s_DL: (.*)_\1_p")|pbcopy'
+alias fzf-preview='printf "fzf --with-nth 2.. --cycle --preview=\"kitty +kitten icat --clear --transfer-mode file;\
+  kitty +kitten icat --place "190x12@10x10" --scale-up --transfer-mode file {1}\""|pbcopy'
 alias weather="curl -s wttr.in/Heilbronn"
 alias pf='pfetch'
 alias nft='neofetch --kitty ~/.config/neofetch/neofetch.jpeg --size 30%'

@@ -102,13 +102,13 @@ cchar() {
     sed -nE 's_.*href="([^"]*)".*_\1_p; s_.*data-src="([^"]*)".*_\1_p; s_.*alt="([^"]*)".*_\1_p'|
     sed -e 'N;N;s/\n/\t/g' -e 's_/width/[[:digit:]]\{1,3\}_/width/800_g' \
     -e 's_/height/[[:digit:]]\{1,3\}_/height/600_g'|
-    fzf --with-nth 3.. --cycle --preview="kitty +kitten icat --clear --transfer-mode file; \
-    kitty +kitten icat --place "190x12@10x10" --scale-up --transfer-mode file {2}"|cut -f1)
+    fzf --reverse --with-nth 3.. --cycle --preview="kitty +kitten icat --clear --transfer-mode file; \
+    kitty +kitten icat --place "256x17@10x10" --scale-up --transfer-mode file {2}"|cut -f1)
   [ -z "$char" ] && exit 1 || images=$(curl -sL "https://you-zitsu.fandom.com"$char|
     sed -nE 's_.*src="([^"]*)".*class="pi-image-thumbnail".*alt="([^"]*)".*_\1\t\2_p')
   [ $(printf "%s" "$images"|wc -l) -lt 2 ] && kitty +kitten icat $(printf "%s" "$images"|cut -f1) ||
   printf "%s" "$images"|fzf --with-nth 2.. --cycle --preview="kitty +kitten icat --clear --transfer-mode file; \
-    kitty +kitten icat --place "190x12@10x10" --scale-up --transfer-mode file {1}" > /dev/null
+    kitty +kitten icat --place "256x17@10x10" --scale-up --transfer-mode file {1}" > /dev/null
 }
 
 ### Fzf functions
@@ -138,7 +138,7 @@ emoji() {
 ic() {
   image=$(fd -t f -d 1 --extension png --extension jpg --extension jpeg --extension webm|
     fzf -0 --cycle --preview="kitty +kitten icat --clear --transfer-mode file; \
-  kitty +kitten icat --place "190x12@10x10" --scale-up --transfer-mode file {}")
+  kitty +kitten icat --place "256x17@10x10" --scale-up --transfer-mode file {}")
   [ -z "$image" ] || imgcopy "$image"
 }
 
@@ -146,7 +146,7 @@ ic() {
 # is = image share
 is() {
   image=$(fd -t f -d 1|fzf --cycle --preview="kitty +kitten icat --clear --transfer-mode file; \
-  kitty +kitten icat --place "190x12@10x10" --scale-up --transfer-mode file {}")
+  kitty +kitten icat --place "256x17@10x10" --scale-up --transfer-mode file {}")
   [ -z "$image" ] || printf $(curl -# "https://0x0.st" -F "file=@${image}")|pbcopy
 }
 
@@ -159,6 +159,10 @@ choose_wallpaper() {
   sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db \
     "update data set value = '$(find $HOME/Pictures/wallpapers -type f|
     fzf --cycle -d"/" --with-nth=6.. --preview="kitty icat \
-    --place 60x40@72x10 --transfer-mode file {}")'" && killall Dock 
+    --place "256x17@10x10" --transfer-mode file {}")'" && killall Dock 
 }
 
+yabai() {
+    command yabai "$@"
+    sketchybar -m --trigger yabai_command_run >/dev/null 2>/dev/null &disown # prevents any delay from happening
+}

@@ -95,9 +95,31 @@ keymap({ 'n', 'x' }, '0', "<Cmd>lua Scroll('0')<CR>")
 keymap({ 'n', 'x' }, '^', "<Cmd>lua Scroll('^')<CR>")
 keymap({ 'n', 'x' }, '$', "<Cmd>lua Scroll('$', 0, 1)<CR>")
 
+-- For Neovide clipboard
+vim.g.neovide_input_use_logo = 1
+keymap('', '<D-v>', '+p<CR>', { noremap = true, silent = true })
+keymap('!', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+keymap('t', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+keymap('v', '<D-v>', '<C-R>+', { noremap = true, silent = true })
+
 -- Custom
 keymap("n", "<leader>ps", ":PackerSync<CR>", opts)
-keymap("n", "<leader>T", ":TransparentToggle<CR>", opts)
 keymap("n", "<C-s>", ":w<cr>", opts)
 keymap("n", "<leader>H", ":!shellcheck %<cr>", opts)
 keymap("n", "<leader>a", ":Alpha<CR>", opts)
+
+-- Toggle Transparency
+keymap("n", "<leader>T",
+  function()
+    if vim.g.neovide == nil then
+      vim.cmd("TransparentToggle")
+    else
+      local current_value = vim.api.nvim_get_var("neovide_transparency")
+      if current_value == 1 then
+        vim.cmd("let g:neovide_transparency=0.7")
+      else
+        vim.cmd("let g:neovide_transparency=1")
+      end
+    end
+  end,
+  opts)

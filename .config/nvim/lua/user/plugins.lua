@@ -48,7 +48,6 @@ packer.init {
 return packer.startup(function(use)
   -- My plugins here
   use { "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" } -- Have packer manage itself
-  use { "nvim-lua/plenary.nvim", commit = "968a4b9afec0c633bc369662e78f8c5db0eba249" } -- Useful lua functions used by lots of plugins
   use { "windwp/nvim-autopairs", commit = "fa6876f832ea1b71801c4e481d8feca9a36215ec" } -- Autopairs, integrates with both cmp and treesitter
   use { "numToStr/Comment.nvim", commit = "2c26a00f32b190390b664e56e32fd5347613b9e2" }
   use { "JoosepAlviste/nvim-ts-context-commentstring", commit = "88343753dbe81c227a1c1fd2c8d764afb8d36269" }
@@ -70,6 +69,16 @@ return packer.startup(function(use)
   use { 'rainbowhxch/beacon.nvim' }
 	use { 'xiyaowong/accelerated-jk.nvim' }
   use { 'ggandor/lightspeed.nvim' }
+  use { 'norcalli/nvim-colorizer.lua' }
+  use {'nvim-orgmode/orgmode', config = function()
+          require('orgmode').setup{}
+  end
+  }
+  require'cmp'.setup({
+    sources = {
+      { name = 'orgmode' }
+    }
+  })
   
   -- Colorschemes
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
@@ -105,10 +114,7 @@ return packer.startup(function(use)
   use { "nvim-telescope/telescope.nvim", commit = "d96eaa914aab6cfc4adccb34af421bdd496468b0" }
 
   -- Treesitter
-  use {
-    "nvim-treesitter/nvim-treesitter",
-    commit = "518e27589c0463af15463c9d675c65e464efc2fe",
-  }
+  use { "nvim-treesitter/nvim-treesitter" }
 
   -- Git
   use { "lewis6991/gitsigns.nvim", commit = "c18e016864c92ecf9775abea1baaa161c28082c3" }

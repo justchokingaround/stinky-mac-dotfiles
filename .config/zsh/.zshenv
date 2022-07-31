@@ -34,3 +34,6 @@ PATH=$PATH:$HOME/.spicetify
 
 # colorful man pages
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+export NEOVIDE_FRAMELESS=true
+export NEOVIDE_FRAME=none
