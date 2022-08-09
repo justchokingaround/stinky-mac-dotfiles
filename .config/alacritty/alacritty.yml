@@ -10,7 +10,8 @@ window:
 font:
   normal:
     # family: Liga SFMono Nerd Font
-    family: JetBrains Mono
+    # family: JetBrains Mono
+    family: JetBrainsMono Nerd Font Mono
     # family: ComicCodeLigatures
   bold:
     style: Bold

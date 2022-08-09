@@ -46,17 +46,17 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 })
 
 -- Launch Nvim with Transparent Background
--- vim.api.nvim_create_autocmd({ "VimEnter" }, {
---   callback = function ()
---    -- vim.cmd ":TransparentEnable"
---    vim.cmd ":TransparentDisable"
---   end
--- })
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  callback = function ()
+   vim.cmd ":TransparentEnable"
+   -- vim.cmd ":TransparentDisable"
+  end
+})
 
 -- Neovide stuff
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function ()
-  vim.cmd ":let g:neovide_transparency=0.7"
+  vim.cmd ":let g:neovide_transparency=1"
   end
 })
 
@@ -92,6 +92,23 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function ()
     vim.cmd "nnoremap <C-f> /"
+  end
+})
+
+-- Set ray settings
+
+-- let g:ray_options =
+-- \ {
+-- \ 'colors' : 'midnight',
+-- \ 'background' : 'true',
+-- \ 'darkMode' : 'true',
+-- \ 'padding' : '64',
+-- \ 'language' : 'auto'
+-- \  }
+
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  callback = function ()
+    vim.cmd "let g:ray_options = {'colors': 'breeze', 'background': 'true', 'darkMode': 'true', 'padding': '32', 'language': 'auto'}"
   end
 })
 

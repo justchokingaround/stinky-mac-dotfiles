@@ -60,11 +60,11 @@ return packer.startup(function(use)
   use { "ahmedkhalf/project.nvim", commit = "541115e762764bc44d7d3bf501b6e367842d3d4f" }
   use { "lewis6991/impatient.nvim", commit = "969f2c5c90457612c09cf2a13fee1adaa986d350" }
   use { "lukas-reineke/indent-blankline.nvim", commit = "6177a59552e35dfb69e1493fd68194e673dc3ee2" }
-  use { "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" }
+  use { "goolord/alpha-nvim" }
   use 'andweeb/presence.nvim'
   use 'mcchrish/nnn.vim'
   use { 'CRAG666/code_runner.nvim', requires = 'nvim-lua/plenary.nvim' }
-  -- use 'karb94/neoscroll.nvim'
+  use 'karb94/neoscroll.nvim'
   use { 'declancm/cinnamon.nvim' }
   use { 'rainbowhxch/beacon.nvim' }
 	use { 'xiyaowong/accelerated-jk.nvim' }
@@ -79,7 +79,8 @@ return packer.startup(function(use)
       { name = 'orgmode' }
     }
   })
-  
+  use { 'sudoerwx/vim-ray-so-beautiful' }
+
   -- Colorschemes
   use { "folke/tokyonight.nvim", commit = "8223c970677e4d88c9b6b6d81bda23daf11062bb" }
   use { "lunarvim/darkplus.nvim", commit = "2584cdeefc078351a79073322eb7f14d7fbb1835" }

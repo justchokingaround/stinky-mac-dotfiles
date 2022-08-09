@@ -189,6 +189,11 @@ _G.packer_plugins = {
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
   },
+  ["neoscroll.nvim"] = {
+    loaded = true,
+    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/neoscroll.nvim",
+    url = "https://github.com/karb94/neoscroll.nvim"
+  },
   ["nnn.vim"] = {
     loaded = true,
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/nnn.vim",
@@ -309,6 +314,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/vim-moonfly-colors",
     url = "https://github.com/bluz71/vim-moonfly-colors"
+  },
+  ["vim-ray-so-beautiful"] = {
+    loaded = true,
+    path = "/Users/justchokingaround/.local/share/nvim/site/pack/packer/start/vim-ray-so-beautiful",
+    url = "https://github.com/sudoerwx/vim-ray-so-beautiful"
   },
   ["vim-sunbather"] = {
     loaded = true,

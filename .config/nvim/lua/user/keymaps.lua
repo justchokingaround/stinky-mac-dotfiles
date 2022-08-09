@@ -75,8 +75,6 @@ keymap('n', '<leader>rf', ':RunFile<CR>', { noremap = true, silent = false })
 keymap('n', '<leader>rft', ':RunFile tab<CR>', { noremap = true, silent = false })
 keymap('n', '<leader>rp', ':RunProject<CR>', { noremap = true, silent = false })
 keymap('n', '<leader>rc', ':RunClose<CR>', { noremap = true, silent = false })
-keymap('n', '<leader>crf', ':CRFiletype<CR>', { noremap = true, silent = false })
-keymap('n', '<leader>crp', ':CRProjects<CR>', { noremap = true, silent = false })
 
 -- Cinnamon
 vim.keymap.set({ 'n', 'x' }, 'k', "<Cmd>lua Scroll('k', 0, 1)<CR>")

@@ -4,8 +4,9 @@ ITEM_DIR="$HOME/.config/sketchybar/items"
 source $HOME/.config/sketchybar/colors.sh
 source $HOME/.config/sketchybar/icons.sh
 
-export FONT="ComicCodeLigatures"
-export NERD_FONT="SFMono Nerd Font"
+/* export FONT="ComicCodeLigatures" */
+export FONT="JetBrainsMono Nerd Font"
+export NERD_FONT="JetBrainsMono Nerd Font"
 
 sketchybar --bar height=30        \
                  blur_radius=100  \

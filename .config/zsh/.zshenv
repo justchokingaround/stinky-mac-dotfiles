@@ -17,6 +17,7 @@ export NNN_PLUG='o:fzopen;j:autojump;c:cdpath;g:getplugs;i:imgview;p:preview-tui
 LC_CTYPE=en_US.UTF-8
 LC_ALL=en_US.UTF-8
 export PATH="$HOME/.emacs.d/bin:$PATH"
+export PATH="/usr/local/sbin:$PATH"
 export GOPATH=$HOME/go-workspace # don't forget to change your path correctly!
 export GOROOT=/usr/local/opt/go/libexec
 export PATH=$PATH:$GOPATH/bin

@@ -20,5 +20,6 @@ null_ls.setup {
     formatting.stylua,
     formatting.google_java_format,
     diagnostics.flake8,
+    null_ls.builtins.code_actions.gitsigns,
   },
 }

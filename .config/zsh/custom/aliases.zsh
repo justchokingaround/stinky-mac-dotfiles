@@ -43,7 +43,6 @@ alias -s pdf=mupdf-gl
 
 alias trackma='trackma -a 1'
 alias syncplay='/Applications/Syncplay.app/Contents/MacOS/Syncplay'
-alias flameshot='/Applications/flameshot.app/Contents/MacOS/flameshot'
 alias mpvq="mpv --no-video"
 alias watchgoodedits='cd "$(fd . "$HOME/good_edits" --max-depth 1 --type d|fzf --cycle)" && mpv *'
 

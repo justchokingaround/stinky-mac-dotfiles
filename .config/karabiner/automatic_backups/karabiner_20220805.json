@@ -95,6 +95,33 @@
                         ]
                     },
                     {
+                        "description": "CAPS_LOCK + SPACE : Toggle Alfred",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "spacebar",
+                                    "modifiers": {
+                                        "mandatory": [
+                                            "left_shift",
+                                            "left_command",
+                                            "left_control",
+                                            "left_option"
+                                        ]
+                                    }
+                                },
+                                "to": [
+                                    {
+                                        "key_code": "spacebar",
+                                        "modifiers": [
+                                            "left_command"
+                                        ]
+                                    }
+                                ],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Toggle CAPS_LOCK with LEFT_SHIFT + RIGHT_SHIFT",
                         "manipulators": [
                             {
@@ -227,8 +254,7 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
+                    "simple_modifications": []
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -241,8 +267,7 @@
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": false,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
+                    "simple_modifications": []
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -255,8 +280,7 @@
                     },
                     "ignore": true,
                     "manipulate_caps_lock_led": false,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
+                    "simple_modifications": []
                 },
                 {
                     "disable_built_in_keyboard_if_exists": false,
@@ -269,8 +293,7 @@
                     },
                     "ignore": false,
                     "manipulate_caps_lock_led": true,
-                    "simple_modifications": [],
-                    "treat_as_built_in_keyboard": false
+                    "simple_modifications": []
                 }
             ],
             "fn_function_keys": [

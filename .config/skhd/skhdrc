@@ -6,7 +6,10 @@ cmd - x [
 ]
 cmd - i : open -na /Applications/iTerm.app/Contents/MacOS/iTerm2
 # cmd - return : open -na /Applications/Alacritty.app/Contents/MacOS/alacritty
-cmd - return : open -na /Applications/kitty.app/Contents/MacOS/kitty
+cmd - return [
+  * : open -na /Applications/kitty.app/Contents/MacOS/kitty
+  "warp" : ->
+] 
 cmd - m : mpv "$(pbpaste)"
 # shift + cmd - b : open -na /Applications/Firefox\ Nightly.app/Contents/MacOS/firefox
 # cmd - e : open -a /System/Volumes/Data/usr/local/Cellar/emacs-plus@28/28.1/Emacs.app
@@ -79,6 +82,8 @@ hyper - c [
   "kitty" : osascript -e 'quit app "kitty"'
   "nightly" : osascript -e 'quit app "nightly"'
   "neovide" : osascript -e 'quit app "neovide"'
+  "brave" : osascript -e 'quit app "brave"'
+  "warp" : osascript -e 'quit app "warp"'
 ]
 
 # Float / Unfloat window
@@ -107,7 +112,6 @@ shift + alt - r : yabai -m space --rotate 90
 hyper - n : yabai -m space --create && \
 index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
 yabai -m space --focus "${index}"
-
 
 # Destroy desktop
 cmd + alt - w : yabai -m space --destroy

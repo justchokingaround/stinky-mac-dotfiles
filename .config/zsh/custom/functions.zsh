@@ -158,8 +158,9 @@ wallpaper() {
 choose_wallpaper() {
   sqlite3 ~/Library/Application\ Support/Dock/desktoppicture.db \
     "update data set value = '$(find $HOME/Pictures/wallpapers -type f|
-    fzf --cycle -d"/" --with-nth=6.. --preview="kitty icat \
-    --place "256x17@10x10" --transfer-mode file {}")'" && killall Dock 
+    fzf --cycle -d"/" --with-nth=6.. --preview="kitty +kitten icat --clear \
+      --transfer-mode file; kitty +kitten icat --place "256x17@10x10" --transfer-mode file {}"
+)'" && killall Dock 
 }
 
 yabai() {
